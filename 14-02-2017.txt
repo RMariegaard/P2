@@ -1,5 +1,0 @@
-I dag har vi snakket om hvordan man kan få data omkring de forskellige kunstnere, heriblandt genre. Med dette ville vi kunne bedømme om en kunstner der kommer til roskilde, ligner en kunstner brugeren kan lide. Vi har fået lavet et program hvor man kan logge ind på sin spotify. Her har vi også fundet ud af om hvordan vi kan trække data omkring genre ud.
-
-Vi har snakket om vi skal have data andre steder fra. Hvis en kunstner ikke er inde på spotify, eller hvis en bruger ikke har en spotify. Ville det være lækkert at kunne lave en app der stadig vil kunne fungere. Altså skal vi have data et andet sted fra. 
-
-Det vi vil begynde at lave til næste gang, er at skrive om "state of the art" heriblandt: collaberativ, content og hybrid. Vi vil også få skrevet et afsnit omkring hvordan vi kan få vores data. Til sidst skal vi have skrevet et indledende afsnit omkring hvad et recommender system egentlig er, hvad der gør i dagen danmark. Vi skal skrive om hvorfor vi egentlig gør det her, og skabe interesse for andre så de vil læse vores rapport og bruge vores program.
