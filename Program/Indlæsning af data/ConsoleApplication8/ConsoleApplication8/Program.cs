@@ -25,7 +25,6 @@ namespace ConsoleApplication8
                 ny.Name = data[1];
                 kunstere.SetValue(ny, i);
                 i++;
-
             }
 
 
@@ -50,11 +49,11 @@ namespace ConsoleApplication8
                 foreach (Artist kunstner in kunstere)
                 {
                     if (int.Parse(data[1]) == kunstner.Id)
-                    {
-                                                                       
-                        if (!kunstner.TagIds.Contains(int.Parse(data[2])))
+                    {                                                                                            
+                        if (!kunstner.TagIds.Id.Contains(int.Parse(data[2])))
                         {
-                            kunstner.TagIds.Add(int.Parse(data[2]));
+                            kunstner.TagIds.Add(new Tags(int.Parse(data[2]));
+                            kunstner.TagIds.Tags.Amount++;
                         }         
 
                     }
@@ -122,7 +121,6 @@ namespace ConsoleApplication8
         {
             Id = ID;
             Name = navn;
-
         }
     }
 
@@ -130,6 +128,11 @@ namespace ConsoleApplication8
     {
         public int Id;
         public int Amount;
+
+        public Tags(int id)
+        {
+            Id = id;
+        }
     }
 
 }
