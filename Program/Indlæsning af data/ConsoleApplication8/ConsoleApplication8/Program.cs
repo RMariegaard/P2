@@ -10,9 +10,9 @@ namespace ConsoleApplication8
     {
         static void Main(string[] args)
         {
-            string[] fil = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\Visual Studio 2015\Projects\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
-            string[] kunst_fil = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\Visual Studio 2015\Projects\ConsoleApplication8\ConsoleApplication8\artists.dat");
-            string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\Visual Studio 2015\Projects\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
+            string[] fil = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
+            string[] kunst_fil = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.dat");
+            string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
             List<User> Users = new List<User>();
             Artist[] kunstere = new Artist[17632];
             int i = 0;
@@ -29,19 +29,40 @@ namespace ConsoleApplication8
             }
 
 
+            List<int> Alltags = new List<int>();
+            List<int> Relevanttags = new List<int>();
+            
             //Lav hvor du tilføjer tags til kunstere array
             foreach (var streng in tag_fil.Skip(1))
             {  
                     string[] data = streng.Split('\t');
+
+                if (!Alltags.Contains(int.Parse(data[2])))
+                {
+                    Alltags.Add(int.Parse(data[2]));
+                }
+
+                else if (!Relevanttags.Contains(int.Parse(data[2])))
+                {
+                    Relevanttags.Add(int.Parse(data[2]));
+                }
+
                 foreach (Artist kunstner in kunstere)
                 {
                     if (int.Parse(data[1]) == kunstner.Id)
                     {
+                                                                       
                         if (!kunstner.TagIds.Contains(int.Parse(data[2])))
+                        {
                             kunstner.TagIds.Add(int.Parse(data[2]));
+                        }         
+
                     }
+
                 }
+
             }
+
 
 
             
@@ -85,16 +106,17 @@ namespace ConsoleApplication8
         public int Id;
         public List<Artist> Artits = new List<Artist>();
     }
+
     class Artist
     {
         public int Id;
         public string Name;
-        public List<int> TagIds = new List<int>();
-        public int Wieght;
+        public List<Tags> TagIds = new List<Tags>();
+        public int Weight;
         public Artist(int ID, int W)
         {
             this.Id = ID;
-            Wieght = W;
+            Weight = W;
         }
         public Artist(int ID, string navn)
         {
@@ -102,6 +124,12 @@ namespace ConsoleApplication8
             Name = navn;
 
         }
+    }
+
+    class Tags
+    {
+        public int Id;
+        public int Amount;
     }
 
 }

@@ -4,3 +4,9 @@ c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication8\Consol
 c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication8\ConsoleApplication8\obj\Debug\ConsoleApplication8.csprojResolveAssemblyReference.cache
 c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication8\ConsoleApplication8\obj\Debug\ConsoleApplication8.exe
 c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication8\ConsoleApplication8\obj\Debug\ConsoleApplication8.pdb
+C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\bin\Debug\ConsoleApplication8.exe.config
+C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\obj\Debug\ConsoleApplication8.exe
+C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\obj\Debug\ConsoleApplication8.pdb
+C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\bin\Debug\ConsoleApplication8.exe
+C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\bin\Debug\ConsoleApplication8.pdb
+C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\obj\Debug\ConsoleApplication8.csprojResolveAssemblyReference.cache
