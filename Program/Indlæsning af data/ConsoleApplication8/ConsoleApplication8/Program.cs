@@ -1,0 +1,107 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication8
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] fil = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\Visual Studio 2015\Projects\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
+            string[] kunst_fil = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\Visual Studio 2015\Projects\ConsoleApplication8\ConsoleApplication8\artists.dat");
+            string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\Visual Studio 2015\Projects\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
+            List<User> Users = new List<User>();
+            Artist[] kunstere = new Artist[17632];
+            int i = 0;
+            foreach (var streng in kunst_fil.Skip(1))
+            {
+                string[] data = streng.Split('\t');
+                Artist ny = new Artist(int.Parse(data[0]), data[1]);
+                
+                ny.Id = int.Parse(data[0]);
+                ny.Name = data[1];
+                kunstere.SetValue(ny, i);
+                i++;
+
+            }
+
+
+            //Lav hvor du tilføjer tags til kunstere array
+            foreach (var streng in tag_fil.Skip(1))
+            {  
+                    string[] data = streng.Split('\t');
+                foreach (Artist kunstner in kunstere)
+                {
+                    if (int.Parse(data[1]) == kunstner.Id)
+                    {
+                        if (!kunstner.TagIds.Contains(int.Parse(data[2])))
+                            kunstner.TagIds.Add(int.Parse(data[2]));
+                    }
+                }
+            }
+
+
+            
+            int prev = 0;
+            int index = -1;
+            var fil1 = fil.Skip(1);
+
+            foreach (var linje in fil1)
+            {
+
+                string[] data = linje.Split('\t');
+                // 0 = bruger ID, 1 = Artist Id, 2 = weithgs
+
+                if (prev != int.Parse(data[0]))
+                {
+                    User _User = new User();
+                    _User.Id = int.Parse(data[0]);
+                    _User.Artits.Add((new Artist(int.Parse(data[1]), int.Parse(data[2]))));
+                    Users.Add(_User);
+                    index++;
+                }
+                else{
+                    Users[index].Artits.Add(new Artist(int.Parse(data[1]), int.Parse(data[2])));
+                }
+                prev = int.Parse(data[0]);
+
+            }
+
+            foreach(Artist kunsterne in Users[0].Artits)
+                {
+                    Console.WriteLine(kunsterne.Id);
+                }
+
+            Console.Read();
+
+        }
+    }
+
+    class User
+    {
+        public int Id;
+        public List<Artist> Artits = new List<Artist>();
+    }
+    class Artist
+    {
+        public int Id;
+        public string Name;
+        public List<int> TagIds = new List<int>();
+        public int Wieght;
+        public Artist(int ID, int W)
+        {
+            this.Id = ID;
+            Wieght = W;
+        }
+        public Artist(int ID, string navn)
+        {
+            Id = ID;
+            Name = navn;
+
+        }
+    }
+
+}
