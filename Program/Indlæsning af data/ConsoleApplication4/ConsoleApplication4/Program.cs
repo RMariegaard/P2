@@ -11,9 +11,9 @@ namespace Recommender
         static void Main(string[] args)
         {
             // Fil Indlæsning:
-            string[] file = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
-            string[] artist_file = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.dat");
-            string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
+            string[] file = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
+            string[] artist_file = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.dat");
+            string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
 
             // Initialisering af User list og Kunstner Arrayet:
             List<User> Users = new List<User>();
@@ -61,7 +61,17 @@ namespace Recommender
             }
 
             // Tags bliver overført til respektive kunstnere:
-            foreach (Artist )
+            foreach (string streng in tag_fil.Skip(1))
+            {
+                string[] data = streng.Split('\t');
+                foreach (Artist artist in Artists)
+                {
+                    if(int.Parse(data[1]) == artist.Id)
+                    {
+                        artist.TagIds.Add(new Tag(int.Parse(data[2])));
+                    }
+                }
+            }
 
 
 
