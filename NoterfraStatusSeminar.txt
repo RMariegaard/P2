@@ -1,0 +1,32 @@
+Intuative app design
+
+Hard to test.. (How to find out if it is a good recommendation? )
+
+Tydeligør 2011 - se det virker
+
+Gør det mere klart (figur om content)
+
+Uddybning:
+Demographic??
+What is an item?
+Best, strength and weakness? 
+
+Current Solution - What is it is really??
+Clearify it more. (For iniatial problem)
+
+What about user feedback? 
+
+Kig på subjective ord !!! meget vigtigt!!
+
+Expand on the nieche (This is why our solutions is the best and this is why you are going to use).
+
+Reffernces! Skrive det.
+
+Dårlig forbindelse til nettet. 
+
+Overvejelser om bruger undersøgelse.
+
+How to save the data (RAM)  ?  Class. OOP in general.
+
+Hvordan gør vi test (studeirdning).
+
