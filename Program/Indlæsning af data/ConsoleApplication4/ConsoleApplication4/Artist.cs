@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
+    [Serializable]
     class Artist
     {
         public int Id;
