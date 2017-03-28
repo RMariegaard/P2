@@ -9,6 +9,9 @@ namespace Recommender
 {
     class Program
     {
+
+
+
         static void Main(string[] args)
         {
             /*
@@ -24,11 +27,12 @@ namespace Recommender
 
 
             Console.Read();*/
-            
-                // Fil Indlæsning:
-                string[] file = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
-                string[] artist_file = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.dat");
-                string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
+
+            // Fil Indlæsning:
+            string Username = Environment.UserName;
+            string[] file = System.IO.File.ReadAllLines(@"C:\Users\"+Username+@"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
+                string[] artist_file = System.IO.File.ReadAllLines(@"C:\Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.dat");
+                string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
 
                 // Initialisering af User list og Kunstner Arrayet:
                 List<User> Users = new List<User>();
@@ -102,15 +106,18 @@ namespace Recommender
                         }
                     }
                 }
-                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin", Users);
-                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin", Artists);
+
+            Users.ForEach(x => x.TagCalc());
+
+
+                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin", Users);
+                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin", Artists);
 
 
 
                 Console.WriteLine("done");
 
-                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin", Users);
-                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin", Artists);
+               
                 
         }
     }

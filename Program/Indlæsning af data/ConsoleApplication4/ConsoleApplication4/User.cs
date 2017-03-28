@@ -18,7 +18,7 @@ namespace Recommender
             foreach (Userartist artist in Artists)
             {
                 artist.ThisArtist.TagIds.OrderBy(T => T.amount);
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 5 && i < artist.ThisArtist.TagIds.Count(); i++)
                 {
                     if (Tags.Contains(artist.ThisArtist.TagIds[i]))
                     {
