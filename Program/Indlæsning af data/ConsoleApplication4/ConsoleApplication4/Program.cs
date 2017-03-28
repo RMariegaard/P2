@@ -12,10 +12,17 @@ namespace Recommender
         static void Main(string[] args)
         {
 
-            List<User> Users = BinarySerialization.ReadFromBinaryFile<List<User>>(@"C: \Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin");
-            Artist[] Artists = BinarySerialization.ReadFromBinaryFile<Artist[]>(@"C: \Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin");
+            List<User> Users = BinarySerialization.ReadFromBinaryFile<List<User>>(@"C: \Users\Mark\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin");
+            Artist[] Artists = BinarySerialization.ReadFromBinaryFile<Artist[]>(@"C: \Users\Mark\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin");
 
             Console.WriteLine("done");
+
+            foreach (Artist element in Artists)
+            {
+                Console.WriteLine(element.Id);
+            }
+
+
             Console.Read();
             /*
                 // Fil Indlæsning:
