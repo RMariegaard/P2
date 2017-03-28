@@ -11,7 +11,7 @@ namespace Recommender
     {
         static void Main(string[] args)
         {
-
+            /*
             List<User> Users = BinarySerialization.ReadFromBinaryFile<List<User>>(@"C: \Users\Mark\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin");
             Artist[] Artists = BinarySerialization.ReadFromBinaryFile<Artist[]>(@"C: \Users\Mark\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin");
 
@@ -23,12 +23,12 @@ namespace Recommender
             }
 
 
-            Console.Read();
-            /*
+            Console.Read();*/
+            
                 // Fil Indlæsning:
-                string[] file = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
-                string[] artist_file = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.dat");
-                string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
+                string[] file = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
+                string[] artist_file = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.dat");
+                string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
 
                 // Initialisering af User list og Kunstner Arrayet:
                 List<User> Users = new List<User>();
@@ -67,9 +67,12 @@ namespace Recommender
                         index++;
                     }
 
-                    // Artist ID og antal afspilninger bliver indsat i Users Artist liste:
-                    Users[index].Artists.Add(new Userartist(int.Parse(data[1]), int.Parse(data[2])));
+                    // Der laves en tempartist til senere:
+                    Artist tempartist = new Artist(int.Parse(data[1]), "test");
 
+                    // Artist ID og antal afspilninger bliver indsat i Users Artist liste. Samtidig bliver der oprettet en "pointer" til den instans af artist der allerede eksisterer:
+                    Users[index].Artists.Add(new Userartist(int.Parse(data[1]), int.Parse(data[2]), Artists.Single(p => p.Id == tempartist.Id)));
+                     
                     // Det nuværende ID sættes over I Prev:
                     prev = int.Parse(data[0]);
 
@@ -81,22 +84,34 @@ namespace Recommender
                     string[] data = streng.Split('\t');
                     foreach (Artist artist in Artists)
                     {
+
+                       
+
                         if(int.Parse(data[1]) == artist.Id)
                         {
-                            artist.TagIds.Add(new Tag(int.Parse(data[2])));
+                            Tag temptag = new Tag(int.Parse(data[2]));
+                            if (artist.TagIds.Contains((temptag)))
+                            {
+                                artist.TagIds.Find(p => p.Id == artist.TagIds[i].Id).amount++;
+                            }
+                            else
+                            {
+                                artist.TagIds.Add(temptag);
+                            }
+  
                         }
                     }
                 }
-                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin", Users);
-                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin", Artists);
+                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin", Users);
+                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin", Artists);
 
 
 
                 Console.WriteLine("done");
 
-                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin", Users);
-                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\Casper\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin", Artists);
-                */
+                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin", Users);
+                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\Lasse\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin", Artists);
+                
         }
     }
 

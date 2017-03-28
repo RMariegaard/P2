@@ -9,14 +9,15 @@ namespace Recommender
     [Serializable]
     class Userartist
     {
-        public int Id;
         public int Weight;
+        public int Id;
+        public Artist ThisArtist;
 
-        public Userartist(int ID, int W)
+        public Userartist(int ID, int W, Artist thisartist)
         {
-            this.Id = ID;
             Weight = W;
+            Id = ID;
+            ThisArtist = thisartist;
         }
-
     }
 }
