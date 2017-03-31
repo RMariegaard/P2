@@ -10,7 +10,7 @@ namespace Recommender
     class Tag
     {
         public int Id;
-        public int amount;
+        public int amount = 1;
         //public string Name;
 
         public Tag(int id)

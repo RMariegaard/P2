@@ -82,40 +82,39 @@ namespace Recommender
 
                 }
 
-                // Tags bliver overført til respektive kunstnere:
+            // Tags bliver overført til respektive kunstnere:
+            int TempTagID;
                 foreach (string streng in tag_fil.Skip(1))
                 {
                     string[] data = streng.Split('\t');
+                    TempTagID = int.Parse(data[2]);
                     foreach (Artist artist in Artists)
                     {
-
-                       
-
                         if(int.Parse(data[1]) == artist.Id)
                         {
-                            Tag temptag = new Tag(int.Parse(data[2]));
-                            if (artist.TagIds.Contains((temptag)))
+                            if (artist.TagIds.Exists(t => t.Id == TempTagID))
                             {
-                                artist.TagIds.Find(p => p.Id == artist.TagIds[i].Id).amount++;
+                                artist.TagIds.Find(p => p.Id == TempTagID).amount++;
                             }
                             else
                             {
-                                artist.TagIds.Add(temptag);
+                                artist.TagIds.Add(new Tag(TempTagID));
                             }
-  
+                        break;
                         }
                     }
                 }
 
-            Users.ForEach(x => x.TagCalc());
+           // Users.ForEach(x => x.TagCalc());
 
 
-                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin", Users);
-                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin", Artists);
+                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\users.bin", Users);
+                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\artists.bin", Artists);
 
 
 
                 Console.WriteLine("done");
+            Console.ReadKey();
 
                
                 
