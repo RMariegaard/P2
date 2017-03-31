@@ -11,6 +11,7 @@ namespace Recommender
     {
         public int Id;
         public int amount;
+        public double weight;
         //public string Name;
 
         public Tag(int id)

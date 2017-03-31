@@ -12,6 +12,8 @@ namespace Recommender
         public int Id;
         public List<Userartist> Artists = new List<Userartist>();
         public List<Tag> Tags = new List<Tag>();
+        public double total_tag_amount;
+        public double totalt_listen_amount;
 
         /* 
         Bliver udregnet når den binærefil skrives:

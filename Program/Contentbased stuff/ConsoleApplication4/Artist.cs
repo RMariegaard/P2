@@ -11,6 +11,7 @@ namespace Recommender
     {
         public int Id;
         public string Name;
+        public double total_tag_amount;
 
         public List<Tag> TagIds = new List<Tag>();
 

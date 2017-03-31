@@ -108,9 +108,15 @@ namespace Recommender
             foreach (Artist artist in Artists)
             {
                 artist.TagIds.Sort((a, b) => -a.amount.CompareTo(b.amount));
+                artist.CalcTagWeight();
             }
 
-            Users.ForEach(x => x.TagCalc());
+            foreach ( User user in Users)
+            {
+                user.TagCalc();
+                user.CalculateArtistWeight();
+            }
+
 
 
                 BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\users.bin", Users);

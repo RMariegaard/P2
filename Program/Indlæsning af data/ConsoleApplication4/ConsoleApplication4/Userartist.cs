@@ -10,6 +10,7 @@ namespace Recommender
     class Userartist
     {
         public int amount;
+        public double weight;
         public int Id;
         public Artist ThisArtist;
 
