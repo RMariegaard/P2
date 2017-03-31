@@ -83,7 +83,7 @@ namespace Recommender
                 }
 
             // Tags bliver overført til respektive kunstnere:
-            int TempTagID;
+                int TempTagID;
                 foreach (string streng in tag_fil.Skip(1))
                 {
                     string[] data = streng.Split('\t');
@@ -105,7 +105,12 @@ namespace Recommender
                     }
                 }
 
-           // Users.ForEach(x => x.TagCalc());
+            foreach (Artist artist in Artists)
+            {
+                artist.TagIds.Sort((a, b) => -a.amount.CompareTo(b.amount));
+            }
+
+            Users.ForEach(x => x.TagCalc());
 
 
                 BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\users.bin", Users);
