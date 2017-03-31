@@ -1,4 +1,0 @@
-c:\users\lasse\documents\visual studio 2015\Projects\Tagstest\Tagstest\bin\Debug\Tagstest.exe.config
-C:\Users\Lasse\Documents\Visual Studio 2015\Projects\Tagstest\Tagstest\obj\Debug\Tagstest.csprojResolveAssemblyReference.cache
-C:\Users\Lasse\Documents\GitHub\P2\Program\Klasser\Tagstest\Tagstest\bin\Debug\Tagstest.exe.config
-C:\Users\Casper\Documents\GitHub\P2\Program\Klasser\Tagstest\Tagstest\bin\Debug\Tagstest.exe.config

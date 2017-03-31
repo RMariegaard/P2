@@ -15,8 +15,8 @@ namespace Recommender
         static void Main(string[] args)
         {
             /*
-            List<User> Users = BinarySerialization.ReadFromBinaryFile<List<User>>(@"C: \Users\Mark\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\users.bin");
-            Artist[] Artists = BinarySerialization.ReadFromBinaryFile<Artist[]>(@"C: \Users\Mark\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.bin");
+            List<User> Users = BinarySerialization.ReadFromBinaryFile<List<User>>(@"C: \Users\Mark\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\users.bin");
+            Artist[] Artists = BinarySerialization.ReadFromBinaryFile<Artist[]>(@"C: \Users\Mark\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\artists.bin");
 
             Console.WriteLine("done");
 
@@ -30,9 +30,9 @@ namespace Recommender
 
             // Fil Indlæsning:
             string Username = Environment.UserName;
-            string[] file = System.IO.File.ReadAllLines(@"C:\Users\"+Username+@"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_artists.dat");
-                string[] artist_file = System.IO.File.ReadAllLines(@"C:\Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\artists.dat");
-                string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication8\ConsoleApplication8\user_taggedartists.dat");
+            string[] file = System.IO.File.ReadAllLines(@"C:\Users\"+Username+@"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\user_artists.dat");
+                string[] artist_file = System.IO.File.ReadAllLines(@"C:\Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\artists.dat");
+                string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\user_taggedartists.dat");
 
                 // Initialisering af User list og Kunstner Arrayet:
                 List<User> Users = new List<User>();
