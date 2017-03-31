@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Artist.cs" />
     <Compile Include="ConvertIdName.cs" />
+    <Compile Include="Cosine.cs" />
     <Compile Include="FindBestMatch.cs" />
     <Compile Include="KeyWordSearch.cs" />
     <Compile Include="Program.cs" />
