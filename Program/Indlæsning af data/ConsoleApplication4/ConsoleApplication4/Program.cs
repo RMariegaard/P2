@@ -35,20 +35,17 @@ namespace Recommender
                 string[] tag_fil = System.IO.File.ReadAllLines(@"C:\Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\user_taggedartists.dat");
 
                 // Initialisering af User list og Kunstner Arrayet:
-                List<User> Users = new List<User>();
-                Artist[] Artists = new Artist[17632];
+                Dictionary<int, User> UsersDic = new Dictionary<int, User>();
+            var Artists = new Dictionary<int, Artist>();
+            var Users = new List<User>();
 
-                // "Artists" array udfyldes med alle kunstnere i datasættet:
-                int i = 0;
+                // "Artists" dic udfyldes med alle kunstnere i datasættet:
                 foreach (var String in artist_file.Skip(1))
                 {
                     string[] data = String.Split('\t');
-                    Artist New = new Artist(int.Parse(data[0]), data[1]);
+                    Artists.Add(int.Parse(data[0]), new Artist(int.Parse(data[0]), data[1]));
 
-                    New.Id = int.Parse(data[0]);
-                    New.Name = data[1];
-                    Artists.SetValue(New, i);
-                    i++;
+
                 }
 
                 // Users listen bliver udfyldt:
@@ -75,7 +72,7 @@ namespace Recommender
                     Artist tempartist = new Artist(int.Parse(data[1]), "test");
 
                     // Artist ID og antal afspilninger bliver indsat i Users Artist liste. Samtidig bliver der oprettet en "pointer" til den instans af artist der allerede eksisterer:
-                    Users[index].Artists.Add(new Userartist(int.Parse(data[1]), int.Parse(data[2]), Artists.Single(p => p.Id == tempartist.Id)));
+                    Users[index].Artists.Add(new Userartist(int.Parse(data[1]), int.Parse(data[2]), Artists[tempartist.Id]));
                      
                     // Det nuværende ID sættes over I Prev:
                     prev = int.Parse(data[0]);
@@ -88,27 +85,27 @@ namespace Recommender
                 {
                     string[] data = streng.Split('\t');
                     TempTagID = int.Parse(data[2]);
-                    foreach (Artist artist in Artists)
+                    foreach (var artist in Artists)
                     {
-                        if(int.Parse(data[1]) == artist.Id)
+                        if(int.Parse(data[1]) == artist.Value.Id)
                         {
-                            if (artist.TagIds.Exists(t => t.Id == TempTagID))
+                            if (artist.Value.TagIds.Exists(t => t.Id == TempTagID))
                             {
-                                artist.TagIds.Find(p => p.Id == TempTagID).amount++;
+                                artist.Value.TagIds.Find(p => p.Id == TempTagID).amount++;
                             }
                             else
                             {
-                                artist.TagIds.Add(new Tag(TempTagID));
+                                artist.Value.TagIds.Add(new Tag(TempTagID));
                             }
                         break;
                         }
                     }
                 }
 
-            foreach (Artist artist in Artists)
+            foreach (var artist in Artists)
             {
-                artist.TagIds.Sort((a, b) => -a.amount.CompareTo(b.amount));
-                artist.CalcTagWeight();
+                artist.Value.TagIds.Sort((a, b) => -a.amount.CompareTo(b.amount));
+                artist.Value.CalcTagWeight();
             }
 
             foreach ( User user in Users)
@@ -117,10 +114,15 @@ namespace Recommender
                 user.CalculateArtistWeight();
             }
 
+            //Midlertidigt
+           foreach(var userr in Users)
+            {
+                UsersDic.Add(userr.Id, userr);
+            }
 
 
-                BinarySerialization.WriteToBinaryFile<List<User>>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\users.bin", Users);
-                BinarySerialization.WriteToBinaryFile<Artist[]>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\artists.bin", Artists);
+                BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\users.bin", UsersDic);
+                BinarySerialization.WriteToBinaryFile< Dictionary<int, Artist>> (@"C: \Users\" + Username + @"\Documents\GitHub\P2\Program\Indlæsning af data\ConsoleApplication4\ConsoleApplication4\artists.bin", Artists);
 
 
 

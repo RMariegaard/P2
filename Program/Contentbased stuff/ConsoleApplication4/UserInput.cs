@@ -11,7 +11,7 @@ namespace Recommender
         int UserInputID;
         ConvertIdName Convert = new ConvertIdName();
 
-        public Artist GetArtistFromUserInput(string UserInput, List<Artist> DataArtist)
+        public Artist GetArtistFromUserInput(string UserInput, Dictionary<int, Artist> DataArtist)
         {
             //Id or Name?
             if (int.TryParse(UserInput, out UserInputID))
@@ -24,7 +24,7 @@ namespace Recommender
             }
         }
 
-        public bool TryGetArtistFromUserInput(string UserInput, List<Artist> DataArtist, out Artist BaseArtist)
+        public bool TryGetArtistFromUserInput(string UserInput, Dictionary<int, Artist> DataArtist, out Artist BaseArtist)
         {
             //Id or Name?
             try

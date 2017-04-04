@@ -16,8 +16,8 @@ namespace Recommender
             startupPath = Path.GetDirectoryName(startupPath);
 
             Console.WriteLine("Reading File");
-            List<User> Users = BinarySerialization.ReadFromBinaryFile<List<User>>(startupPath + @"\users.bin");
-            Artist[] Artists = BinarySerialization.ReadFromBinaryFile<Artist[]>(startupPath + @"\artists.bin");
+            Dictionary<int, User> Users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\users.bin");
+            Dictionary<int, Artist> Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\artists.bin");
             Console.WriteLine("Done Reading File");
             Console.Clear();
 
@@ -29,19 +29,19 @@ namespace Recommender
             Console.WriteLine(";");
             int h = int.Parse(Console.ReadLine());
 
-            Artist jeh = Artists.ToList().Find(a => a.Id == h);
+            Artist jeh = Artists.ToList().Find(a => a.Value.Id == h).Value;
                 Dictionary<int, double> rec = new Dictionary<int, double>(); 
             double temp = 0;
             foreach (var art in Artists)
             {
-                temp = pear.Calculate(jeh, art);
-                    if (art.Id == jeh.Id)
+                temp = pear.Calculate(jeh, art.Value);
+                    if (art.Value.Id == jeh.Id)
                     {
                         //
                     }
                     else
                     {
-                        rec.Add(art.Id, temp);
+                        rec.Add(art.Value.Id, temp);
                     }
 
 
@@ -54,7 +54,7 @@ namespace Recommender
 
                 for (int i = 0; i < 5; i++)
                 {
-                    Console.WriteLine(nname.ArtistFromID((list.Skip(i).First().Key), Artists.ToList()).Name + " " + list.Skip(i).First().Value);
+                    Console.WriteLine(nname.ArtistFromID((list.Skip(i).First().Key), Artists).Name + " " + list.Skip(i).First().Value);
                 }
 
 

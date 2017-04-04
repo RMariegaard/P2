@@ -15,20 +15,20 @@ namespace Recommender
         double ProcentMatch;
         int ProcentDoneMatchFinding;
 
-        public Artist BestMatch(List<Artist> DataArtist, Artist BaseArtist, out double ProcentFinalMatch)
+        public Artist BestMatch(Dictionary<int, Artist> DataArtist, Artist BaseArtist, out double ProcentFinalMatch)
         {
             SingleBest.Procent = 0.00;
             for (int i = 0; i < DataArtist.Count(); i++)
             {
                 test.RemoveRange(0, test.Count());
 
-                test = Search.CompareTwoArtists(DataArtist.ElementAt(i), BaseArtist);
+                test = Search.CompareTwoArtists(DataArtist.ElementAt(i).Value, BaseArtist);
                 ProcentMatch = (100.00 / BaseArtist.TagIds.Count()) * test.Count();
 
-                if (SingleBest.Procent < ProcentMatch && BaseArtist.Id != DataArtist.ElementAt(i).Id)
+                if (SingleBest.Procent < ProcentMatch && BaseArtist.Id != DataArtist.ElementAt(i).Value.Id)
                 {
                     SingleBest.Procent = ProcentMatch;
-                    SingleBest.ArtistID = DataArtist.ElementAt(i).Id;
+                    SingleBest.ArtistID = DataArtist.ElementAt(i).Value.Id;
                     SingleBest.Element = i;
                 }
 

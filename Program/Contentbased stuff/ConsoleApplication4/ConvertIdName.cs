@@ -10,23 +10,19 @@ namespace Recommender
     class ConvertIdName
     {
         //Artist
-        public Artist ArtistFromID(int ID, List<Artist> Artists)
+        public Artist ArtistFromID(int ID, Dictionary<int,Artist> Artists)
         {
-            for (int i = 0; i < Artists.Count(); i++)
-            {
-                if (Artists.ElementAt(i).Id == ID)
-                    return Artists.ElementAt(i);
-            }
-            throw new Exception("ID Dosent Match an Artist Name");
+            return Artists[ID];
+           // throw new Exception("ID Dosent Match an Artist Name");
         }
 
-        public Artist ArtistFromName(string Name, List<Artist> Artists)
+        public Artist ArtistFromName(string Name, Dictionary<int, Artist> Artists)
         {
             for (int i = 0; i < Artists.Count(); i++)
             {
 
-                if (Artists.ElementAt(i).Name.ToUpper() == Name.ToUpper())
-                    return Artists.ElementAt(i);
+                if (Artists.ElementAt(i).Value.Name.ToUpper() == Name.ToUpper())
+                    return Artists.ElementAt(i).Value;
             }
             throw new Exception("Name Dosent Match an Artist Name");
         }

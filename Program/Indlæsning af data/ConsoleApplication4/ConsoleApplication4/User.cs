@@ -15,6 +15,8 @@ namespace Recommender
         public double total_tag_amount;
         public double totalt_listen_amount;
 
+
+
         public void TagCalc() //Makes the users tag list depending on the users its heard, their top 5 tags, and how much the user has heard theese artists:
         {
             foreach(Userartist artist in Artists)
