@@ -9,14 +9,14 @@ namespace Recommender
     [Serializable]
     class Userartist
     {
-        public int amount;
-        public double weight;
-        public int Id;
-        public Artist ThisArtist;
+        public int Amount { get; private set; }
+        public double Weight { get; set; }
+        public int Id { get; private set; }
+        public Artist ThisArtist { get; private set; }
 
         public Userartist(int ID, int A, Artist thisartist)
         {
-            amount = A;
+            Amount = A;
             Id = ID;
             ThisArtist = thisartist;
         }

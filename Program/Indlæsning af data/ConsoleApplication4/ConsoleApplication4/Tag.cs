@@ -9,14 +9,15 @@ namespace Recommender
     [Serializable]
     class Tag
     {
-        public int Id;
-        public int amount = 1; // Antal gange det er hørt/blevet tagget.
-        public double weight; // Vægten af tagget sammenlignet med alle tags i listen.
+        public int Id { get; private set; }
+        public int Amount { get; set; } // Antal gange det er hørt/blevet tagget.
+        public double Weight { get; set; } // Vægten af tagget sammenlignet med alle tags i listen.
         //public string Name;
 
         public Tag(int id)
         {
             Id = id;
+            Amount = 1;
         }
     }
 }

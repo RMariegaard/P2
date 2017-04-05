@@ -9,26 +9,29 @@ namespace Recommender
     [Serializable]
     class Artist
     {
-        public int Id;
-        public string Name;
-        public double total_tag_amount;
-
-        public List<Tag> TagIds = new List<Tag>();
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        private double _total_tag_amount;
+        public Dictionary<int, Tag> Tags { get; private set; }
 
         public void CalcTagWeight()
         {
-            foreach (Tag tag in TagIds)
+            List<Tag> list = Tags.Values.ToList();
+            list.Sort((a, b) => -a.Amount.CompareTo(b.Amount));
+
+            foreach (var tag in list)
             {
-                total_tag_amount += tag.amount;
+                _total_tag_amount += tag.Amount;
             }
-            foreach (Tag tag in TagIds)
+            foreach (var tag in list)
             {
-                tag.weight = (100 / total_tag_amount) * tag.amount;
+                tag.Weight = (100 / _total_tag_amount) * tag.Amount;
             }
         }
 
         public Artist(int ID, string navn)
         {
+            Tags = new Dictionary<int, Tag>();
             Id = ID;
             Name = navn;
         }

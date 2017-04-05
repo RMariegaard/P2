@@ -62,17 +62,17 @@ namespace Recommender
                     // Hvis ikke User ID allerede eksisteres laves der en ny User:
                     if (prev != int.Parse(data[0]))
                     {
-                        User _User = new User();
-                        _User.Id = int.Parse(data[0]);
+                        User _User = new User(int.Parse(data[0]));
                         Users.Add(_User);
                         index++;
                     }
 
                     // Der laves en tempartist til senere:
-                    Artist tempartist = new Artist(int.Parse(data[1]), "test");
+
+                    int tempId = int.Parse(data[1]);
 
                     // Artist ID og antal afspilninger bliver indsat i Users Artist liste. Samtidig bliver der oprettet en "pointer" til den instans af artist der allerede eksisterer:
-                    Users[index].Artists.Add(new Userartist(int.Parse(data[1]), int.Parse(data[2]), Artists[tempartist.Id]));
+                    Users[index].Artists.Add(tempId, new Userartist(tempId, int.Parse(data[2]), Artists[tempId]));
                      
                     // Det nuværende ID sættes over I Prev:
                     prev = int.Parse(data[0]);
@@ -87,15 +87,15 @@ namespace Recommender
                     TempTagID = int.Parse(data[2]);
                     foreach (var artist in Artists)
                     {
-                        if(int.Parse(data[1]) == artist.Value.Id)
-                        {
-                            if (artist.Value.TagIds.Exists(t => t.Id == TempTagID))
+                    if (int.Parse(data[1]) == artist.Value.Id)
+                    {
+                        if (artist.Value.Tags.ContainsKey(TempTagID))
                             {
-                                artist.Value.TagIds.Find(p => p.Id == TempTagID).amount++;
+                                artist.Value.Tags[TempTagID].Amount++;
                             }
-                            else
+                       else
                             {
-                                artist.Value.TagIds.Add(new Tag(TempTagID));
+                                artist.Value.Tags.Add(TempTagID, new Tag(TempTagID));
                             }
                         break;
                         }
@@ -104,7 +104,6 @@ namespace Recommender
 
             foreach (var artist in Artists)
             {
-                artist.Value.TagIds.Sort((a, b) => -a.amount.CompareTo(b.amount));
                 artist.Value.CalcTagWeight();
             }
 

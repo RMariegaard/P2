@@ -9,54 +9,64 @@ namespace Recommender
     [Serializable]
     class User
     {
-        public int Id;
-        public List<Userartist> Artists = new List<Userartist>();
-        public List<Tag> Tags = new List<Tag>();
-        public double total_tag_amount;
-        public double totalt_listen_amount;
+        public int Id { get; private set; }
+        public Dictionary<int, Userartist> Artists { get; private set; }
+        public Dictionary<int, Tag> Tags { get; private set; }
+        private double _total_tag_amount;
+        private double _totalt_listen_amount;
+
+
+
+        public User(int id)
+        {
+            Artists = new Dictionary<int, Userartist>();
+            Tags = new Dictionary<int, Tag>();
+            Id = id; 
+        }
 
 
 
         public void TagCalc() //Makes the users tag list depending on the users its heard, their top 5 tags, and how much the user has heard theese artists:
         {
-            foreach(Userartist artist in Artists)
+            foreach(KeyValuePair<int, Userartist> artist in Artists)
             {
-               
-                for (int i = 0; i < 5 && i < artist.ThisArtist.TagIds.Count(); i++)
+                Tag[] ArrayOfTags = artist.Value.ThisArtist.Tags.Values.ToArray().OrderByDescending(p => p.Amount).ToArray();
+
+                for (int i = 0; i < 5 && i < ArrayOfTags.Count(); i++)
                 {
-                    if (Tags.Exists(t => t.Id == artist.ThisArtist.TagIds[i].Id))
+                    if (Tags.ContainsKey(ArrayOfTags[i].Id))
                     {
-                        Tags.Find(p => p.Id == artist.ThisArtist.TagIds[i].Id).amount += artist.amount; // Indsæt en tagweightcalc metode
+                        Tags[ArrayOfTags[i].Id].Amount += artist.Value.Amount; 
                     }
 
                     else
                     {
-                        Tag Temptag = new Tag(artist.ThisArtist.TagIds[i].Id);
-                        Temptag.amount = artist.amount; // Indsæt en tagweightcalc metode
-                        Tags.Add(Temptag);
+                        Tag Temptag = new Tag(ArrayOfTags[i].Id);
+                        Temptag.Amount = artist.Value.Amount; 
+                        Tags.Add(Temptag.Id, Temptag);
                     }
                 }
             }
 
-            foreach(Tag tag in Tags)
+            foreach(var tag in Tags)
             {
-                total_tag_amount += tag.amount;
+                _total_tag_amount += tag.Value.Amount;
             }
-            foreach (Tag tag in Tags)
+            foreach (var tag in Tags)
             {
-                tag.weight = (100 / total_tag_amount) * tag.amount;
+                tag.Value.Weight = (100 / _total_tag_amount) * tag.Value.Amount;
             }
         } 
 
         public void CalculateArtistWeight()
         {
-            foreach(Userartist artist in Artists)
+            foreach(var artist in Artists)
             {
-                totalt_listen_amount += artist.amount;
+                _totalt_listen_amount += artist.Value.Amount;
             }
-            foreach(Userartist artist in Artists)
+            foreach(var artist in Artists)
             {
-                artist.weight = (100 / totalt_listen_amount) * artist.amount;
+                artist.Value.Weight = (100 / _totalt_listen_amount) * artist.Value.Amount;
             }
         }
     }

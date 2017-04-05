@@ -9,11 +9,22 @@ namespace Recommender
     [Serializable]
     class User
     {
-        public int Id;
-        public List<Userartist> Artists = new List<Userartist>();
-        public List<Tag> Tags = new List<Tag>();
+        public int Id { get; private set; }
+        public Dictionary<int, Userartist> Artists { get; private set; }
+        public Dictionary<int, Tag> Tags { get; private set; }
         public double total_tag_amount;
         public double totalt_listen_amount;
+
+        
+
+        public User(int id)
+        {
+            Artists = new Dictionary<int, Userartist>();
+            Tags = new Dictionary<int, Tag>();
+            Id = id;
+        }
+
+
 
         /* 
         Bliver udregnet når den binærefil skrives:

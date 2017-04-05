@@ -14,10 +14,10 @@ namespace Recommender
         public int Id;
         public Artist ThisArtist;
 
-        public Userartist(int ID, int A, Artist thisartist)
+        public Userartist(int A, Artist thisartist)
         {
             amount = A;
-            Id = ID;
+            Id = thisartist.Id;
             ThisArtist = thisartist;
         }
     }
