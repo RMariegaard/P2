@@ -4,30 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recommender
+namespace RoskildeRecommender
 {
     class PearsonCor
     {
 
 
-        public double Calculate(Artist A1, Artist A2)
+        public double Calculate(Artist artist1, Artist artist2)
         {
 
-            double A1Mean = 0.0;
-            A1.TagIds.ForEach(tag => A1Mean += tag.weight);
-            A1Mean /= A1.total_tag_amount;
+            double Artist1Mean = 0.0;
+            artist1.Tags.Values.ToList().ForEach(tag => Artist1Mean += tag.Weight);
+            Artist1Mean /= artist1.TotalTagAmount;
 
-            double A2Mean = 0.0;
-            A2.TagIds.ForEach(tag => A2Mean += tag.weight);
-            A2Mean /= A2.total_tag_amount;
+            double Artist2Mean = 0.0;
+            artist2.Tags.Values.ToList().ForEach(tag => Artist2Mean += tag.Weight);
+            Artist2Mean /= artist2.TotalTagAmount;
 
             double Top = 0.0;
 
-            foreach(var tagA1 in A1.TagIds)
+            foreach(var tag in artist1.Tags)
             {
-                if(A2.TagIds.Exists(tag => tag.Id == tagA1.Id))
+                if (artist2.Tags.ContainsKey(tag.Key))
                 {
-                    Top += (tagA1.weight - A1Mean) * (A2.TagIds.Find(tag => tag.Id == tagA1.Id).weight - A2Mean);
+                    Top += (tag.Value.Weight - Artist1Mean) * (artist2.Tags[tag.Value.Id].Weight - Artist2Mean);
                 }
             }
             double Buttom = Math.Sqrt(Top);
@@ -42,20 +42,20 @@ namespace Recommender
         {
 
             double A1Mean = 0.0;
-            A1.Tags.ForEach(tag => A1Mean += tag.weight);
-            A1Mean /= A1.total_tag_amount;
+            A1.Tags.Values.ToList().ForEach(tag => A1Mean += tag.Weight);
+            A1Mean /= A1.TotalTagAmount;
 
             double A2Mean = 0.0;
-            A2.Tags.ForEach(tag => A2Mean += tag.weight);
-            A2Mean /= A2.total_tag_amount;
+            A2.Tags.Values.ToList().ForEach(tag => A2Mean += tag.Weight);
+            A2Mean /= A2.TotalTagAmount;
 
             double Top = 0.0;
 
             foreach (var tagA1 in A1.Tags)
             {
-                if (A2.Tags.Exists(tag => tag.Id == tagA1.Id))
+                if (A2.Tags.ContainsKey(tagA1.Key))
                 {
-                    Top += (tagA1.weight - A1Mean) * (A2.Tags.Find(tag => tag.Id == tagA1.Id).weight - A2Mean);
+                    Top += (tagA1.Value.Weight - A1Mean) * (A2.Tags[tagA1.Key].Weight - A2Mean);
                 }
             }
             double Buttom = Math.Sqrt(Top);
@@ -64,7 +64,7 @@ namespace Recommender
 
             return Top / Buttom;
         }
-
+        
 
     }
 }

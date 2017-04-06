@@ -4,23 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recommender
+namespace RoskildeRecommender
 {
     [Serializable]
-    class Artist
+    class Artist : BaseArtist
     {
-        public int Id;
-        public string Name;
-        public double total_tag_amount;
-
-        public List<Tag> TagIds = new List<Tag>();
-
-        public Artist(int ID, string navn)
-        {
-            Id = ID;
-            Name = navn;
-        }
-
-
+        //This class has no cunstructor because it will be loaded from the binary file
+        private double _totalTagAmount;
+        public double TotalTagAmount { get { return _totalTagAmount; } }
     }
+
+
+
 }

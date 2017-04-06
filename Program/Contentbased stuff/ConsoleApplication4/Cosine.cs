@@ -4,40 +4,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recommender
+namespace RoskildeRecommender
 {
     class Cosine
     { 
 
 
-        public double GetCosine(Artist testArtist1, Artist testArtist2)
+        public double GetCosine(Artist artist1, Artist artist2)
         {
-            double dot = 0;
+            double Dot = 0;
             double LengthArtist1 = 0;
             double LengthArtist2 = 0;
             //Dot
-            for (int i = 0; i < testArtist1.TagIds.Count(); i++)
+            
+            foreach (var tag in artist1.Tags)
             {
-                if (testArtist2.TagIds.Exists(p => p.Id == testArtist1.TagIds[i].Id))
+                if (artist2.Tags.ContainsKey(tag.Key))
                 {
-                    dot += testArtist2.TagIds.Find(p => p.Id == testArtist1.TagIds[i].Id).weight * testArtist1.TagIds[i].weight;
+                    Dot += artist2.Tags[tag.Key].Weight * tag.Value.Weight;
                 }
             }
+
             //length
-            foreach (Tag item in testArtist1.TagIds)
+            foreach (var item in artist1.Tags)
             {
-                LengthArtist1 += Math.Pow(item.weight, 2);
+                LengthArtist1 += Math.Pow(item.Value.Weight, 2);
             }
             LengthArtist1 = Math.Sqrt(LengthArtist1);
 
-            foreach (Tag item in testArtist2.TagIds)
+            foreach (var item in artist2.Tags)
             {
-                LengthArtist2 += Math.Pow(item.weight, 2);
+                LengthArtist2 += Math.Pow(item.Value.Weight, 2);
             }
             LengthArtist2 = Math.Sqrt(LengthArtist2);
 
             //Result
-            return (dot) / (LengthArtist1 * LengthArtist2);
+            return (Dot) / (LengthArtist1 * LengthArtist2);
         }
     }
 }

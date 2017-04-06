@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Recommender
+namespace RoskildeRecommender
 {
     class Program
     {
@@ -20,7 +20,7 @@ namespace Recommender
             Dictionary<int, Artist> Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\artists.bin");
             Console.WriteLine("Done Reading File");
             Console.Clear();
-
+            
             var cos = new Cosine();
             var pear = new PearsonCor();
 
@@ -28,6 +28,7 @@ namespace Recommender
 
             //Collaborative med tags
 
+            /*
             double temp = 0;
             var newUser = Users[550];
             var sim = new Dictionary<int, double>();
@@ -36,7 +37,7 @@ namespace Recommender
             Console.WriteLine("New Users Artists: ");
             for (int i = 0; i < 10; i++)
             {
-                Console.WriteLine(newUser.Artists.Skip(i).First().ThisArtist.Name);
+                Console.WriteLine(newUser.Artists.Skip(i).First().Value.ThisArtist.Name);
             }
 
 
@@ -61,7 +62,7 @@ namespace Recommender
 
             var listeMedNewUSerArtists = new List<Artist>();
 
-            newUser.Artists.ForEach(x => listeMedNewUSerArtists.Add(x.ThisArtist));
+            newUser.Artists.Values.ToList().ForEach(x => listeMedNewUSerArtists.Add(x.ThisArtist));
 
 
             for (int i = 0; i < 5; i++)
@@ -71,9 +72,9 @@ namespace Recommender
                 Console.WriteLine(sim[tempUser.Id] + ":");
                 for (int j = 0; j < 5 && j < tempUser.Artists.Count; j++)
                 {
-                    if (!listeMedNewUSerArtists.Contains(tempUser.Artists.Skip(j).First().ThisArtist))
+                    if (!listeMedNewUSerArtists.Contains(tempUser.Artists.Skip(j).First().Value.ThisArtist))
                     {
-                        Console.WriteLine(tempUser.Artists.Skip(j).First().ThisArtist.Name);
+                        Console.WriteLine(tempUser.Artists.Skip(j).First().Value.ThisArtist.Name);
                     }
                 }
 
@@ -81,7 +82,7 @@ namespace Recommender
 
             }
 
-            Console.Read();
+            Console.Read();*/
 
 
             //Artist rec

@@ -4,19 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recommender
+namespace RoskildeRecommender
 {
     [Serializable]
     class Tag
     {
-        public int Id;
-        public int amount;
-        public double weight;
-        //public string Name;
-
-        public Tag(int id)
-        {
-            Id = id;
-        }
+        //This class has no cunstructor because it will be loaded from the binary file
+        public int Id { get; private set; }
+        public int Amount { get; private set; }
+        public double Weight { get; private set; }
     }
 }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recommender
+namespace RoskildeRecommender
 {
     class FindBestMatch
     {
+        /*
         ConvertIdName Convert = new ConvertIdName();
         BestMatch SingleBest = new BestMatch();
         List<Tag> test = new List<Tag>();
@@ -23,7 +24,7 @@ namespace Recommender
                 test.RemoveRange(0, test.Count());
 
                 test = Search.CompareTwoArtists(DataArtist.ElementAt(i).Value, BaseArtist);
-                ProcentMatch = (100.00 / BaseArtist.TagIds.Count()) * test.Count();
+                ProcentMatch = (100.00 / BaseArtist.Tags.Count()) * test.Count();
 
                 if (SingleBest.Procent < ProcentMatch && BaseArtist.Id != DataArtist.ElementAt(i).Value.Id)
                 {
@@ -43,12 +44,14 @@ namespace Recommender
             }
             ProcentFinalMatch = SingleBest.Procent;
             return Convert.ArtistFromID(SingleBest.ArtistID, DataArtist);
-        }
+        }*/
     }
+    /*
     internal class BestMatch
     {
         public int ArtistID;
         public double Procent;
         public int Element;
     }
+    */
 }

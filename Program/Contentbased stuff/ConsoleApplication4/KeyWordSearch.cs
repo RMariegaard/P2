@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recommender
+namespace RoskildeRecommender
 {
-    class KeyWordSearch
+  /*  class KeyWordSearch
     {
         List<Userartist> Matches = new List<Userartist>();
         List<Tag> TagsInCommon = new List<Tag>();
@@ -18,7 +18,7 @@ namespace Recommender
 
             for (int i = 0; i < UserTags.Count(); i++)
             {
-                for (int j = 0; j < Data.TagIds.Count(); j++)
+                for (int j = 0; j < Data.Tags.Count(); j++)
                 {
                     TagIsThere = false;
                     for (int q = 0; q < TagsInCommon.Count(); q++)
@@ -27,7 +27,7 @@ namespace Recommender
                             TagIsThere = true;
                     }
                     if (!TagIsThere)
-                        if (UserTags.ElementAt(i).Id == Data.TagIds.ElementAt(j).Id)
+                        if (UserTags.ElementAt(i).Id == Data.Tags.ElementAt(j).Id)
                             TagsInCommon.Add(UserTags.ElementAt(i));
                 }
             }
@@ -38,11 +38,11 @@ namespace Recommender
         public List<Tag> CompareTwoArtists(Artist Data, Artist User)
         {
             TagsInCommon.RemoveRange(0, TagsInCommon.Count());
-            List<Tag> UserTags = User.TagIds;
+            List<Tag> UserTags = User.Tags;
 
             for (int i = 0; i < UserTags.Count(); i++)
             {
-                for (int j = 0; j < Data.TagIds.Count(); j++)
+                for (int j = 0; j < Data.Tags.Count(); j++)
                 {
                     TagIsThere = false;
                     for (int q = 0; q < TagsInCommon.Count(); q++)
@@ -51,7 +51,7 @@ namespace Recommender
                             TagIsThere = true;
                     }
                     if (!TagIsThere)
-                        if (UserTags.ElementAt(i).Id == Data.TagIds.ElementAt(j).Id)
+                        if (UserTags.ElementAt(i).Id == Data.Tags.ElementAt(j).Id)
                             TagsInCommon.Add(UserTags.ElementAt(i));
                 }
             }
@@ -74,5 +74,5 @@ namespace Recommender
 
             return Matches;
         }
-    }
+    }*/
 }

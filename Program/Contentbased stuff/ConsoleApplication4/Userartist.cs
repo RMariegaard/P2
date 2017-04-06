@@ -4,21 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recommender
+namespace RoskildeRecommender
 {
     [Serializable]
     class Userartist
     {
-        public int amount;
-        public double weight;
-        public int Id;
-        public Artist ThisArtist;
-
-        public Userartist(int A, Artist thisartist)
-        {
-            amount = A;
-            Id = thisartist.Id;
-            ThisArtist = thisartist;
-        }
+        //This class has no cunstructor because it will be loaded from the binary file
+        public int Amount { get; private set; }
+        public double Weight { get; set; }
+        public int Id { get; private set; }
+        public Artist ThisArtist { get; private set; }
+        
     }
 }

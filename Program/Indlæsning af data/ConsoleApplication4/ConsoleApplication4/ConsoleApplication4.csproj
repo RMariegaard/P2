@@ -7,7 +7,7 @@
     <ProjectGuid>{7F9E0A07-D474-442D-BA64-CDBC46A4E240}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConsoleApplication4</RootNamespace>
+    <RootNamespace>Recommender</RootNamespace>
     <AssemblyName>ConsoleApplication4</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -44,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Artist.cs" />
+    <Compile Include="BaseArtist.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoskildeArtist.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Userartist.cs" />

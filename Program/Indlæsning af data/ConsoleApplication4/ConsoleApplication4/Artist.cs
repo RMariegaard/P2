@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 namespace Recommender
 {
     [Serializable]
-    class Artist
+    class Artist : BaseArtist
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; }
         private double _total_tag_amount;
-        public Dictionary<int, Tag> Tags { get; private set; }
+
+        public Artist(int ID, string navn) : base(ID, navn)
+        {
+        }
+
+
 
         public void CalcTagWeight()
         {
@@ -29,12 +32,6 @@ namespace Recommender
             }
         }
 
-        public Artist(int ID, string navn)
-        {
-            Tags = new Dictionary<int, Tag>();
-            Id = ID;
-            Name = navn;
-        }
 
 
     }
