@@ -7,7 +7,7 @@
     <ProjectGuid>{7F9E0A07-D474-442D-BA64-CDBC46A4E240}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RoskildeRecommender</RootNamespace>
+    <RootNamespace>Recommender</RootNamespace>
     <AssemblyName>ConsoleApplication4</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
