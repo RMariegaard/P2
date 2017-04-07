@@ -20,11 +20,16 @@ namespace Recommender
             Dictionary<int, Artist> Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\artists.bin");
             Console.WriteLine("Done Reading File");
             Console.Clear();
-            
-            var cos = new Cosine();
-            var pear = new PearsonCor();
+            var cosine = new Cosine();
 
+            User newUser = Users[5];
+            var recommendedArtists = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, Artists, 10); //CollaborativeFiltering.RecommendArtists(newUser, Users);
 
+            recommendedArtists.OrderByDescending(x=> x.Value.ContentBasedFilteringRating).ToList().ForEach(x => Console.WriteLine(x.Value.thisArtist.Name + " - " + x.Value.ContentBasedFilteringRating));
+            Console.WriteLine(" ---------");
+            newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => Console.WriteLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));
+
+            Console.Read();
 
             //Collaborative med tags
 

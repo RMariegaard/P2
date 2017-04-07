@@ -37,32 +37,33 @@ namespace Recommender
             return Top / Buttom;
         }
 
-
-        public double CalculateUser(User A1, User A2) //Baseret på Tags og ikke Artists
+        //Calcuates the Pearson Correlation between two users based on artists
+        public static double CalculateUser(User user, User otherUser)
         {
+            //Calculates the mean of the artist weight for the two users
+            double userMean = 0.0;
+            user.Artists.Values.ToList().ForEach(artist => userMean += artist.Weight);
+            userMean /= user.Artists.Count;
 
-            double A1Mean = 0.0;
-            A1.Tags.Values.ToList().ForEach(tag => A1Mean += tag.Weight);
-            A1Mean /= A1.TotalTagAmount;
+            double otherUserMean = 0.0;
+            otherUser.Artists.Values.ToList().ForEach(artist => otherUserMean += artist.Weight);
+            otherUserMean /= otherUser.Artists.Count;
 
-            double A2Mean = 0.0;
-            A2.Tags.Values.ToList().ForEach(tag => A2Mean += tag.Weight);
-            A2Mean /= A2.TotalTagAmount;
-
-            double Top = 0.0;
-
-            foreach (var tagA1 in A1.Tags)
-            {
-                if (A2.Tags.ContainsKey(tagA1.Key))
+            //Calculates the numerator of the Pearson Correlation
+            double numerator = 0.0;
+            foreach (var userArtist in user.Artists)
+            { 
+                if (otherUser.Artists.ContainsKey(userArtist.Key))
                 {
-                    Top += (tagA1.Value.Weight - A1Mean) * (A2.Tags[tagA1.Key].Weight - A2Mean);
+                    numerator += (userArtist.Value.Weight - userMean) * (otherUser.Artists[userArtist.Key].Weight - otherUserMean);
                 }
             }
-            double Buttom = Math.Sqrt(Top);
 
+            //Calculates the denumerator of the Pearson Correlation
+            double denumerator = Math.Sqrt(numerator);
 
-
-            return Top / Buttom;
+            //Returns the Pearson Correlation
+            return numerator / denumerator;
         }
         
 

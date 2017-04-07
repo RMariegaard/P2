@@ -10,36 +10,36 @@ namespace Recommender
     { 
 
 
-        public double GetCosine(Artist artist1, Artist artist2)
+        public double GetCosine(User user, Artist artist)
         {
             double Dot = 0;
-            double LengthArtist1 = 0;
-            double LengthArtist2 = 0;
+            double LengthUser = 0;
+            double LengthArtist = 0;
             //Dot
             
-            foreach (var tag in artist1.Tags)
+            foreach (var tag in user.Tags)
             {
-                if (artist2.Tags.ContainsKey(tag.Key))
+                if (artist.Tags.ContainsKey(tag.Key))
                 {
-                    Dot += artist2.Tags[tag.Key].Weight * tag.Value.Weight;
+                    Dot += artist.Tags[tag.Key].Weight * tag.Value.Weight;
                 }
             }
 
             //length
-            foreach (var item in artist1.Tags)
+            foreach (var item in user.Tags)
             {
-                LengthArtist1 += Math.Pow(item.Value.Weight, 2);
+                LengthUser += Math.Pow(item.Value.Weight, 2);
             }
-            LengthArtist1 = Math.Sqrt(LengthArtist1);
+            LengthUser = Math.Sqrt(LengthUser);
 
-            foreach (var item in artist2.Tags)
+            foreach (var item in artist.Tags)
             {
-                LengthArtist2 += Math.Pow(item.Value.Weight, 2);
+                LengthArtist += Math.Pow(item.Value.Weight, 2);
             }
-            LengthArtist2 = Math.Sqrt(LengthArtist2);
+            LengthArtist = Math.Sqrt(LengthArtist);
 
             //Result
-            return (Dot) / (LengthArtist1 * LengthArtist2);
+            return (Dot) / (LengthUser * LengthArtist);
         }
     }
 }
