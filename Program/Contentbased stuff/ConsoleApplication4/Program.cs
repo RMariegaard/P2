@@ -30,7 +30,7 @@ namespace Recommender
             newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => Console.WriteLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));
 
             Console.Read();
-
+            
             //Collaborative med tags
 
             /*
