@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Artist.cs" />
     <Compile Include="BaseArtist.cs" />
+    <Compile Include="BinaryData.cs" />
+    <Compile Include="BinarySerialization.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoskildeArtist.cs" />
