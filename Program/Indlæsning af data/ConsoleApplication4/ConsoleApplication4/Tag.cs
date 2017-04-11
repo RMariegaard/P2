@@ -12,7 +12,7 @@ namespace Recommender
         public int Id { get; private set; }
         public int Amount { get; set; } // Antal gange det er hørt/blevet tagget.
         public double Weight { get; set; } // Vægten af tagget sammenlignet med alle tags i listen.
-        //public string Name;
+        public string Name;
 
         public Tag(int id)
         {

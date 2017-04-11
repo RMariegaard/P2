@@ -12,8 +12,8 @@ namespace Recommender
         string[] file;
         string[] artist_file;
         string[] tag_fil;
-        Dictionary<int, User> UsersDic = new Dictionary<int, User>();
-        Dictionary<int, Artist> Artists = new Dictionary<int, Artist>();
+        public Dictionary<int, User> UsersDic = new Dictionary<int, User>();
+        public Dictionary<int, Artist> Artists = new Dictionary<int, Artist>();
         List<User> Users = new List<User>();
 
         public void DoItAll()
