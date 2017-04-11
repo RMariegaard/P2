@@ -15,6 +15,7 @@ namespace Recommender
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
 
+
             Console.WriteLine("Reading File");
             Dictionary<int, User> Users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\users.bin");
             Dictionary<int, Artist> Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\artists.bin");
@@ -26,6 +27,8 @@ namespace Recommender
             var recommendedArtists = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, Artists, 10); //CollaborativeFiltering.RecommendArtists(newUser, Users);
 
             recommendedArtists.OrderByDescending(x=> x.Value.ContentBasedFilteringRating).ToList().ForEach(x => Console.WriteLine(x.Value.thisArtist.Name + " - " + x.Value.ContentBasedFilteringRating));
+
+
             Console.WriteLine(" ---------");
             newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => Console.WriteLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));
 

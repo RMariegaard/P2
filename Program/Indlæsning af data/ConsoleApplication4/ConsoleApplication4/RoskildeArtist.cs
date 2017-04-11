@@ -13,9 +13,10 @@ namespace Recommender
         public DateTime TimeOfConcert { get; private set; }
         public string Scene { get; private set; }
 
-        public RoskildeArtist(int ID, string name) : base(ID, name)
+        public RoskildeArtist(int ID, string name, DateTime timeOfConcert, string scene) : base(ID, name)
         {
-
+            TimeOfConcert = timeOfConcert;
+            Scene = scene;
         }
 
     }
