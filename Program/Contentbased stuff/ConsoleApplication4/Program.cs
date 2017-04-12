@@ -19,20 +19,40 @@ namespace Recommender
             Console.WriteLine("Reading File");
             Dictionary<int, User> Users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\users.bin");
             Dictionary<int, Artist> Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\artists.bin");
+            List<RoskildeArtist> RoskildeArtists = BinarySerialization.ReadFromBinaryFile<List<RoskildeArtist>>(startupPath + @"\Roskildeartists.bin");
+
             Console.WriteLine("Done Reading File");
             Console.Clear();
             var cosine = new Cosine();
+            int id = 0;
+            User newUser = new User(0);
+            Console.WriteLine();
+            while (true)
+            {
+               Console.WriteLine("ID: ");
+                while (!int.TryParse(Console.ReadLine(), out id));
 
-            User newUser = Users[5];
-            var recommendedArtists = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, Artists, 10); //CollaborativeFiltering.RecommendArtists(newUser, Users);
+                if(Users.ContainsKey(id))
+                    newUser = Users[id];
 
-            recommendedArtists.OrderByDescending(x=> x.Value.ContentBasedFilteringRating).ToList().ForEach(x => Console.WriteLine(x.Value.thisArtist.Name + " - " + x.Value.ContentBasedFilteringRating));
+                StringBuilder streng = new StringBuilder();
 
+                var recommendedArtists = CollaborativeFiltering.RecommendArtists(newUser, Users, RoskildeArtists);// ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10); 
+                streng.AppendLine("Collarborative");
+                recommendedArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.thisArtist.Name + " - " + x.Value.CollaborativeFilteringRating));
 
-            Console.WriteLine(" ---------");
-            newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => Console.WriteLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));
+                var recommendedArtists2 = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10);
+                streng.AppendLine("\nContentBasedFiltering: ");
+                recommendedArtists2.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.thisArtist.Name + " - " + x.Value.ContentBasedFilteringRating));
+                
 
-            Console.Read();
+                                    streng.AppendLine(" ---------");
+                    newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => streng.AppendLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));
+                    Console.Read();
+                File.AppendAllText(startupPath + @"\tilLasse.txt", streng.ToString());
+                    Console.Clear();
+                
+            }
             
             //Collaborative med tags
 

@@ -8,15 +8,19 @@ namespace Recommender
 {
 
     [Serializable]
-    class RoskildeArtist : Artist
+    class RoskildeArtist
     {
+        public int Id { get; private set; }
         public DateTime TimeOfConcert { get; private set; }
         public string Scene { get; private set; }
+        public Artist thisArtist { get; private set; }
 
-        public RoskildeArtist(int ID, string name, DateTime timeOfConcert, string scene) : base(ID, name)
+        public RoskildeArtist(int ID, DateTime timeOfConcert, string scene, Artist artist)
         {
+            Id = ID;
             TimeOfConcert = timeOfConcert;
             Scene = scene;
+            thisArtist = artist;
         }
 
     }

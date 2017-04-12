@@ -151,12 +151,16 @@ namespace Recommender
                             string[] tag = input[i].Split('\t');
 
                             // Hvis tagget allerede eksisterer:
-                            if (tagFile.Contains(tag[0]))
+                            if (tagFile.Any(x => x.Split('\t')[1].Equals(tag[0])))
                             {
-                                string[] tagLine = tagFile.Single(x => x.Contains(tag[0])).Split('\t');
+                                Console.WriteLine("hej");
+                                string[] tagLine = tagFile.Single(x => x.Split('\t')[1].Equals(tag[0])).Split('\t');
                                 int id = int.Parse(tagLine[0]);
-                                Artists[newId].Tags.Add(id, dicTags[id]); // Den relevante kunstner for tilføjet tagget og antallet af tags:
-                                Artists[newId].Tags[id].Amount = int.Parse(tag[1]);
+                                if (dicTags.ContainsKey(id)) //Det  kan være at ingen artist er tagget med tagget
+                                {
+                                    Artists[newId].Tags.Add(id, dicTags[id]); // Den relevante kunstner for tilføjet tagget og antallet af tags:
+                                    Artists[newId].Tags[id].Amount = int.Parse(tag[1]);
+                                }
                             }
                             // Hvis tagget ikke på forhånd eksisterer i datasættet:
                             else
@@ -200,6 +204,7 @@ namespace Recommender
 
             BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(startupPath + @"\users.bin", UsersDic);
             BinarySerialization.WriteToBinaryFile<Dictionary<int, Artist>>(startupPath + @"\artists.bin", Artists);
+            BinarySerialization.WriteToBinaryFile<List<RoskildeArtist>>(startupPath + @"\Roskildeartists.bin", RoskildeArtists);
         }
 
         public void ReadRoskildeSchedule(string date)
@@ -229,14 +234,17 @@ namespace Recommender
                 {
                     foreach(var artist in Artists)
                     {
-                        if(artist.Value.Name == line)
+                        if(artist.Value.Name.ToUpper() == line)
                         {                                             
-                            RoskildeArtists.Add(new RoskildeArtist(artist.Value.Id, line, currentTime, currentScene));
+                            RoskildeArtists.Add(new RoskildeArtist(artist.Value.Id, currentTime, currentScene, artist.Value));
                             break;
                         }
                     }
                 }
             }
+
+            
+
         }
 
     }
