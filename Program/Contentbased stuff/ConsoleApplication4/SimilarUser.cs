@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    class SimilarUser
+    public class SimilarUser
     {
         public double similarity { get; set; }
         public int Id { get; private set; }

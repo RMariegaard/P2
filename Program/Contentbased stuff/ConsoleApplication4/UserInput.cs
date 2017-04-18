@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    class UserInput
+     public class UserInput
     {
         int UserInputID;
         ConvertIdName Convert = new ConvertIdName();

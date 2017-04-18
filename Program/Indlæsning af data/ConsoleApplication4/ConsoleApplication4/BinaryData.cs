@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Recommender
 {
-    class BinaryData
+    public class BinaryData
     {
         string startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
 

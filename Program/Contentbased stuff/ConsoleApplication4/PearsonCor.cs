@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    class PearsonCor
+    public class PearsonCor
     {
 
 

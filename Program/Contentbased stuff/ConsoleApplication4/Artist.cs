@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Recommender
 {
     [Serializable]
-    class Artist : BaseArtist
+    public class Artist : BaseArtist
     {
-        //This class has no cunstructor because it will be loaded from the binary file
+        //This public class has no cunstructor because it will be loaded from the binary file
         private double _totalTagAmount;
         public double TotalTagAmount { get { return _totalTagAmount; } }
     }

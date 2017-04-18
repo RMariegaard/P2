@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Recommender
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {

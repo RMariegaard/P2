@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    class RecommendedArtist
+    public class RecommendedArtist
     {
        public double CollaborativeFilteringRating { get; set; }
        public double ContentBasedFilteringRating { get; set; }

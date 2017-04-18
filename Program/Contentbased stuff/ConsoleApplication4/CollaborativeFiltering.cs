@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    class CollaborativeFiltering
+    public class CollaborativeFiltering
     {
         //Finds the users with the highest correlation based on a given correltion measure
         public static List<SimilarUser> KNearestNeighbours(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> users, int k)

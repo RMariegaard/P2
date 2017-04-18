@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    class ContentBasedFiltering
+    public class ContentBasedFiltering
     {
         public static Dictionary<int,RecommendedArtist> RecommedArtists(Func<User, Artist, double> correlationMeasure, User newUser, List<RoskildeArtist> roskildeArtist, int k)
         {

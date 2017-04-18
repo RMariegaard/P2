@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Recommender
 {
     [Serializable]
-    class Tag
+    public class Tag
     {
         public int Id { get; private set; }
         public int Amount { get; set; } // Antal gange det er hørt/blevet tagget.

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Recommender
 {
     [Serializable]
-    class Artist : BaseArtist
+    public class Artist : BaseArtist
     {
         private double _total_tag_amount;
 

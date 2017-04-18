@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Recommender
 {
     [Serializable]
-    abstract class BaseArtist
+    abstract public class BaseArtist
     {
         public int Id { get; private set; }
         public string Name { get; private set; }

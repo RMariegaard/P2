@@ -7,11 +7,12 @@ using System.IO;
 
 namespace Recommender
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
             string startupPath = Environment.CurrentDirectory;
+            //Does it twice to go back two folders
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
 
@@ -214,7 +215,7 @@ namespace Recommender
         }
     }
 
-    public static class BinarySerialization
+    public static public class BinarySerialization
     {
         public static void WriteToBinaryFile<T>(string filePath, T objectToWrite, bool append = false)
         {

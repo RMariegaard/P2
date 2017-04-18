@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    class FindBestMatch
+    public class FindBestMatch
     {
         /*
         ConvertIdName Convert = new ConvertIdName();
@@ -47,7 +47,7 @@ namespace Recommender
         }*/
     }
     /*
-    internal class BestMatch
+    internal public class BestMatch
     {
         public int ArtistID;
         public double Procent;

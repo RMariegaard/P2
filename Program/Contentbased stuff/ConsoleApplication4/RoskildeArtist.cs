@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Recommender
 {
     [Serializable]
-    class RoskildeArtist
+    public class RoskildeArtist
     {
         public int Id { get; private set; }
         public DateTime TimeOfConcert { get; private set; }

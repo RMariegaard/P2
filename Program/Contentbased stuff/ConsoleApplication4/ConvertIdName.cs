@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    class ConvertIdName
+    public class ConvertIdName
     {
         //Artist
         public Artist ArtistFromID(int ID, Dictionary<int,Artist> Artists)

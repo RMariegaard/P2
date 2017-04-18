@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-  /*  class KeyWordSearch
+  /*  public class KeyWordSearch
     {
         List<Userartist> Matches = new List<Userartist>();
         List<Tag> TagsInCommon = new List<Tag>();

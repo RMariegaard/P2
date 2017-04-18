@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    class Cosine
+    public class Cosine
     { 
 
 

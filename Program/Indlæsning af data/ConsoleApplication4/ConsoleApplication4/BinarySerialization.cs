@@ -13,7 +13,7 @@ namespace Recommender
     /// <para>Object type (and all child types) must be decorated with the [Serializable] attribute.</para>
     /// <para>To prevent a variable from being serialized, decorate it with the [NonSerialized] attribute; cannot be applied to properties.</para>
     /// </summary>
-    public static class BinarySerialization
+    public static public class BinarySerialization
     {
         /// <summary>
         /// Writes the given object instance to a binary file.
