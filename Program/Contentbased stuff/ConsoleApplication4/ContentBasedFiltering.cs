@@ -15,20 +15,16 @@ namespace Recommender
             //Calculates the correlation
             foreach (RoskildeArtist artist in roskildeArtist)
             {
-
                 var tempArtist = new RecommendedArtist(artist.thisArtist);
                 tempArtist.ContentBasedFilteringRating = correlationMeasure(newUser, artist.thisArtist);
                 recommendedArtist.Add(tempArtist.thisArtist.Id, tempArtist);
 
             }
-            //Burde omskrives meeeeeen virker for nu
+            //SHOULD BE REWRITTEN... BUUUT WORKS FOR NOW
             var final = recommendedArtist.OrderByDescending(x => x.Value.ContentBasedFilteringRating).Take(k)
                 .ToDictionary((x => x.Key), (x=> x.Value));
-           
-
+            
             return final;
         }
-
-
     }
 }

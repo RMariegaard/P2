@@ -45,12 +45,12 @@
   <ItemGroup>
     <Compile Include="Artist.cs" />
     <Compile Include="BaseArtist.cs" />
+    <Compile Include="BinaryData.cs" />
+    <Compile Include="BinarySerialization.cs" />
     <Compile Include="CollaborativeFiltering.cs" />
     <Compile Include="ContentBasedFiltering.cs" />
     <Compile Include="ConvertIdName.cs" />
     <Compile Include="Cosine.cs" />
-    <Compile Include="FindBestMatch.cs" />
-    <Compile Include="KeyWordSearch.cs" />
     <Compile Include="PearsonCor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

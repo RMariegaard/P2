@@ -15,13 +15,10 @@ namespace Recommender
         {
             //Id or Name?
             if (int.TryParse(UserInput, out UserInputID))
-            {
                 return Convert.ArtistFromID(UserInputID, DataArtist);
-            }
+            
             else
-            {
                 return Convert.ArtistFromName(UserInput, DataArtist);
-            }
         }
 
         public bool TryGetArtistFromUserInput(string UserInput, Dictionary<int, Artist> DataArtist, out Artist BaseArtist)

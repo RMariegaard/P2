@@ -9,11 +9,23 @@ namespace Recommender
     [Serializable]
     public class Artist : BaseArtist
     {
-        //This public class has no cunstructor because it will be loaded from the binary file
-        private double _totalTagAmount;
-        public double TotalTagAmount { get { return _totalTagAmount; } }
+        public double TotalTagAmount { get; private set; }
+
+        public Artist(int ID, string name) : base(ID, name){}
+        
+        public void CalcTagWeight()
+        {
+            List<Tag> list = Tags.Values.ToList();
+            list.Sort((a, b) => -a.Amount.CompareTo(b.Amount));
+
+            foreach (var tag in list)
+            {
+                TotalTagAmount += tag.Amount;
+            }
+            foreach (var tag in list)
+            {
+                tag.Weight = (100 / TotalTagAmount) * tag.Amount;
+            }
+        }
     }
-
-
-
 }

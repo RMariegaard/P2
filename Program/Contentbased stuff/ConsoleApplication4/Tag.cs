@@ -9,9 +9,17 @@ namespace Recommender
     [Serializable]
     public class Tag
     {
-        //This public class has no cunstructor because it will be loaded from the binary file
         public int Id { get; private set; }
-        public int Amount { get; private set; }
-        public double Weight { get; private set; }
+        // The number of times the tag has been used
+        public int Amount { get; set; }
+        // The weight of the tag compared to all other tags in the list
+        public double Weight { get; set; }
+        public string Name;
+
+        public Tag(int id)
+        {
+            Id = id;
+            Amount = 1;
+        }
     }
 }

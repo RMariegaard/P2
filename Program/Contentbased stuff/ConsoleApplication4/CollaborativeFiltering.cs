@@ -16,13 +16,10 @@ namespace Recommender
             //Calculates the correlation
             foreach (var user in users.Values)
             {
-
                 SimilarUser tempUser = new SimilarUser(user.Id);
                 tempUser.similarity = correlationMeasure(newUser, user);
                 listOfNeighbours.Add(tempUser);
-
             }
-            
 
             return listOfNeighbours.OrderByDescending(x=> x.similarity).Take(k).ToList();
         }
@@ -30,16 +27,12 @@ namespace Recommender
         public static List<SimilarUser> KNearestNeighbours(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> users) {
             return KNearestNeighbours(correlationMeasure, newUser, users, 10);
         }
-
         
-
         public static Dictionary<int,RecommendedArtist> RecommendArtists(User newUser, Dictionary<int, User> allUsers, List<RoskildeArtist> roskildeArtist)
         {
             Dictionary<int, RecommendedArtist> dicOfRecommendations = new Dictionary<int, RecommendedArtist>();
-
             List<SimilarUser> KNN = KNearestNeighbours(PearsonCor.CalculateUser, newUser, allUsers);
             
-
             foreach(SimilarUser user in KNN)
             {
                 foreach(var artist in allUsers[user.Id].Artists.OrderByDescending(x => x.Value.Weight))
@@ -72,15 +65,9 @@ namespace Recommender
                     final.Add(artist.Key, artist.Value);
                 }
             }
-
-
+            
             //.OrderByDescending(x => x.Value.CollaborativeFilteringRating).Take(5).ToDictionary(x => x.Key, x => x.Value);
             return final;
         }
-
-
-
-
-
     }
 }

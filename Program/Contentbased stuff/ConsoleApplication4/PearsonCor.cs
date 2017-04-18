@@ -8,8 +8,6 @@ namespace Recommender
 {
     public class PearsonCor
     {
-
-
         public double Calculate(Artist artist1, Artist artist2)
         {
 
@@ -31,8 +29,6 @@ namespace Recommender
                 }
             }
             double Buttom = Math.Sqrt(Top);
-
-
 
             return Top / Buttom;
         }
@@ -65,7 +61,5 @@ namespace Recommender
             //Returns the Pearson Correlation
             return numerator / denumerator;
         }
-        
-
     }
 }
