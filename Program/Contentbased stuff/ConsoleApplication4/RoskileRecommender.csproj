@@ -51,6 +51,7 @@
     <Compile Include="ContentBasedFiltering.cs" />
     <Compile Include="ConvertIdName.cs" />
     <Compile Include="Cosine.cs" />
+    <Compile Include="CreateRecommendations.cs" />
     <Compile Include="PearsonCor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="SchedueleElement.cs" />
     <Compile Include="SimilarUser.cs" />
     <Compile Include="Tag.cs" />
+    <Compile Include="UpdateData.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Userartist.cs" />
     <Compile Include="UserInput.cs" />
