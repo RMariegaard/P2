@@ -15,6 +15,16 @@ namespace Recommender
             Concerts = new List<SchedueleElement>();
         }
 
+
+        public void MakeScheduele(List<RoskildeArtist> artists)
+        {
+            foreach (var artist in artists)
+            {
+                AddConcert(new SchedueleElement(artist, artist.TimeOfConcert, 90));
+            }
+        }
+
+
         //Add concert when it doesnt overlap
         public bool AddConcert(SchedueleElement newConcert)
         {
