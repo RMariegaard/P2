@@ -215,7 +215,7 @@ namespace Recommender
         }
     }
 
-    public static public class BinarySerialization
+    public static class BinarySerialization
     {
         public static void WriteToBinaryFile<T>(string filePath, T objectToWrite, bool append = false)
         {
