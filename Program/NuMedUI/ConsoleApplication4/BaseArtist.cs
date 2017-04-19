@@ -13,6 +13,13 @@ namespace Recommender
         public string Name { get; private set; }
         public Dictionary<int, Tag> Tags { get; private set; }
 
+        public BaseArtist(int ID, string Name)
+        {
+            Tags = new Dictionary<int, Tag>();
+            Id = ID;
+            this.Name = Name;
+        }
+
         public BaseArtist(int ID, Dictionary<int, Tag> tag)
         {
             Tags = tag;

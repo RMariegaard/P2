@@ -10,14 +10,14 @@ namespace Recommender
     public class BinaryData
     {
         string startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
-        
+
         string[] file;
         string[] artistFile;
         string[] userTagFile;
         public Dictionary<int, User> UsersDic = new Dictionary<int, User>();
         public Dictionary<int, Artist> Artists = new Dictionary<int, Artist>();
         List<User> Users = new List<User>();
-        List<RoskildeArtist> RoskildeArtists = new List<RoskildeArtist>();
+        Dictionary<int, RoskildeArtist> RoskildeArtists = new Dictionary<int, RoskildeArtist>();
 
         public void DoItAll()
         {
@@ -46,12 +46,12 @@ namespace Recommender
                 artistFile = File.ReadAllLines(startupPath + @"\DataFiles\artists.dat");
                 userTagFile = File.ReadAllLines(startupPath + @"\DataFiles\user_taggedartists.dat");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw new Exception($"One or more files are missing at this location: {startupPath}");
             }
         }
-        
+
         public void ReadArtist()
         {
             // "Artists" dic gets filled with all the artists from the dataset
@@ -108,7 +108,7 @@ namespace Recommender
                             artist.Value.Tags[TempTagID].Amount++;
                         else
                             artist.Value.Tags.Add(TempTagID, new Tag(TempTagID));
-                        
+
                         break;
                     }
                 }
@@ -133,7 +133,7 @@ namespace Recommender
             }
 
             List<string> artistNameList = Artists.Values.Select(x => x.Name).ToList();
-     
+
             // Read all tags from the dataset
             List<string> tagFile = File.ReadAllLines(startupPath + @"\DataFiles\tags.dat").ToList();
 
@@ -204,7 +204,7 @@ namespace Recommender
                 user.CalculateArtistWeight();
             }
         }
-        
+
         public void WriteToFile()
         {
             //TEMP
@@ -213,7 +213,7 @@ namespace Recommender
 
             BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin", UsersDic);
             BinarySerialization.WriteToBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin", Artists);
-            BinarySerialization.WriteToBinaryFile<List<RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin", RoskildeArtists);
+            BinarySerialization.WriteToBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin", RoskildeArtists);
         }
 
         public void ReadRoskildeSchedule(string date)
@@ -229,23 +229,23 @@ namespace Recommender
                 {
                     currentScene = line;
                 }
-                else if(line.Contains(" : "))
+                else if (line.Contains(" : "))
                 {
                     int day = int.Parse(date.Substring(date.Length - 2));
                     int month = day > 3 ? 6 : 7;
                     int year = 2011;
-                    int hour = int.Parse(line.Substring(0,2));
+                    int hour = int.Parse(line.Substring(0, 2));
                     int minute = int.Parse(line.Substring(line.Length - 2));
                     int second = 0;
                     currentTime = new DateTime(year, month, day, hour, minute, second);
                 }
-                else if(line != "")
+                else if (line != "")
                 {
-                    foreach(var artist in Artists)
+                    foreach (var artist in Artists)
                     {
-                        if(artist.Value.Name.ToUpper() == line)
-                        {                                             
-                            RoskildeArtists.Add(new RoskildeArtist(artist.Value.Id, currentTime, currentScene, artist.Value));
+                        if (artist.Value.Name.ToUpper() == line)
+                        {
+                            RoskildeArtists.Add(artist.Key, new RoskildeArtist(artist.Value.Id, currentTime, currentScene, artist.Value));
                             break;
                         }
                     }
