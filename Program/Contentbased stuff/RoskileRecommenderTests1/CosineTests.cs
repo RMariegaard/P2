@@ -11,22 +11,22 @@ namespace Recommender.Tests
     [TestFixture()]
     public class CosineTests
     {
-        [TestCase(new double[] { 0.0, 0.0, 0.0 }, new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0)]
-        [TestCase(new double[] { 1.0, 1.0, 1.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 1)]
+        [TestCase(new double[] { 0.0, 0.0, 0.0 }, new double[] { 0.0, 0.0, 0.0 },ExpectedResult = 0.00)]
+        [TestCase(new double[] { 1.0, 1.0, 1.0 }, new double[] { 1.0, 1.0, 1.0 },ExpectedResult = 1.00)]
         public double GetCosineTest(double[] user, double[] artist)
         {
             User testUser = createTestType<User>(user);
             Artist testArtist = createTestType<Artist>(artist);
             Cosine cosineTest = new Cosine();
-
-            return cosineTest.GetCosine(testUser, testArtist);
+            double actual = cosineTest.GetCosine(testUser, testArtist);
+            return Math.Round(actual, 5);
         }
-        [TestCase(1.0, 1.0, 1.0, ExpectedResult = 1)]
-        public double CalculateTheCosineTest(double dot, double length1, double length2)
+        [TestCase(1.0, 1.0, ExpectedResult = 1.00)]
+        public double CalculateTheCosineTest(double dot, double denumerator)
         {
             Cosine cosineTest = new Cosine();
-
-            return cosineTest.CalculateTheCosine(dot, length1, length2);
+            
+            return cosineTest.CalculateTheCosine(dot, denumerator);
         }
 
 
@@ -59,23 +59,16 @@ namespace Recommender.Tests
             return dot;
         }
 
-        [TestCase(new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0.0)]
-        [TestCase(new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 3.0)]
-        [TestCase(new double[] { 100.0, 100.0, 100.0 }, ExpectedResult = 300.0)]
-        public double GetLengthTestUser(double[] user)
+        [TestCase(new double[] { 0.0, 0.0, 0.0 }, new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0.0)]
+        [TestCase(new double[] { 1.0, 1.0, 1.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 3.0)]
+        [TestCase(new double[] { 100.0, 100.0, 100.0 }, new double[] { 100.0, 100.0, 100.0 }, ExpectedResult = 30000.0)]
+        [TestCase(new double[] { 1, 2.0, 0.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 3.87298)]
+        public double GetDeuneratorTest(double[] user, double[] artist)
         {
             Cosine cosineTest = new Cosine();
             User testUser = createTestType<User>(user);
-            return cosineTest.GetLengthUser(testUser);
-        }
-        [TestCase(new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0.0)]
-        [TestCase(new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 3.0)]
-        [TestCase(new double[] { 100.0, 100.0, 100.0 }, ExpectedResult = 300.0)]
-        public double GetLengthTestArtist(double[] artist)
-        {
-            Cosine cosineTest = new Cosine();
             Artist testArtist = createTestType<Artist>(artist);
-            return cosineTest.GetLengthArtist(testArtist);
+            return Math.Round(cosineTest.GetDenumerator(testUser, testArtist), 5);
         }
 
         private T createTestType<T>(params double[] array)

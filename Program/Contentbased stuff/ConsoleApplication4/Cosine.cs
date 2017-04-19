@@ -11,25 +11,24 @@ namespace Recommender
         public double GetCosine(User user, Artist artist)
         {
             double dot = 0;
-            double lengthUser = 0;
-            double lengthArtist = 0;
+            double denumerator = 0;
+
+            denumerator = GetDenumerator(user, artist);
             //Dot
             dot = CalcDotInCosine(user, artist);
 
             //length, this is the vector definicion of length, so its acctually just the sum of all tag.weigths
-            lengthUser = GetLengthUser(user);
-
-            lengthArtist = GetLengthArtist(artist);
+            
 
             //Result
-            return CalculateTheCosine(dot, lengthUser, lengthArtist);
+            return CalculateTheCosine(dot, denumerator);
         }
-        public double CalculateTheCosine(double dot, double length1, double length2)
+        public double CalculateTheCosine(double dot, double denumerator)
         {
-            if (length1 * length2 == 0.0)
+            if (denumerator == 0.0)
                 return 0.0;
             else
-                return (dot) / (length1 * length2);
+                return (dot) / (denumerator);
         }
 
         public double CalcDotInCosine(User user, Artist artist)
@@ -46,14 +45,13 @@ namespace Recommender
         }
 
         //length, this is the vector definicion of length, so its acctually just the sum of all tag.weigths
-        public double GetLengthUser(User user)
+        public double GetDenumerator(User user, Artist artist)
         {
-            return user.Tags.Sum(x => x.Value.Weight);
-        }
-        //length, this is the vector definicion of length, so its acctually just the sum of all tag.weigths
-        public double GetLengthArtist(Artist artist)
-        {
-            return artist.Tags.Sum(x => x.Value.Weight);
+            double temp = user.Tags.Sum(x => Math.Pow(x.Value.Weight, 2));
+            
+
+            double temp2 = artist.Tags.Sum(x => Math.Pow(x.Value.Weight, 2));
+            return Math.Sqrt(temp) * Math.Sqrt(temp2);
         }
     }
 }
