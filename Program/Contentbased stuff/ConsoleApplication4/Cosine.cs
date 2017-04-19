@@ -8,38 +8,40 @@ namespace Recommender
 {
     public class Cosine
     { 
-
-
         public double GetCosine(User user, Artist artist)
         {
             double Dot = 0;
             double LengthUser = 0;
             double LengthArtist = 0;
             //Dot
-            
-            foreach (var tag in user.Tags)
-            {
-                if (artist.Tags.ContainsKey(tag.Key))
-                {
-                    Dot += artist.Tags[tag.Key].Weight * tag.Value.Weight;
-                }
-            }
+            Dictionary<int, double> userArrayWeigth = user.Tags.ToDictionary(x => x.Key, x => x.Value.Weight);
+            Dictionary<int, double> artistArrayWeigth = artist.Tags.ToDictionary(x => x.Key, x => x.Value.Weight);
+
+            Dot = CalcDotInCosine(userArrayWeigth, artistArrayWeigth);
 
             //length
-            foreach (var item in user.Tags)
-            {
-                LengthUser += Math.Pow(item.Value.Weight, 2);
-            }
-            LengthUser = Math.Sqrt(LengthUser);
+            LengthUser = GetLength(userArrayWeigth);
 
-            foreach (var item in artist.Tags)
-            {
-                LengthArtist += Math.Pow(item.Value.Weight, 2);
-            }
-            LengthArtist = Math.Sqrt(LengthArtist);
+            LengthArtist = GetLength(artistArrayWeigth);
 
             //Result
             return (Dot) / (LengthUser * LengthArtist);
+        }
+        public double CalcDotInCosine(Dictionary<int, double> user, Dictionary<int, double> artist)
+        {
+            double dot = 0.0;
+            foreach (var element in user)
+            {
+                if (artist.ContainsKey(element.Key))
+                {
+                    dot += artist[element.Key] * element.Value;
+                }
+            }
+            return dot;
+        }
+        public double GetLength(Dictionary<int, double> vector)
+        {
+            return vector.Sum(x => x.Value);
         }
     }
 }
