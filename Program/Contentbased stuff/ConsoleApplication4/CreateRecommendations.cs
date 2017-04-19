@@ -45,11 +45,11 @@ namespace Recommender
 
             var recommendedArtists = CollaborativeFiltering.RecommendArtists(newUser, Users, RoskildeArtists);// ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10); 
             streng.AppendLine("Collarborative");
-            recommendedArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.thisArtist.Name + " - " + x.Value.CollaborativeFilteringRating));
+            recommendedArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.CollaborativeFilteringRating));
 
             var recommendedArtists2 = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10);
             streng.AppendLine("\nContentBasedFiltering: ");
-            recommendedArtists2.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.thisArtist.Name + " - " + x.Value.ContentBasedFilteringRating));
+            recommendedArtists2.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.ContentBasedFilteringRating));
         
             streng.AppendLine(" ---------");
             newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => streng.AppendLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));

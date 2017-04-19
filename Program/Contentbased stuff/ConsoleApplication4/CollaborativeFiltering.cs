@@ -50,12 +50,14 @@ namespace Recommender
                     }*/
                     else
                     {
-                        dicOfRecommendations.Add(artist.Key, new RecommendedArtist(artist.Value.ThisArtist));
-                        dicOfRecommendations[artist.Key].CollaborativeFilteringRating = (user.similarity + artist.Value.Weight) / 2;
+                        if (roskildeArtist.ContainsKey(artist.Key))
+                        {
+                            dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
+                            dicOfRecommendations[artist.Key].CollaborativeFilteringRating = (user.similarity + artist.Value.Weight) / 2;
+                        }
                     }
                 }
             }
-            List<Artist> roskildeThisArtists = roskildeArtist.Select(x => x.Value.thisArtist).ToList();
 
             var final = new Dictionary<int, RecommendedArtist>();
             foreach(var artist in dicOfRecommendations)

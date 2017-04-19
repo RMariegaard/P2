@@ -22,3 +22,9 @@ C:\Users\caspe\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication
 C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication4\bin\Debug\ConsoleApplication4.exe
 C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication4\bin\Debug\ConsoleApplication4.pdb
 C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication4\obj\Debug\RoskileRecommender.csprojResolveAssemblyReference.cache
+C:\Users\Kasperca\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication4\bin\Debug\ConsoleApplication4.exe.config
+C:\Users\Kasperca\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication4\obj\Debug\ConsoleApplication4.exe
+C:\Users\Kasperca\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication4\obj\Debug\ConsoleApplication4.pdb
+C:\Users\Kasperca\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication4\obj\Debug\RoskileRecommender.csprojResolveAssemblyReference.cache
+C:\Users\Kasperca\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication4\bin\Debug\ConsoleApplication4.exe
+C:\Users\Kasperca\Documents\GitHub\P2\Program\Contentbased stuff\ConsoleApplication4\bin\Debug\ConsoleApplication4.pdb
