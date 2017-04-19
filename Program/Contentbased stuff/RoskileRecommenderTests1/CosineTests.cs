@@ -21,10 +21,18 @@ namespace Recommender.Tests
 
             return cosineTest.GetCosine(testUser, testArtist);
         }
+        [TestCase(1.0, 1.0, 1.0, ExpectedResult = 1)]
+        public double CalculateTheCosineTest(double dot, double length1, double length2)
+        {
+            Cosine cosineTest = new Cosine();
+
+            return cosineTest.CalculateTheCosine(dot, length1, length2);
+        }
+
 
         [TestCase(new double[] { 0.0, 0.0, 0.0 }, new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0)]
         [TestCase(new double[] { 1.0, 1.0, 1.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 3.0)]
-        [TestCase(new double[] {0.0, 1.0, 0.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 1.0)]
+        [TestCase(new double[] { 0.0, 1.0, 0.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 1.0)]
         public double CalcDotInCosineTest(double[] user, double[] artist)
         {
             User testUser = createTestType<User>(user);
@@ -35,7 +43,7 @@ namespace Recommender.Tests
             return dot;
         }
 
-        [TestCase(new int[] { 1, 2, 3}, new double[] { 0.0, 1.0, 1.0 }, 
+        [TestCase(new int[] { 1, 2, 3 }, new double[] { 0.0, 1.0, 1.0 },
                   new int[] { 1, 2, 4 }, new double[] { 2.0, 1.0, 1.0 }, ExpectedResult = 1.0)]
 
         [TestCase(new int[] { 1, 2, 3 }, new double[] { 0.0, 1.0, 1.0 },
@@ -51,13 +59,13 @@ namespace Recommender.Tests
             return dot;
         }
 
-        [TestCase(new double[] { 0.0, 0.0, 0.0}, ExpectedResult = 0.0)]
+        [TestCase(new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0.0)]
         [TestCase(new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 3.0)]
         [TestCase(new double[] { 100.0, 100.0, 100.0 }, ExpectedResult = 300.0)]
         public double GetLengthTestUser(double[] user)
         {
             Cosine cosineTest = new Cosine();
-            User testUser = createTestType<User>( user);
+            User testUser = createTestType<User>(user);
             return cosineTest.GetLengthUser(testUser);
         }
         [TestCase(new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0.0)]
@@ -86,7 +94,7 @@ namespace Recommender.Tests
 
             return (T)valueobj;
         }
-        private T createTestType<T>(int[] key,  double[] value)
+        private T createTestType<T>(int[] key, double[] value)
         {
             var returnDic = new Dictionary<int, Tag>();
             int length = value.Length;
@@ -102,5 +110,7 @@ namespace Recommender.Tests
 
             return (T)valueobj;
         }
+
+       
     }
 }

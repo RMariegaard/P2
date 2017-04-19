@@ -16,17 +16,21 @@ namespace Recommender
             //Dot
             dot = CalcDotInCosine(user, artist);
 
-            //length
+            //length, this is the vector definicion of length, so its acctually just the sum of all tag.weigths
             lengthUser = GetLengthUser(user);
 
             lengthArtist = GetLengthArtist(artist);
 
             //Result
-            if (lengthUser * lengthArtist == 0.0)
-                return 0;
-            return (dot) / (lengthUser * lengthArtist);
+            return CalculateTheCosine(dot, lengthUser, lengthArtist);
         }
-
+        public double CalculateTheCosine(double dot, double length1, double length2)
+        {
+            if (length1 * length2 == 0.0)
+                return 0.0;
+            else
+                return (dot) / (length1 * length2);
+        }
 
         public double CalcDotInCosine(User user, Artist artist)
         {
@@ -41,11 +45,12 @@ namespace Recommender
             return dot;
         }
 
-
+        //length, this is the vector definicion of length, so its acctually just the sum of all tag.weigths
         public double GetLengthUser(User user)
         {
             return user.Tags.Sum(x => x.Value.Weight);
         }
+        //length, this is the vector definicion of length, so its acctually just the sum of all tag.weigths
         public double GetLengthArtist(Artist artist)
         {
             return artist.Tags.Sum(x => x.Value.Weight);
