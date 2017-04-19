@@ -13,7 +13,7 @@ namespace Recommender
         Dictionary<int, Artist> Artists;
         Dictionary<int, RoskildeArtist> RoskildeArtists;
 
-        public void LoadFiles()
+        public List<string> LoadFiles()
         {
             string startupPath = Environment.CurrentDirectory;
             //Does it twice to go back two folders
@@ -26,9 +26,42 @@ namespace Recommender
             RoskildeArtists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
 
             Console.WriteLine("Done Reading File");
-            Console.Clear();
-        }
+            List<string> RoskildeNames = new List<string>();
+            RoskildeArtists.Values.ToList().ForEach(x => RoskildeNames.Add(x.thisArtist.Name));
 
+            Console.WriteLine("Roskilde artits:");
+            foreach (string item in RoskildeNames)
+            {
+                Console.WriteLine(item);
+            }
+            Console.Clear();
+            return RoskildeNames;
+
+        }
+        /*public List<string> LoadFiles()
+        {
+            string startupPath = Environment.CurrentDirectory;
+            //Does it twice to go back two folders
+            startupPath = Path.GetDirectoryName(startupPath);
+            startupPath = Path.GetDirectoryName(startupPath);
+
+            Console.WriteLine("Reading File");
+            Users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin");
+            Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin");
+            RoskildeArtists = BinarySerialization.ReadFromBinaryFile<List<RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
+            
+            Console.WriteLine("Done Reading File");
+            List<string> RoskildeNames = new List<string>();
+            RoskildeArtists.ForEach(x => RoskildeNames.Add(x.thisArtist.Name));
+
+            Console.WriteLine("Roskilde artits:");
+            foreach (string item in RoskildeNames)
+            {
+                Console.WriteLine(item);
+            }
+
+            return RoskildeNames;
+        }*/
         public void Recommender()
         {
             var cosine = new Cosine();
