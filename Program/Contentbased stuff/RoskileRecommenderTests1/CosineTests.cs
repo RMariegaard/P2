@@ -11,14 +11,15 @@ namespace Recommender.Tests
     [TestFixture()]
     public class CosineTests
     {
-        [TestCase(1.0, 1.0, 1.0, ExpectedResult = 1.0)]
-        [TestCase(0.0, 0.0, 0.0, ExpectedResult = 0.0)]
-        [TestCase(0.3, 1.0, 1.0, ExpectedResult = 0.3)]
-        public double GetCosineTest(double dot, double length1, double length2)
+        [TestCase(new double[] { 0.0, 0.0, 0.0 }, new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0)]
+        [TestCase(new double[] { 1.0, 1.0, 1.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 1)]
+        public double GetCosineTest(double[] user, double[] artist)
         {
-            if (length1 * length2 == 0)
-                return 0;
-            return (dot) / (length1 * length2);
+            User testUser = createTestType<User>(user);
+            Artist testArtist = createTestType<Artist>(artist);
+            Cosine cosineTest = new Cosine();
+
+            return cosineTest.GetCosine(testUser, testArtist);
         }
 
         [TestCase(new double[] { 0.0, 0.0, 0.0 }, new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0)]
@@ -26,24 +27,25 @@ namespace Recommender.Tests
         [TestCase(new double[] {0.0, 1.0, 0.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 1.0)]
         public double CalcDotInCosineTest(double[] user, double[] artist)
         {
+            User testUser = createTestType<User>(user);
+            Artist testArtist = createTestType<Artist>(artist);
             Cosine cosineTest = new Cosine();
-            Dictionary<int, double> testUser = createTestDictionary(user);
-            Dictionary<int, double> testArtist = createTestDictionary(artist);
 
             double dot = cosineTest.CalcDotInCosine(testUser, testArtist);
             return dot;
         }
+
         [TestCase(new int[] { 1, 2, 3}, new double[] { 0.0, 1.0, 1.0 }, 
                   new int[] { 1, 2, 4 }, new double[] { 2.0, 1.0, 1.0 }, ExpectedResult = 1.0)]
 
         [TestCase(new int[] { 1, 2, 3 }, new double[] { 0.0, 1.0, 1.0 },
                   new int[] { 0, 4, 6 }, new double[] { 2.0, 1.0, 1.0 }, ExpectedResult = 0.0)]
 
-        public double CalcDotInCosineTest_CheckWithEmtykeys(int[] userKeys, double[] user, int[] artistKeys, double[] artist)
+        public double CalcDotInCosineTest_CheckWithEmptykeys(int[] userKeys, double[] user, int[] artistKeys, double[] artist)
         {
+            User testUser = createTestType<User>(userKeys, user);
+            Artist testArtist = createTestType<Artist>(artistKeys, artist);
             Cosine cosineTest = new Cosine();
-            Dictionary<int, double> testUser = createTestDictionary(userKeys, user);
-            Dictionary<int, double> testArtist = createTestDictionary(artistKeys, artist);
 
             double dot = cosineTest.CalcDotInCosine(testUser, testArtist);
             return dot;
@@ -52,32 +54,53 @@ namespace Recommender.Tests
         [TestCase(new double[] { 0.0, 0.0, 0.0}, ExpectedResult = 0.0)]
         [TestCase(new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 3.0)]
         [TestCase(new double[] { 100.0, 100.0, 100.0 }, ExpectedResult = 300.0)]
-        public double GetLengthTest(double[] array)
+        public double GetLengthTestUser(double[] user)
         {
             Cosine cosineTest = new Cosine();
-            Dictionary<int, double> testLength = createTestDictionary(array);
-            return cosineTest.GetLength(testLength);
+            User testUser = createTestType<User>( user);
+            return cosineTest.GetLengthUser(testUser);
+        }
+        [TestCase(new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0.0)]
+        [TestCase(new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 3.0)]
+        [TestCase(new double[] { 100.0, 100.0, 100.0 }, ExpectedResult = 300.0)]
+        public double GetLengthTestArtist(double[] artist)
+        {
+            Cosine cosineTest = new Cosine();
+            Artist testArtist = createTestType<Artist>(artist);
+            return cosineTest.GetLengthArtist(testArtist);
         }
 
-        private Dictionary<int, double> createTestDictionary(params double[] array)
+        private T createTestType<T>(params double[] array)
         {
-            var returnDic = new Dictionary<int, double>();
+            var returnDic = new Dictionary<int, Tag>();
             int length = array.Length;
-            for(int i = 0; i < length; i++)
-            {
-                returnDic.Add(i, array[i]);
-            }
-            return returnDic;
-        }
-        private Dictionary<int, double> createTestDictionary( int[] keys, params double[] values)
-        {
-            var returnDic = new Dictionary<int, double>();
-            int length = values.Length;
             for (int i = 0; i < length; i++)
             {
-                returnDic.Add(keys[i], values[i]);
+                returnDic.Add(i, new Tag(array[i]));
             }
-            return returnDic;
+            object valueobj;
+            if (typeof(T) == typeof(User))
+                valueobj = new User(1, returnDic);
+            else
+                valueobj = new Artist(1, returnDic);
+
+            return (T)valueobj;
+        }
+        private T createTestType<T>(int[] key,  double[] value)
+        {
+            var returnDic = new Dictionary<int, Tag>();
+            int length = value.Length;
+            for (int i = 0; i < length; i++)
+            {
+                returnDic.Add(key[i], new Tag(value[i]));
+            }
+            object valueobj;
+            if (typeof(T) == typeof(User))
+                valueobj = new User(1, returnDic);
+            else
+                valueobj = new Artist(1, returnDic);
+
+            return (T)valueobj;
         }
     }
 }

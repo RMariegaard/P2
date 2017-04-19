@@ -14,37 +14,41 @@ namespace Recommender
             double lengthUser = 0;
             double lengthArtist = 0;
             //Dot
-            //Create dictionaries of weights, makes it easier to test
-
-            Dictionary<int, double> userArrayWeigth = user.Tags.ToDictionary(x => x.Key, x => x.Value.Weight);
-            Dictionary<int, double> artistArrayWeigth = artist.Tags.ToDictionary(x => x.Key, x => x.Value.Weight);
-
-            dot = CalcDotInCosine(userArrayWeigth, artistArrayWeigth);
+            dot = CalcDotInCosine(user, artist);
 
             //length
-            lengthUser = GetLength(userArrayWeigth);
+            lengthUser = GetLengthUser(user);
 
-            lengthArtist = GetLength(artistArrayWeigth);
+            lengthArtist = GetLengthArtist(artist);
+
             //Result
             if (lengthUser * lengthArtist == 0.0)
                 return 0;
             return (dot) / (lengthUser * lengthArtist);
         }
-        public double CalcDotInCosine(Dictionary<int, double> user, Dictionary<int, double> artist)
+
+
+        public double CalcDotInCosine(User user, Artist artist)
         {
             double dot = 0.0;
-            foreach (var element in user)
+            foreach (var element in user.Tags)
             {
-                if (artist.ContainsKey(element.Key))
+                if (artist.Tags.ContainsKey(element.Key))
                 {
-                    dot += artist[element.Key] * element.Value;
+                    dot += artist.Tags[element.Key].Weight * element.Value.Weight;
                 }
             }
             return dot;
         }
-        public double GetLength(Dictionary<int, double> vector)
+
+
+        public double GetLengthUser(User user)
         {
-            return vector.Sum(x => x.Value);
+            return user.Tags.Sum(x => x.Value.Weight);
+        }
+        public double GetLengthArtist(Artist artist)
+        {
+            return artist.Tags.Sum(x => x.Value.Weight);
         }
     }
 }

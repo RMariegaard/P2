@@ -27,13 +27,10 @@ namespace Recommender
 
             Console.WriteLine("Done Reading File");
             Console.Clear();
-
         }
 
         public void Recommender()
         {
-
-
             var cosine = new Cosine();
             int id = 0;
             User newUser = new User(0);

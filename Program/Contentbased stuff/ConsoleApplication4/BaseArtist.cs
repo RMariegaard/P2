@@ -19,6 +19,11 @@ namespace Recommender
             Id = ID;
             this.Name = Name;
         }
+        public BaseArtist(int ID, Dictionary<int, Tag> tag)
+        {
+            Tags = tag;
+            Id = ID;
+        }
 
     }
 }
