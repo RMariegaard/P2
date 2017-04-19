@@ -1,0 +1,9 @@
+C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\RoskileRecommenderTests1\obj\Debug\RoskileRecommenderTests1.csprojResolveAssemblyReference.cache
+C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\RoskileRecommenderTests1\bin\Debug\RoskileRecommenderTests1.dll
+C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\RoskileRecommenderTests1\bin\Debug\RoskileRecommenderTests1.pdb
+C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\RoskileRecommenderTests1\bin\Debug\ConsoleApplication4.exe
+C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\RoskileRecommenderTests1\bin\Debug\nunit.framework.dll
+C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\RoskileRecommenderTests1\bin\Debug\ConsoleApplication4.pdb
+C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\RoskileRecommenderTests1\bin\Debug\nunit.framework.xml
+C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\RoskileRecommenderTests1\obj\Debug\RoskileRecommenderTests1.dll
+C:\Users\mark\Documents\GitHub\P2\Program\Contentbased stuff\RoskileRecommenderTests1\obj\Debug\RoskileRecommenderTests1.pdb

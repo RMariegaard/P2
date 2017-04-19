@@ -10,22 +10,25 @@ namespace Recommender
     { 
         public double GetCosine(User user, Artist artist)
         {
-            double Dot = 0;
-            double LengthUser = 0;
-            double LengthArtist = 0;
+            double dot = 0;
+            double lengthUser = 0;
+            double lengthArtist = 0;
             //Dot
+            //Create dictionaries of weights, makes it easier to test
+
             Dictionary<int, double> userArrayWeigth = user.Tags.ToDictionary(x => x.Key, x => x.Value.Weight);
             Dictionary<int, double> artistArrayWeigth = artist.Tags.ToDictionary(x => x.Key, x => x.Value.Weight);
 
-            Dot = CalcDotInCosine(userArrayWeigth, artistArrayWeigth);
+            dot = CalcDotInCosine(userArrayWeigth, artistArrayWeigth);
 
             //length
-            LengthUser = GetLength(userArrayWeigth);
+            lengthUser = GetLength(userArrayWeigth);
 
-            LengthArtist = GetLength(artistArrayWeigth);
-
+            lengthArtist = GetLength(artistArrayWeigth);
             //Result
-            return (Dot) / (LengthUser * LengthArtist);
+            if (lengthUser * lengthArtist == 0.0)
+                return 0;
+            return (dot) / (lengthUser * lengthArtist);
         }
         public double CalcDotInCosine(Dictionary<int, double> user, Dictionary<int, double> artist)
         {
