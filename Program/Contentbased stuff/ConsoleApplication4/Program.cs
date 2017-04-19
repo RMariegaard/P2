@@ -13,7 +13,7 @@ namespace Recommender
         {
             CreateRecommendations Recommender = new CreateRecommendations();
             Console.WriteLine("Do you want to update the datafiles? (Y/N)");
-            bool readInput = (Console.ReadKey().KeyChar == 'Y')?true:false;
+            bool readInput = (Char.ToUpper(Console.ReadKey().KeyChar) == 'Y')?true:false;
             if (readInput)
             {
                 UpdateData.UpdateDataFiles();
