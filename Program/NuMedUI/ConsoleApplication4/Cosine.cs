@@ -7,41 +7,51 @@ using System.Threading.Tasks;
 namespace Recommender
 {
     public class Cosine
-    { 
+    {
         public double GetCosine(User user, Artist artist)
         {
-            double Dot = 0;
-            double LengthUser = 0;
-            double LengthArtist = 0;
+            double dot = 0;
+            double denumerator = 0;
+
+            denumerator = GetDenumerator(user, artist);
             //Dot
-            Dictionary<int, double> userArrayWeigth = user.Tags.ToDictionary(x => x.Key, x => x.Value.Weight);
-            Dictionary<int, double> artistArrayWeigth = artist.Tags.ToDictionary(x => x.Key, x => x.Value.Weight);
+            dot = CalcDotInCosine(user, artist);
 
-            Dot = CalcDotInCosine(userArrayWeigth, artistArrayWeigth);
+            //length, this is the vector definicion of length, so its acctually just the sum of all tag.weigths
 
-            //length
-            LengthUser = GetLength(userArrayWeigth);
-
-            LengthArtist = GetLength(artistArrayWeigth);
 
             //Result
-            return (Dot) / (LengthUser * LengthArtist);
+            return CalculateTheCosine(dot, denumerator);
         }
-        public double CalcDotInCosine(Dictionary<int, double> user, Dictionary<int, double> artist)
+        public double CalculateTheCosine(double dot, double denumerator)
+        {
+            if (denumerator == 0.0)
+                return 0.0;
+            else
+                return (dot) / (denumerator);
+        }
+
+        public double CalcDotInCosine(User user, Artist artist)
         {
             double dot = 0.0;
-            foreach (var element in user)
+            foreach (var element in user.Tags)
             {
-                if (artist.ContainsKey(element.Key))
+                if (artist.Tags.ContainsKey(element.Key))
                 {
-                    dot += artist[element.Key] * element.Value;
+                    dot += artist.Tags[element.Key].Weight * element.Value.Weight;
                 }
             }
             return dot;
         }
-        public double GetLength(Dictionary<int, double> vector)
+
+        //length, this is the vector definicion of length, so its acctually just the sum of all tag.weigths
+        public double GetDenumerator(User user, Artist artist)
         {
-            return vector.Sum(x => x.Value);
+            double temp = user.Tags.Sum(x => Math.Pow(x.Value.Weight, 2));
+
+
+            double temp2 = artist.Tags.Sum(x => Math.Pow(x.Value.Weight, 2));
+            return Math.Sqrt(temp) * Math.Sqrt(temp2);
         }
     }
 }

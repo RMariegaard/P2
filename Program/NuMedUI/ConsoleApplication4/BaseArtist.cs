@@ -13,12 +13,10 @@ namespace Recommender
         public string Name { get; private set; }
         public Dictionary<int, Tag> Tags { get; private set; }
 
-        public BaseArtist(int ID, string Name)
+        public BaseArtist(int ID, Dictionary<int, Tag> tag)
         {
-            Tags = new Dictionary<int, Tag>();
+            Tags = tag;
             Id = ID;
-            this.Name = Name;
         }
-
     }
 }

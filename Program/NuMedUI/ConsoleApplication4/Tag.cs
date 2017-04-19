@@ -21,5 +21,10 @@ namespace Recommender
             Id = id;
             Amount = 1;
         }
+        public Tag(double weight)
+        {
+            Weight = weight;
+        }
+
     }
 }
