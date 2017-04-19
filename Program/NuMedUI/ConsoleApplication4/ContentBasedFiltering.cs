@@ -15,9 +15,9 @@ namespace Recommender
             //Calculates the correlation
             foreach (RoskildeArtist artist in roskildeArtist.Values)
             {
-                var tempArtist = new RecommendedArtist(artist.thisArtist);
-                tempArtist.ContentBasedFilteringRating = correlationMeasure(newUser, artist.thisArtist);
-                recommendedArtist.Add(tempArtist.thisArtist.Id, tempArtist);
+                var tempArtist = new RecommendedArtist(artist);
+                tempArtist.ContentBasedFilteringRating = correlationMeasure(newUser, artist);
+                recommendedArtist.Add(tempArtist.Id, tempArtist);
 
             }
             //SHOULD BE REWRITTEN... BUUUT WORKS FOR NOW

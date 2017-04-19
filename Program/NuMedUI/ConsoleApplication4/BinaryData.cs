@@ -245,7 +245,7 @@ namespace Recommender
                     {
                         if (artist.Value.Name.ToUpper() == line)
                         {
-                            RoskildeArtists.Add(artist.Key, new RoskildeArtist(artist.Value.Id, currentTime, currentScene, artist.Value));
+                            RoskildeArtists.Add(artist.Key, new RoskildeArtist(currentTime, currentScene, artist.Value));
                             break;
                         }
                     }
