@@ -11,8 +11,10 @@ namespace Recommender
     {
         public double TotalTagAmount { get; private set; }
 
-        public Artist(int ID, string name) : base(ID, name){}
-        
+        public Artist(int ID, string name) : base(ID, name) { }
+
+        public Artist(int ID, Dictionary<int, Tag> tag) : base(ID, tag) { }
+
         public void CalcTagWeight()
         {
             List<Tag> list = Tags.Values.ToList();
