@@ -17,7 +17,7 @@ namespace Recommender
         public Dictionary<int, User> UsersDic = new Dictionary<int, User>();
         public Dictionary<int, Artist> Artists = new Dictionary<int, Artist>();
         List<User> Users = new List<User>();
-        List<RoskildeArtist> RoskildeArtists = new List<RoskildeArtist>();
+        Dictionary<int, RoskildeArtist> RoskildeArtists = new Dictionary<int, RoskildeArtist>();
 
         public void DoItAll()
         {
@@ -213,7 +213,7 @@ namespace Recommender
 
             BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin", UsersDic);
             BinarySerialization.WriteToBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin", Artists);
-            BinarySerialization.WriteToBinaryFile<List<RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin", RoskildeArtists);
+            BinarySerialization.WriteToBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin", RoskildeArtists);
         }
 
         public void ReadRoskildeSchedule(string date)
@@ -245,7 +245,7 @@ namespace Recommender
                     {
                         if(artist.Value.Name.ToUpper() == line)
                         {                                             
-                            RoskildeArtists.Add(new RoskildeArtist(artist.Value.Id, currentTime, currentScene, artist.Value));
+                            RoskildeArtists.Add(artist.Key, new RoskildeArtist(artist.Value.Id, currentTime, currentScene, artist.Value));
                             break;
                         }
                     }

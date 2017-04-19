@@ -11,7 +11,7 @@ namespace Recommender
     {
         private Dictionary<int, User> Users;
         Dictionary<int, Artist> Artists;
-        List<RoskildeArtist> RoskildeArtists;
+        Dictionary<int, RoskildeArtist> RoskildeArtists;
 
         public void LoadFiles()
         {
@@ -23,7 +23,7 @@ namespace Recommender
             Console.WriteLine("Reading File");
             Users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin");
             Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin");
-            RoskildeArtists = BinarySerialization.ReadFromBinaryFile<List<RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
+            RoskildeArtists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
 
             Console.WriteLine("Done Reading File");
             Console.Clear();

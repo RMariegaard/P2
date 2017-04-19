@@ -28,7 +28,7 @@ namespace Recommender
             return KNearestNeighbours(correlationMeasure, newUser, users, 10);
         }
         
-        public static Dictionary<int,RecommendedArtist> RecommendArtists(User newUser, Dictionary<int, User> allUsers, List<RoskildeArtist> roskildeArtist)
+        public static Dictionary<int,RecommendedArtist> RecommendArtists(User newUser, Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist)
         {
             Dictionary<int, RecommendedArtist> dicOfRecommendations = new Dictionary<int, RecommendedArtist>();
             List<SimilarUser> KNN = KNearestNeighbours(PearsonCor.CalculateUser, newUser, allUsers);
@@ -55,12 +55,12 @@ namespace Recommender
                     }
                 }
             }
-            List<Artist> roskildeThisArtists = roskildeArtist.Select(x => x.thisArtist).ToList();
+            List<Artist> roskildeThisArtists = roskildeArtist.Select(x => x.Value.thisArtist).ToList();
 
             var final = new Dictionary<int, RecommendedArtist>();
             foreach(var artist in dicOfRecommendations)
             {
-                if(roskildeArtist.Any(x => x.Id == artist.Key))
+                if(roskildeArtist.Any(x => x.Key == artist.Key))
                 {
                     final.Add(artist.Key, artist.Value);
                 }
