@@ -27,7 +27,7 @@ namespace Recommender
 
             Console.WriteLine("Done Reading File");
             List<string> RoskildeNames = new List<string>();
-            RoskildeArtists.Values.ToList().ForEach(x => RoskildeNames.Add(x.thisArtist.Name));
+            RoskildeArtists.Values.ToList().ForEach(x => RoskildeNames.Add(x.Name));
 
             Console.WriteLine("Roskilde artits:");
             foreach (string item in RoskildeNames)
@@ -38,30 +38,6 @@ namespace Recommender
             return RoskildeNames;
 
         }
-        /*public List<string> LoadFiles()
-        {
-            string startupPath = Environment.CurrentDirectory;
-            //Does it twice to go back two folders
-            startupPath = Path.GetDirectoryName(startupPath);
-            startupPath = Path.GetDirectoryName(startupPath);
-
-            Console.WriteLine("Reading File");
-            Users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin");
-            Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin");
-            RoskildeArtists = BinarySerialization.ReadFromBinaryFile<List<RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
-            
-            Console.WriteLine("Done Reading File");
-            List<string> RoskildeNames = new List<string>();
-            RoskildeArtists.ForEach(x => RoskildeNames.Add(x.thisArtist.Name));
-
-            Console.WriteLine("Roskilde artits:");
-            foreach (string item in RoskildeNames)
-            {
-                Console.WriteLine(item);
-            }
-
-            return RoskildeNames;
-        }*/
         public void Recommender()
         {
             var cosine = new Cosine();
@@ -78,11 +54,11 @@ namespace Recommender
 
             var recommendedArtists = CollaborativeFiltering.RecommendArtists(newUser, Users, RoskildeArtists);// ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10); 
             streng.AppendLine("Collarborative");
-            recommendedArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.thisArtist.Name + " - " + x.Value.CollaborativeFilteringRating));
+            recommendedArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.CollaborativeFilteringRating));
 
             var recommendedArtists2 = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10);
             streng.AppendLine("\nContentBasedFiltering: ");
-            recommendedArtists2.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.thisArtist.Name + " - " + x.Value.ContentBasedFilteringRating));
+            recommendedArtists2.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.ContentBasedFilteringRating));
 
             streng.AppendLine(" ---------");
             newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => streng.AppendLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));

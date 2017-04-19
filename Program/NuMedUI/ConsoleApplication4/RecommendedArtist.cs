@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    public class RecommendedArtist
+    public class RecommendedArtist : RoskildeArtist
     {
-       public double CollaborativeFilteringRating { get; set; }
-       public double ContentBasedFilteringRating { get; set; }
-       public Artist thisArtist { get; private set; }
+        public double CollaborativeFilteringRating { get; set; }
+        public double ContentBasedFilteringRating { get; set; }
 
-        public RecommendedArtist(Artist artist)
+        public RecommendedArtist(RoskildeArtist artist) : base(artist.TimeOfConcert, artist.Scene, artist)
         {
-            thisArtist = artist;
         }
     }
 }

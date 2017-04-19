@@ -8,19 +8,19 @@ namespace Recommender
 {
 
     [Serializable]
-    public class RoskildeArtist
+    public class RoskildeArtist : Artist
     {
-        public int Id { get; private set; }
         public DateTime TimeOfConcert { get; private set; }
         public string Scene { get; private set; }
-        public Artist thisArtist { get; private set; }
 
-        public RoskildeArtist(int ID, DateTime timeOfConcert, string scene, Artist artist)
+        public RoskildeArtist(DateTime timeOfConcert, string scene, Artist artist) : base(artist.Id, artist.Name)
         {
-            Id = ID;
             TimeOfConcert = timeOfConcert;
             Scene = scene;
-            thisArtist = artist;
+            foreach (var tag in artist.Tags)
+            {
+                Tags.Add(tag.Key, new Tag(tag.Key));
+            }
         }
 
     }
