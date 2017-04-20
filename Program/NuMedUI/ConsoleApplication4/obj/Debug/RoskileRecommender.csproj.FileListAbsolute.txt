@@ -58,3 +58,4 @@ C:\AalborgUniDrive\OneDrive - Aalborg Universitet\NuMedUI\ConsoleApplication4\ob
 C:\AalborgUniDrive\OneDrive - Aalborg Universitet\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UIAfterLogin.resources
 C:\AalborgUniDrive\OneDrive - Aalborg Universitet\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UiScheduele.resources
 C:\AalborgUniDrive\OneDrive - Aalborg Universitet\NuMedUI\ConsoleApplication4\obj\Debug\RoskileRecommender.csproj.GenerateResource.Cache
+C:\Users\mark\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UiScheduele.resources

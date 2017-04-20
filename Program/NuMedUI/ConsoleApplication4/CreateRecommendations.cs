@@ -50,13 +50,13 @@ namespace Recommender
         public void Recommender(int id)
         {
             var cosine = new Cosine();
-            
+            var pearson = new PearsonCor();
             User newUser = new User(0);
             newUser = Users[id];
 
             StringBuilder streng = new StringBuilder();
 
-            recommendedArtists = CollaborativeFiltering.RecommendArtists(newUser, Users, RoskildeArtists);// ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10); 
+            recommendedArtists = CollaborativeFiltering.RecommendArtists(pearson.CalculateUser, newUser, Users, RoskildeArtists);// ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10); 
             streng.AppendLine("Collarborative");
             recommendedArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.CollaborativeFilteringRating));
 

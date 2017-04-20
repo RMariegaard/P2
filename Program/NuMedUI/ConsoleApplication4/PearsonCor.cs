@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Recommender
 {
     public class PearsonCor
-    {
+    {/*
         public double Calculate(Artist artist1, Artist artist2)
         {
 
@@ -32,34 +32,41 @@ namespace Recommender
 
             return Top / Buttom;
         }
-
+        */
         //Calcuates the Pearson Correlation between two users based on artists
-        public static double CalculateUser(User user, User otherUser)
+        public double CalculateUser(User user, User otherUser)
         {
             //Calculates the mean of the artist weight for the two users
-            double userMean = 0.0;
-            user.Artists.Values.ToList().ForEach(artist => userMean += artist.Weight);
-            userMean /= user.Artists.Count;
-
-            double otherUserMean = 0.0;
-            otherUser.Artists.Values.ToList().ForEach(artist => otherUserMean += artist.Weight);
-            otherUserMean /= otherUser.Artists.Count;
+            double userMean = CalculateUserMean(user);
+            double otherUserMean = CalculateUserMean(otherUser);
 
             //Calculates the numerator of the Pearson Correlation
-            double numerator = 0.0;
-            foreach (var userArtist in user.Artists)
-            { 
-                if (otherUser.Artists.ContainsKey(userArtist.Key))
-                {
-                    numerator += (userArtist.Value.Weight - userMean) * (otherUser.Artists[userArtist.Key].Weight - otherUserMean);
-                }
-            }
-
+            double numerator = CalculateNumerator(user, otherUser, userMean, otherUserMean);
             //Calculates the denumerator of the Pearson Correlation
             double denumerator = Math.Sqrt(numerator);
 
             //Returns the Pearson Correlation
             return numerator / denumerator;
+        }
+
+        public double CalculateUserMean(User user)
+        {
+            double temp = 0.0;
+            temp = user.Artists.Values.Sum(x => x.Weight);
+            temp /= user.Artists.Count;
+            return temp;
+        }
+        public double CalculateNumerator(User user, User otherUser, double userMean, double otherUserMean)
+        {
+            double temp = 0.0;
+            foreach (var userArtist in user.Artists)
+            {
+                if (otherUser.Artists.ContainsKey(userArtist.Key))
+                {
+                    temp += (userArtist.Value.Weight - userMean) * (otherUser.Artists[userArtist.Key].Weight - otherUserMean);
+                }
+            }
+            return temp;
         }
     }
 }
