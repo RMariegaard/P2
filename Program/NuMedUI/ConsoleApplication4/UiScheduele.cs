@@ -24,8 +24,7 @@ namespace Recommender
             this.Recommender = Recommender;
             this.HardSelected = HardSelected;
             HardSelected.ForEach(x => Console.WriteLine(x.Name));
-            
-            
+
             InitializeComponent();
 
             GUIList = new List<RecommendGUI>();
@@ -34,24 +33,49 @@ namespace Recommender
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
 
+            //Getting the artist the user added
             foreach (RoskildeArtist artist in HardSelected)
             {
                 RecommendedArtist temp = new RecommendedArtist(artist);
-                temp.CollaborativeFilteringRating = 10.00;
-                temp.ContentBasedFilteringRating = 10.00;
-                GUIList.Add(new RecommendGUI(temp, Color.Blue));
+                GUIList.Add(new RecommendGUI(temp, "HardAdd"));
             }
-
+            //Getting Recommendations
             Recommender.Recommender(ID);
             foreach (var artist in Recommender.GetCollabRecommendedArtists())
             {
-                GUIList.Add(new RecommendGUI(artist.Value, Color.Green));
+                GUIList.Add(new RecommendGUI(artist.Value, "Collab"));
             }
             foreach (var artist in Recommender.GetcontentRecommendedArtists())
             {
-                GUIList.Add(new RecommendGUI(artist.Value, Color.Orange));
+                GUIList.Add(new RecommendGUI(artist.Value, "Content"));
             }
 
+            //Adding Buttons
+            List<DayOfWeek> Days = new List<DayOfWeek>();
+            foreach (RecommendGUI item in GUIList)
+            {
+                if (!Days.Contains(item.artist.TimeOfConcert.DayOfWeek))
+                {
+                    Days.Add(item.artist.TimeOfConcert.DayOfWeek);
+                }
+            }
+            
+            int top = 5;
+            int left = 5;
+
+            foreach (DayOfWeek item in Days)
+            {
+                Button button = new Button();
+                button.Left = left;
+                button.Top = top;
+                button.Text = item.ToString();
+                button.Name = item.ToString();
+                button.Click += new EventHandler(NewButton_Click);
+                ButtonPanel.Controls.Add(button);
+                left += button.Width + 2;
+            }
+            
+            //Adding to the Scheduele window
             int i = 0;
             foreach (RecommendGUI test in GUIList.OrderBy(x => x.TimeOfConcertLabel.Text).ToList())
             {
@@ -60,8 +84,23 @@ namespace Recommender
                 i++;
             }
         }
-    }
 
+        private void NewButton_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            
+            panel1.Controls.Clear();
+
+            int counter = 0;
+            foreach (RecommendGUI item in GUIList.Where(x => x.artist.TimeOfConcert.DayOfWeek.ToString() == btn.Name).OrderBy(x => x.TimeOfConcertLabel.ToString()))
+            {
+                item.calcLocation(new Point(5, 105 * counter), new Size(400, 100));
+                panel1.Controls.Add(item.Background);
+                counter++;
+            }
+        }
+    }
+    
     class RecommendGUI
     {
         public PictureBox Picture;
@@ -72,9 +111,13 @@ namespace Recommender
         public Panel Background;
         public Color color;
         public Rectangle Rect;
+        public string RatingFrom;
+        public RecommendedArtist artist;
 
-        public RecommendGUI(RecommendedArtist artist, Color SelectColor)
+        public RecommendGUI(RecommendedArtist artist, string RatingFrom)
         {
+            this.artist = artist;
+            this.RatingFrom = RatingFrom;
             Background = new Panel();
             Picture = new PictureBox();
             NameLabel = new Label();
@@ -83,8 +126,25 @@ namespace Recommender
             Scene = new Label();
             color = new Color();
 
-            color = SelectColor;
-
+            if (RatingFrom == "Collab")
+            {
+                RatingLabel.Text = $"Collaborative: {artist.CollaborativeFilteringRating}";
+                if ((int)((255 / 10) * artist.CollaborativeFilteringRating) > 255)
+                    color = Color.FromArgb(255, 255, 255);
+                else
+                    color = Color.FromArgb(255, (int)((255 / 10) * artist.CollaborativeFilteringRating), (int)((255 / 10) * artist.CollaborativeFilteringRating));
+            }
+            else if (RatingFrom == "Content")
+            {
+                RatingLabel.Text = $"ContentBased: { artist.ContentBasedFilteringRating}";
+                color = Color.FromArgb(255, (int)(255 * artist.ContentBasedFilteringRating), (int)(255 * artist.ContentBasedFilteringRating));
+            }
+            else if (RatingFrom == "HardAdd")
+            {
+                RatingLabel.Text = "You have added this";
+                color = Color.FromArgb(255, 255, 255);
+            }
+            
             string startupPath = Environment.CurrentDirectory;
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
@@ -100,29 +160,12 @@ namespace Recommender
             RatingLabel.AutoSize = true;
             TimeOfConcertLabel.Visible = true;
             TimeOfConcertLabel.AutoSize = true;
-            
-            
-            try
-            {
-                Scene.Text = artist.Scene;
-            }
-            catch (Exception)
-            {
-                Scene.Text = "Scene NULL";
-            }
-            
-            try
-            {
-                NameLabel.Text = artist.Name;
-            }
-            catch (Exception)
-            {
-                NameLabel.Text = "Insert name here";
-            }
+
+
+            Scene.Text = artist.Scene;
+            NameLabel.Text = artist.Name;
 
             TimeOfConcertLabel.Text = artist.TimeOfConcert.ToString();
-            
-            RatingLabel.Text = $"ContentBased: {artist.ContentBasedFilteringRating}\t     Collaborative: {artist.CollaborativeFilteringRating}";
             
         }
         
