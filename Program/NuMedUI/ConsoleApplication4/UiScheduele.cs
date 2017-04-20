@@ -82,7 +82,6 @@ namespace Recommender
             TimeOfConcertLabel = new Label();
             Scene = new Label();
             color = new Color();
-
             color = SelectColor;
 
             string startupPath = Environment.CurrentDirectory;
@@ -90,8 +89,14 @@ namespace Recommender
             startupPath = Path.GetDirectoryName(startupPath);
 
             Background.BackColor = color;
-            Picture.Image = Image.FromFile(startupPath + @"\Images\UnkownImage.jpg");
-
+            try
+            {
+                Picture.Image = Image.FromFile(startupPath + $"\\pics\\{artist.Name.ToUpper()}.png");
+            }
+            catch (FileNotFoundException)
+            {
+                Picture.Image = Image.FromFile(startupPath + @"\Images\UnkownImage.jpg");
+            }
             Scene.Visible = true;
             Scene.AutoSize = true;
             NameLabel.Visible = true;

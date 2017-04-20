@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,15 +46,26 @@ namespace ConsoleApplication9
                 forFile.Add("");
             }
 
-            var ForImageFile = new List<string>();
-            foreach(var picture in ImageDic)
-            {
-                ForImageFile.Add(picture.Key.Name + "\t" + picture.Value);
-            }
-            
             System.IO.File.WriteAllLines(@"C:\Users\Casper\Documents\GitHub\P2\Tidsplan roskilde\test.txt", forFile);
-            System.IO.File.WriteAllLines(@"C:\Users\Casper\Documents\GitHub\P2\Tidsplan roskilde\Billeder.txt", ForImageFile);
 
+            foreach (var picture in ImageDic)
+            {
+                if (picture.Value != "")
+                    using (WebClient client = new WebClient())
+                    {
+                        try {
+                            client.DownloadFile(new Uri(picture.Value), $"C:\\Users\\Casper\\Documents\\GitHub\\P2\\Tidsplan roskilde\\pics\\{picture.Key.Name}.png");
+                        }
+                        catch (Exception)
+                        {
+                            //do nothing - skip
+                        }
+                        }
+            }
+
+
+
+            
             Console.Read();
 
 

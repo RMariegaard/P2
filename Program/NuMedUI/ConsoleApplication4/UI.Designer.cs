@@ -40,7 +40,7 @@
             // UserIdTextbox
             // 
             this.UserIdTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UserIdTextbox.Location = new System.Drawing.Point(242, 259);
+            this.UserIdTextbox.Location = new System.Drawing.Point(385, 324);
             this.UserIdTextbox.Name = "UserIdTextbox";
             this.UserIdTextbox.Size = new System.Drawing.Size(100, 20);
             this.UserIdTextbox.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(193, 262);
+            this.label1.Location = new System.Drawing.Point(336, 327);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 1;
@@ -58,7 +58,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(192, 285);
+            this.button1.Location = new System.Drawing.Point(335, 350);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 23);
             this.button1.TabIndex = 2;
@@ -78,7 +78,7 @@
             // UpdateDataButton
             // 
             this.UpdateDataButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.UpdateDataButton.Location = new System.Drawing.Point(12, 285);
+            this.UpdateDataButton.Location = new System.Drawing.Point(12, 350);
             this.UpdateDataButton.Name = "UpdateDataButton";
             this.UpdateDataButton.Size = new System.Drawing.Size(150, 23);
             this.UpdateDataButton.TabIndex = 5;
@@ -91,7 +91,7 @@
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(12, 25);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(330, 228);
+            this.pictureBox1.Size = new System.Drawing.Size(480, 289);
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
@@ -99,7 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(354, 320);
+            this.ClientSize = new System.Drawing.Size(497, 385);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.UpdateDataButton);
             this.Controls.Add(this.ErrorLabelFrontPage);

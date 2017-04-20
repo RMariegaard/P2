@@ -23,8 +23,8 @@ namespace Recommender
             startupPath = Path.GetDirectoryName(startupPath);
 
             InitializeComponent();
-            pictureBox1.Image = new Bitmap(startupPath + @"\Images\UnkownImage.bmp");
-
+            pictureBox1.Image = Image.FromFile(startupPath + @"\Images\Orange.jpg");
+            
             Recommender = new CreateRecommendations();
             Recommender.LoadFiles();
 

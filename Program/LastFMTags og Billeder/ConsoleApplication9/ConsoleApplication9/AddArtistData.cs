@@ -22,6 +22,7 @@ namespace ConsoleApplication9
                     kusnt.GetTopTags().ToList().ForEach(x => ny.TagIds.Add(new RTag(x.Item.Name, x.Weight)));
                     RList.Add(ny);
                     ImageDic.Add(ny, kusnt.GetImageURL());
+                    
 
                 }
                 catch (ServiceException)
