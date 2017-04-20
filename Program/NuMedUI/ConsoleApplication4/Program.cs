@@ -12,7 +12,6 @@ namespace Recommender
     {
         static void Main(string[] args)
         {
-            //CreateRecommendations Recommender = new CreateRecommendations();
             Console.WriteLine("Do you want to update the datafiles? (Y/N)");
             bool readInput = (Char.ToUpper(Console.ReadKey().KeyChar) == 'Y') ? true : false;
             if (readInput)
@@ -21,16 +20,23 @@ namespace Recommender
             }
             Console.Clear();
             /*************************************** The Program ***************************************/
-            //Recommender.LoadFiles();
-            Application.EnableVisualStyles();
-            Application.Run(new UI());
-
-            /*
-            while (true)
+            Console.WriteLine("Open UI? (Y/N)");
+            readInput = (Char.ToUpper(Console.ReadKey().KeyChar) == 'Y') ? true : false;
+            if (readInput)
             {
-                Recommender.Recommender();
+                Application.EnableVisualStyles();
+                Application.Run(new UI());
             }
-            */
+            else
+            {
+                CreateRecommendations Recommender = new CreateRecommendations();
+                Recommender.LoadFiles();
+                while (true)
+                {
+                    Recommender.Recommender();
+                }
+
+            }
         }
     }
 }

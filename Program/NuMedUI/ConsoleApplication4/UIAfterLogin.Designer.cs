@@ -92,7 +92,7 @@
             this.Controls.Add(this.GreetingLabel);
             this.Name = "UIAfterLogin";
             this.Text = "UIAfterLogin";
-            this.Load += new System.EventHandler(this.UIAfterLogin_Load);
+           // this.Load += new System.EventHandler(this.UIAfterLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
