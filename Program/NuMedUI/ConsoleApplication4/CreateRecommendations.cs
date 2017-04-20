@@ -13,7 +13,14 @@ namespace Recommender
         Dictionary<int, Artist> Artists;
         Dictionary<int, RoskildeArtist> RoskildeArtists;
 
-        public List<string> LoadFiles()
+        public List<RoskildeArtist> GetRoskildeArtists()
+        {
+            List<RoskildeArtist> RoskildeNames = new List<RoskildeArtist>();
+            RoskildeArtists.Values.ToList().ForEach(x => RoskildeNames.Add(x));
+            return RoskildeNames;
+        }
+
+        public void LoadFiles()
         {
             string startupPath = Environment.CurrentDirectory;
             //Does it twice to go back two folders
@@ -26,38 +33,34 @@ namespace Recommender
             RoskildeArtists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
 
             Console.WriteLine("Done Reading File");
-            List<string> RoskildeNames = new List<string>();
-            RoskildeArtists.Values.ToList().ForEach(x => RoskildeNames.Add(x.Name));
-
-            Console.WriteLine("Roskilde artits:");
-            foreach (string item in RoskildeNames)
-            {
-                Console.WriteLine(item);
-            }
-            Console.Clear();
-            return RoskildeNames;
-
         }
-        public void Recommender()
+
+        Dictionary<int, RecommendedArtist> recommendedArtists;
+        Dictionary<int, RecommendedArtist> recommendedArtists2;
+
+        public Dictionary<int, RecommendedArtist> GetCollabRecommendedArtists()
+        {
+            return recommendedArtists;
+        }
+        public Dictionary<int, RecommendedArtist> GetcontentRecommendedArtists()
+        {
+            return recommendedArtists2;
+        }
+
+        public void Recommender(int id)
         {
             var cosine = new Cosine();
-            var pearson = new PearsonCor();
-            int id = 0;
+            
             User newUser = new User(0);
-
-            Console.WriteLine("ID: ");
-            while (!int.TryParse(Console.ReadLine(), out id)) ;
-
-            if (Users.ContainsKey(id))
-                newUser = Users[id];
+            newUser = Users[id];
 
             StringBuilder streng = new StringBuilder();
 
-            var recommendedArtists = CollaborativeFiltering.RecommendArtists(pearson.CalculateUser, newUser, Users, RoskildeArtists);
+            recommendedArtists = CollaborativeFiltering.RecommendArtists(newUser, Users, RoskildeArtists);// ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10); 
             streng.AppendLine("Collarborative");
             recommendedArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.CollaborativeFilteringRating));
 
-            var recommendedArtists2 = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10);
+            recommendedArtists2 = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10);
             streng.AppendLine("\nContentBasedFiltering: ");
             recommendedArtists2.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.ContentBasedFilteringRating));
 
@@ -65,8 +68,6 @@ namespace Recommender
             newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => streng.AppendLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));
 
             Console.WriteLine(streng);
-            Console.ReadKey();
-            Console.Clear();
         }
     }
 }

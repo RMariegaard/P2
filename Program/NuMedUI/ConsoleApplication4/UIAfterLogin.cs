@@ -14,62 +14,63 @@ namespace Recommender
     {
         CreateRecommendations Recommender;
         int ID;
-        List<string> RecTekst;
-        List<string> RoskildeNames;
+        List<RoskildeArtist> RoskildeNames;
+        List<string> Names;
 
-        public UIAfterLogin(int ID)
+        public UIAfterLogin(int ID, CreateRecommendations Recommender)
         {
             this.ID = ID;
-            Recommender = new CreateRecommendations();
-            ReadFileGetRoskildeArtists();
+            this.Recommender = Recommender;
+
+            RoskildeNames = Recommender.GetRoskildeArtists();
 
             InitializeComponent();
 
             GreetingLabel.Text = $"Welcome: {ID}";
-            
-            foreach (string item in RoskildeNames.OrderBy(x => x))
+
+            Names = new List<string>();
+
+            RoskildeNames.OrderBy(x => x.Name).ToList().ForEach(x => Names.Add(x.Name));
+            foreach (string item in Names)
             {
                 RoskildeArtistsList.Items.Add(item);
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        
+        private void GetRecommendationButton_Click(object sender, EventArgs e)
         {
-            /*
-            RecTekst = Recommender.Recommender(ID);
-            foreach (string item in RecTekst)
+            List<RoskildeArtist> HardSelected = new List<RoskildeArtist>();
+            
+            foreach (RoskildeArtist Artist in RoskildeNames)
             {
-                AddStringToList(item);
+                foreach (var SelectedArtist in RoskildeArtistsList.CheckedItems)
+                {
+                    if (Artist.Name == SelectedArtist.ToString())
+                    {
+                        HardSelected.Add(Artist);
+                    }
+                }
             }
-            */
+
+            UiScheduele Scheduele = new UiScheduele(ID, Recommender, HardSelected);
+            Scheduele.Show();
+            this.Close();
         }
 
-        private void HardAddButton_Click(object sender, EventArgs e)
+        private void SeachBar_TextChanged(object sender, EventArgs e)
         {
-            foreach (var item in RoskildeArtistsList.SelectedItems)
+            Names.RemoveRange(0, Names.Count());
+            int test = RoskildeArtistsList.Items.Count;
+            for(int i = 0; i < test; i++)
             {
-                AddStringToList(item.ToString());
+                RoskildeArtistsList.Items.RemoveAt(0);
             }
-        }
-
-        private void ReadFileGetRoskildeArtists()
-        {
-            RoskildeNames = Recommender.LoadFiles();
-        }
-
-        private void AddStringToList(string text)
-        {
-            /*
-            if (!RecommendationsList.Items.Contains(text))
+            
+            RoskildeNames.Where(x => x.Name.Contains(SeachBar.Text)).OrderBy(x => x.Name).ToList().ForEach(x => Names.Add(x.Name));
+            foreach (string item in Names)
             {
-                RecommendationsList.Items.Add(text);
+                RoskildeArtistsList.Items.Add(item);
             }
-            */
-        }
-
-        private void RoskildeArtistsList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

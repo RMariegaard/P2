@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,16 +14,21 @@ namespace Recommender
     public partial class UI : Form
     {
         public int ID;
+        CreateRecommendations Recommender;
         
         public UI()
         {
-            InitializeComponent();
-            ErrorLabelFrontPage.Text = "";
-        }
-        
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
+            string startupPath = Environment.CurrentDirectory;
+            startupPath = Path.GetDirectoryName(startupPath);
+            startupPath = Path.GetDirectoryName(startupPath);
 
+            InitializeComponent();
+            pictureBox1.Image = new Bitmap(startupPath + @"\Images\UnkownImage.bmp");
+
+            Recommender = new CreateRecommendations();
+            Recommender.LoadFiles();
+
+            ErrorLabelFrontPage.Text = "";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -33,9 +39,14 @@ namespace Recommender
             }
             else
             {
-                UIAfterLogin frm2 = new UIAfterLogin(ID);
+                UIAfterLogin frm2 = new UIAfterLogin(ID, Recommender);
                 frm2.Show();
             }
+        }
+
+        private void UpdateDataButton_Click(object sender, EventArgs e)
+        {
+            UpdateData.UpdateDataFiles();
         }
     }
 }
