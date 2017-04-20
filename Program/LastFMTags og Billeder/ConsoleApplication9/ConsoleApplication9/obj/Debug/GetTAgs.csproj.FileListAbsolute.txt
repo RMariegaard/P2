@@ -6,3 +6,6 @@ c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\Consol
 c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\ConsoleApplication9.pdb
 c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Hqub.Lastfm.dll
 c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Mono.HttpUtility.dll
+C:\Users\Casper\Documents\GitHub\P2\Program\LastFMTags og Billeder\ConsoleApplication9\ConsoleApplication9\bin\Debug\ConsoleApplication9.exe.config
+C:\Users\Casper\Documents\GitHub\P2\Program\LastFMTags og Billeder\ConsoleApplication9\ConsoleApplication9\obj\Debug\ConsoleApplication9.exe
+C:\Users\Casper\Documents\GitHub\P2\Program\LastFMTags og Billeder\ConsoleApplication9\ConsoleApplication9\obj\Debug\ConsoleApplication9.pdb
