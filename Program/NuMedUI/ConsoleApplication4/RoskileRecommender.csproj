@@ -74,11 +74,17 @@
     <Compile Include="UI.Designer.cs">
       <DependentUpon>UI.cs</DependentUpon>
     </Compile>
-    <Compile Include="UIAfterLogin.cs">
+    <Compile Include="UiAfterLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UIAfterLogin.Designer.cs">
-      <DependentUpon>UIAfterLogin.cs</DependentUpon>
+    <Compile Include="UiAfterLogin.Designer.cs">
+      <DependentUpon>UiAfterLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UiScheduele.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UiScheduele.Designer.cs">
+      <DependentUpon>UiScheduele.cs</DependentUpon>
     </Compile>
     <Compile Include="UpdateData.cs" />
     <Compile Include="User.cs" />
@@ -96,8 +102,11 @@
     <EmbeddedResource Include="UI.resx">
       <DependentUpon>UI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UIAfterLogin.resx">
-      <DependentUpon>UIAfterLogin.cs</DependentUpon>
+    <EmbeddedResource Include="UiAfterLogin.resx">
+      <DependentUpon>UiAfterLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UiScheduele.resx">
+      <DependentUpon>UiScheduele.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

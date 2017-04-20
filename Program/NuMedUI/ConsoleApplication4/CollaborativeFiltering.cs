@@ -29,10 +29,10 @@ namespace Recommender
             return KNearestNeighbours(correlationMeasure, newUser, users, 10);
         }
 
-        public static Dictionary<int, RecommendedArtist> RecommendArtists(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist)
+        public static Dictionary<int, RecommendedArtist> RecommendArtists(User newUser, Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist)
         {
             Dictionary<int, RecommendedArtist> dicOfRecommendations = new Dictionary<int, RecommendedArtist>();
-            List<SimilarUser> KNN = KNearestNeighbours(correlationMeasure, newUser, allUsers);
+            List<SimilarUser> KNN = KNearestNeighbours(PearsonCor.CalculateUser, newUser, allUsers);
 
             foreach (SimilarUser user in KNN)
             {

@@ -22,7 +22,5 @@ namespace Recommender
                 Tags.Add(tag.Key, new Tag(tag.Key));
             }
         }
-
     }
-
 }
