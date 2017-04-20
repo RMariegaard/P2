@@ -66,7 +66,7 @@ namespace Recommender
                 RoskildeArtistsList.Items.RemoveAt(0);
             }
             
-            RoskildeNames.Where(x => x.Name.Contains(SeachBar.Text)).OrderBy(x => x.Name).ToList().ForEach(x => Names.Add(x.Name));
+            RoskildeNames.Where(x => x.Name.ToUpper().Contains(SeachBar.Text.ToUpper())).OrderBy(x => x.Name).ToList().ForEach(x => Names.Add(x.Name));
             foreach (string item in Names)
             {
                 RoskildeArtistsList.Items.Add(item);

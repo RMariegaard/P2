@@ -53,7 +53,7 @@ namespace Recommender
             }
 
             int i = 0;
-            foreach (RecommendGUI test in GUIList)
+            foreach (RecommendGUI test in GUIList.OrderBy(x => x.TimeOfConcertLabel.Text).ToList())
             {
                 test.calcLocation(new Point(5,105*i), new Size(400, 100));
                 panel1.Controls.Add(test.Background);
