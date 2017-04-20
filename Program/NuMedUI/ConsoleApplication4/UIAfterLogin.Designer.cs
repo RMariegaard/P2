@@ -46,6 +46,7 @@
             // 
             // RoskildeArtistsList
             // 
+            this.RoskildeArtistsList.CheckOnClick = true;
             this.RoskildeArtistsList.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.RoskildeArtistsList.FormattingEnabled = true;
             this.RoskildeArtistsList.Location = new System.Drawing.Point(12, 99);

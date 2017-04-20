@@ -24,9 +24,18 @@ namespace Recommender
             Tags = new Dictionary<int, Tag>();
             Id = id; 
         }
+
+        //To testing
         public User(int id, Dictionary<int, Tag> tags)
         {
             Tags = tags;
+            Id = id;
+        }
+
+        //Same
+        public User(int id, Dictionary<int, Userartist> artists)
+        {
+            Artists = artists;
             Id = id;
         }
         // Makes the users tag list depending on the users its heard, their top 5 tags, and how much the user has heard theese artists:

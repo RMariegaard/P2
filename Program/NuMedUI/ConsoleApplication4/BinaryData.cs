@@ -197,6 +197,10 @@ namespace Recommender
             {
                 artist.Value.CalcTagWeight();
             }
+            foreach (var artist in RoskildeArtists)
+            {
+                artist.Value.CalcTagWeight();
+            }
 
             foreach (User user in Users)
             {
