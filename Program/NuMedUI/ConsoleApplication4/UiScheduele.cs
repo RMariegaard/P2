@@ -125,10 +125,6 @@ namespace Recommender
             TimeOfConcertLabel = new Label();
             Scene = new Label();
             color = new Color();
-<<<<<<< HEAD
-            color = SelectColor;
-
-=======
 
             if (RatingFrom == "Collab")
             {
@@ -149,7 +145,7 @@ namespace Recommender
                 color = Color.FromArgb(255, 255, 255);
             }
             
->>>>>>> origin/master
+
             string startupPath = Environment.CurrentDirectory;
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
