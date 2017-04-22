@@ -11,13 +11,19 @@ namespace Recommender.Tests
     [TestFixture()]
     public class CosineTests
     {
+        private Cosine cosineTest;
+        [SetUp]
+        public void Init()
+        {
+            cosineTest = new Cosine();
+        }
+
         [TestCase(new double[] { 0.0, 0.0, 0.0 }, new double[] { 0.0, 0.0, 0.0 }, ExpectedResult = 0.00)]
         [TestCase(new double[] { 1.0, 1.0, 1.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 1.00)]
         public double GetCosineTest(double[] user, double[] artist)
         {
             User testUser = createTestType<User>(user);
             Artist testArtist = createTestType<Artist>(artist);
-            Cosine cosineTest = new Cosine();
             double actual = cosineTest.GetCosine(testUser, testArtist);
             return Math.Round(actual, 5);
         }
@@ -37,7 +43,6 @@ namespace Recommender.Tests
         {
             User testUser = createTestType<User>(user);
             Artist testArtist = createTestType<Artist>(artist);
-            Cosine cosineTest = new Cosine();
 
             double dot = cosineTest.CalcDotInCosine(testUser, testArtist);
             return dot;
@@ -53,7 +58,6 @@ namespace Recommender.Tests
         {
             User testUser = createTestType<User>(userKeys, user);
             Artist testArtist = createTestType<Artist>(artistKeys, artist);
-            Cosine cosineTest = new Cosine();
 
             double dot = cosineTest.CalcDotInCosine(testUser, testArtist);
             return dot;
@@ -65,7 +69,6 @@ namespace Recommender.Tests
         [TestCase(new double[] { 1, 2.0, 0.0 }, new double[] { 1.0, 1.0, 1.0 }, ExpectedResult = 3.87298)]
         public double GetDeuneratorTest(double[] user, double[] artist)
         {
-            Cosine cosineTest = new Cosine();
             User testUser = createTestType<User>(user);
             Artist testArtist = createTestType<Artist>(artist);
             return Math.Round(cosineTest.GetDenumerator(testUser, testArtist), 5);

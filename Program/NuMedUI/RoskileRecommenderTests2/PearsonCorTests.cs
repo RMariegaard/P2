@@ -11,23 +11,47 @@ namespace Recommender.Tests
     [TestFixture()]
     public class PearsonCorTests
     {
+        private static User user1;
+        private static User user2;
+        private PearsonCor TestCase;
+        [SetUp]
+        public void Init()
+        {
+            //SetUp
+            user1 = createTestType(new int[] { 1, 2, 3, 4, }, new double[] { 1.0, 2.0, 3.0, 4.0 });
+            user2 = createTestType(new int[] { 1, 2, 3, 4, 5, 6 }, new double[] { 1.0, 5.0, 5.0, 5.0, 5.0, 5.0 });
+            TestCase = new PearsonCor();
+
+        }
         [Test()]
         public void CalculateUserTest()
         {
-            Assert.Fail();
+            //Assert
+            double expected = 2.45;
+            double actual = TestCase.CalculateUser(user1, user2);
+            Assert.AreEqual(expected, Math.Round(actual, 2));
+
         }
 
         [Test()]
         public void CalculateUserMeanTest()
         {
-            Assert.Fail();
+            double actual = TestCase.CalculateUserMean(user1);
+            double expected = 2.5;
+            Assert.AreEqual(expected, actual);
+
         }
 
         [Test()]
         public void CalculateNumeratorTest()
         {
-            Assert.Fail();
+            double expected = 6.0;
+            double actual = TestCase.CalculateNumerator(user1, user2, 2.5, 5.0);
+            Assert.AreEqual(expected, actual);
         }
+
+
+
         private User createTestType(params double[] array)
         {
             var returnDic = new Dictionary<int, Userartist>();

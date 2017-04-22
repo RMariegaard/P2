@@ -46,7 +46,10 @@ namespace Recommender
             double denumerator = Math.Sqrt(numerator);
 
             //Returns the Pearson Correlation
-            return numerator / denumerator;
+            if (denumerator == 0.0)
+                return 0.0;
+            else
+                return numerator / denumerator;
         }
 
         public double CalculateUserMean(User user)
