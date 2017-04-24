@@ -65,6 +65,8 @@ namespace Recommender
             int secondCount = 0;
             foreach (var artist in roskildeArtist)
             {
+                n = 0;
+                tempCorelation = 0.0;
                 foreach (SimilarUser user in KNN)
                 {
                     if (user.Artists.ContainsKey(artist.Key))
@@ -75,6 +77,7 @@ namespace Recommender
                 }
                 if(n != 0)
                 {
+                    Console.WriteLine(n);
                     dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
                     dicOfRecommendations[artist.Key].CollaborativeFilteringRating = tempCorelation / n;
                     secondCount++;
