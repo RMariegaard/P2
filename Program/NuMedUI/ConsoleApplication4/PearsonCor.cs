@@ -43,7 +43,7 @@ namespace Recommender
             //Calculates the numerator of the Pearson Correlation
             double numerator = CalculateNumerator(user, otherUser, userMean, otherUserMean);
             //Calculates the denumerator of the Pearson Correlation
-            double denumerator = Math.Sqrt(numerator);
+            double denumerator = CalculateDenumerator(user, otherUser, userMean, otherUserMean);
 
             //Returns the Pearson Correlation
             if (denumerator == 0.0)
@@ -70,6 +70,20 @@ namespace Recommender
                 }
             }
             return temp;
+        }
+        public double CalculateDenumerator(User user, User otherUser, double userMean, double otherUserMean)
+        {
+            double temp = 0.0;
+            double temp2 = 0.0;
+            foreach (var userArtist in user.Artists)
+            {
+                if (otherUser.Artists.ContainsKey(userArtist.Key))
+                {
+                    temp += Math.Pow((userArtist.Value.Weight - userMean), 2);
+                    temp2 += Math.Pow((otherUser.Artists[userArtist.Key].Weight - otherUserMean),2);
+                }
+            }
+            return Math.Sqrt(temp * temp2);
         }
     }
 }

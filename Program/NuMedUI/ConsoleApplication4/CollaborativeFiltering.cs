@@ -21,7 +21,6 @@ namespace Recommender
                 tempUser.Artists = user.Artists;
                 listOfNeighbours.Add(tempUser);
             }
-
             return listOfNeighbours.OrderByDescending(x => x.similarity).Where(x => x.similarity > 0).ToList();
         }
 
@@ -77,7 +76,6 @@ namespace Recommender
                 }
                 if(n != 0)
                 {
-                    Console.WriteLine(n);
                     dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
                     dicOfRecommendations[artist.Key].CollaborativeFilteringRating = tempCorelation / n;
                     secondCount++;
