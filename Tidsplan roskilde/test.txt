@@ -1255,24 +1255,24 @@ trollerier	15
 
 0	DANIEL NORGREN
 seen live	100
-blues	50
-rock	15
-swedish	15
-folk	15
-Sweden	15
-bksbks2015	10
-singer-songwriter	5
-folk rock	5
-gospel	5
-Tom Waits	5
-country blues	5
-duyster	5
-End Of The Road 2013	5
-eurosonic 2010	5
-to listen for jan	5
-live 2013	5
-melodic blues	5
-fjellparkfestivalen	5
+blues	53
+rock	16
+swedish	16
+folk	16
+Sweden	16
+bksbks2015	11
+singer-songwriter	6
+folk rock	6
+gospel	6
+Tom Waits	6
+country blues	6
+duyster	6
+End Of The Road 2013	6
+eurosonic 2010	6
+to listen for jan	6
+live 2013	6
+melodic blues	6
+fjellparkfestivalen	6
 
 0	SVARTE GREINER
 dark ambient	100
@@ -1638,9 +1638,9 @@ doom metal	2
 crust punk	2
 punk	2
 georgia	2
-Psychedelic metal	2
 savannah	2
 rock	2
+Psychedelic metal	2
 
 0	DESTROYER
 indie	100
@@ -1894,8 +1894,8 @@ downtempo	18
 microhouse	15
 idm	11
 electronica	8
-minimal techno	7
 ambient house	7
+minimal techno	7
 american	6
 chillout	4
 trip-hop	4
@@ -2343,7 +2343,7 @@ depressive	1
 
 0	GHOST
 heavy metal	100
-Psychedelic Rock	67
+Psychedelic Rock	68
 doom metal	61
 seen live	50
 psychedelic	49
@@ -2353,8 +2353,8 @@ occult rock	20
 rock	16
 japanese	16
 hard rock	15
-metal	15
 experimental	15
+metal	15
 Sweden	6
 death metal	5
 Traditional Doom Metal	4
@@ -3923,11 +3923,11 @@ Brutal Death Metal	13
 metal	10
 american	10
 doom metal	4
-Death Doom Metal	4
+Death Doom Metal	3
 seen live	3
 grindcore	3
 USA	3
-death doom	3
+death doom	2
 american death metal	2
 old school	2
 death-doom metal	2
@@ -4509,8 +4509,8 @@ funk	4
 jazz	4
 indie pop	3
 USA	3
-NYC	3
 Lo-Fi	2
+NYC	2
 ambient	2
 a cappella	2
 male vocalists	2
@@ -5116,15 +5116,15 @@ r&b	10
 experimental	7
 art pop	7
 singer-songwriter	6
-rock	6
 female vocalist	5
+rock	5
 electronic	5
 alternative soul	5
 Hip-Hop	5
 psychedelic	4
 futuristic	4
-dance	3
 Neo Soul	3
+dance	3
 rhythm and blues	3
 USA	3
 00s	3
@@ -5141,10 +5141,10 @@ Janelle Monae	2
 alternative rock	2
 contemporary r&b	2
 hip hop	2
-art rock	2
 2010s	2
 afropunk	2
 futuristic rock and roll	2
+art rock	2
 Kansas City	2
 amazing	2
 2000s	2
@@ -5165,7 +5165,7 @@ hardcore	42
 screamo	40
 metal	25
 seen live	22
-post-hardcore	13
+post-hardcore	12
 british	7
 death metal	6
 bring me the horizon	3

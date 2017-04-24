@@ -1,8 +1,0 @@
-c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\ConsoleApplication9.exe.config
-c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\ConsoleApplication9.exe
-c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\ConsoleApplication9.pdb
-c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Hqub.Lastfm.dll
-c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\bin\Debug\Mono.HttpUtility.dll
-c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\obj\Debug\ConsoleApplication9.csprojResolveAssemblyReference.cache
-c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\obj\Debug\ConsoleApplication9.exe
-c:\users\casper\documents\visual studio 2015\Projects\ConsoleApplication9\ConsoleApplication9\obj\Debug\ConsoleApplication9.pdb
