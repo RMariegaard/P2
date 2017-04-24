@@ -10,7 +10,9 @@ namespace Recommender
     {
         public double similarity { get; set; }
         public int Id { get; private set; }
-        
+        public Dictionary<int, Userartist> Artists { get; set; }
+
+
         public SimilarUser(int id)
         {
             Id = id;
