@@ -54,5 +54,15 @@ namespace Recommender
         {
             UpdateData.UpdateDataFiles();
         }
+
+        private void UserIdTextbox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+
+            if (Keys.Enter == e.KeyData)
+            {
+                button1_Click(sender, e);
+            }
+        }
     }
 }

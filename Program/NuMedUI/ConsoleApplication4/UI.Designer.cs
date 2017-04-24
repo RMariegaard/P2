@@ -44,6 +44,7 @@
             this.UserIdTextbox.Name = "UserIdTextbox";
             this.UserIdTextbox.Size = new System.Drawing.Size(100, 20);
             this.UserIdTextbox.TabIndex = 0;
+            this.UserIdTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserIdTextbox_KeyDown);
             // 
             // label1
             // 

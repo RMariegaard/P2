@@ -70,7 +70,7 @@ namespace Recommender
                 {
                     if (user.Artists.ContainsKey(artist.Key))
                     {
-                        tempCorelation += user.similarity * user.Artists[artist.Key].Weight;
+                        tempCorelation += user.similarity * (user.Artists[artist.Key].Weight);
                         n++;
                     }
                 }
