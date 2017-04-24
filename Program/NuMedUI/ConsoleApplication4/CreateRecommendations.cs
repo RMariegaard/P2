@@ -13,6 +13,10 @@ namespace Recommender
         Dictionary<int, Artist> Artists;
         Dictionary<int, RoskildeArtist> RoskildeArtists;
 
+        public bool CheckForUserId(int id)
+        {
+            return Users.ContainsKey(id);
+        }
         public List<RoskildeArtist> GetRoskildeArtists()
         {
             List<RoskildeArtist> RoskildeNames = new List<RoskildeArtist>();
@@ -52,8 +56,16 @@ namespace Recommender
             var cosine = new Cosine();
             var pearson = new PearsonCor();
             User newUser = new User(0);
-            newUser = Users[id];
 
+            if (Users.ContainsKey(id))
+            {
+                newUser = Users[id];
+            }
+            else
+            {
+                //der skal være en popup
+            }
+                
             StringBuilder streng = new StringBuilder();
 
             recommendedArtists = CollaborativeFiltering.RecommendArtists(pearson.CalculateUser, newUser, Users, RoskildeArtists);// ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10); 

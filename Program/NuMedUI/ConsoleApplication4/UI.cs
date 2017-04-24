@@ -35,10 +35,16 @@ namespace Recommender
         {
             if (!int.TryParse(UserIdTextbox.Text, out ID))
             {
+
                 ErrorLabelFrontPage.Text = "Please enter a number";
+            }
+            else if (!Recommender.CheckForUserId(ID))
+            {
+                ErrorLabelFrontPage.Text = "User not found!";
             }
             else
             {
+                
                 UIAfterLogin frm2 = new UIAfterLogin(ID, Recommender);
                 frm2.Show();
             }
