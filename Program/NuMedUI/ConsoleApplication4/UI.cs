@@ -53,6 +53,7 @@ namespace Recommender
         private void UpdateDataButton_Click(object sender, EventArgs e)
         {
             UpdateData.UpdateDataFiles();
+            Recommender.LoadFiles();
         }
 
         private void UserIdTextbox_KeyDown(object sender, KeyEventArgs e)

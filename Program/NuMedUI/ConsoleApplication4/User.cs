@@ -79,7 +79,7 @@ namespace Recommender
             }
             foreach(var artist in Artists)
             {
-                artist.Value.Weight = (100 / _totalt_listen_amount) * artist.Value.Amount;
+                artist.Value.Weight = (artist.Value.Amount / _totalt_listen_amount) * 100;
             }
         }
     }
