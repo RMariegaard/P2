@@ -25,7 +25,7 @@ namespace Recommender
             {
                 //Is hard selected
                 
-                if (element.StartTime < newConcert.EndTime && element.StartTime > newConcert.StartTime)
+                if (element.StartTime < newConcert.EndTime && element.StartTime >= newConcert.StartTime || element.EndTime > newConcert.StartTime && element.StartTime < newConcert.StartTime)
                 {
                     if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom != "HardAdd")
                     {
@@ -37,7 +37,7 @@ namespace Recommender
                     }
                     else if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom == "HardAdd")
                     {
-                        MessageBox.Show($"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day}");
+                        MessageBox.Show($"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day} \n {element.Artist.Name} and {newConcert.Artist.Name}");
                     }
                     else
                     {

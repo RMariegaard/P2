@@ -207,11 +207,13 @@ namespace Recommender
             RatingLabel.Location = new Point(size.Height + 2, 25);
             TimeOfConcertLabel.Location = new Point(size.Height + 2, 45);
             EndTimeLabel.Location = new Point(size.Height + 4 + TimeOfConcertLabel.Size.Width, 45);
+            Scene.Location = new Point(size.Height + 2, 65);
 
             Element.Controls.Add(Picture);
             Element.Controls.Add(NameLabel);
             Element.Controls.Add(RatingLabel);
             Element.Controls.Add(TimeOfConcertLabel);
+            Element.Controls.Add(Scene);
             Element.Controls.Add(EndTimeLabel);
         }
     }

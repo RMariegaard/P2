@@ -20,8 +20,10 @@ namespace Recommender
                 recommendedArtist.Add(tempArtist.Id, tempArtist);
 
             }
-            //SHOULD BE REWRITTEN... BUUUT WORKS FOR NOW
-            var final = recommendedArtist.OrderByDescending(x => x.Value.ContentBasedFilteringRating).Take(k)
+
+            var final = recommendedArtist
+                .OrderByDescending(x => x.Value.ContentBasedFilteringRating)
+                .Take(k)
                 .ToDictionary((x => x.Key), (x => x.Value));
 
             return final;
