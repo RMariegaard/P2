@@ -14,32 +14,25 @@ namespace Recommender
         {
             Concerts = new List<SchedueleElement>();
         }
-
-
-        public void MakeScheduele(List<RoskildeArtist> artists)
-        {
-            foreach (var artist in artists)
-            {
-                AddConcert(new SchedueleElement(artist, artist.TimeOfConcert, 90));
-            }
-        }
-
-
+        
         //Add concert when it doesnt overlap
         public bool AddConcert(SchedueleElement newConcert)
         {
             bool noOverlap = true;
             foreach (SchedueleElement currentConcert in Concerts)
             {
-                if (currentConcert.StartTime <= newConcert.StartTime && currentConcert.EndTime > newConcert.StartTime)
+                if (currentConcert.StartTime.DayOfWeek == newConcert.StartTime.DayOfWeek)
                 {
-                    noOverlap = false;
-                }
-                //Start time is now before the current concert
-                //therefore we check wether the end time is after the start time of the current concert
-                else if (currentConcert.StartTime < newConcert.EndTime)
-                {
-                    noOverlap = false;
+                    if (currentConcert.StartTime <= newConcert.EndTime && currentConcert.StartTime > newConcert.StartTime)
+                    {
+                        noOverlap = false;
+                    }
+                    //Start time is now before the current concert
+                    //therefore we check wether the end time is after the start time of the current concert
+                    else if (newConcert.EndTime > currentConcert.StartTime)
+                    {
+                        noOverlap = false;
+                    }
                 }
             }
 

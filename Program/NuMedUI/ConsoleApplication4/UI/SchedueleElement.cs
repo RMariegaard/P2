@@ -9,11 +9,13 @@ namespace Recommender
     public class SchedueleElement
     {
         public DateTime StartTime;
-        public RoskildeArtist Artist;
+        public RecommendedArtist Artist;
         public DateTime EndTime;
+        public string AddedFrom;
 
-        public SchedueleElement(RoskildeArtist artist, DateTime startTime, double minutesOfTime)
+        public SchedueleElement(RecommendedArtist artist, DateTime startTime, double minutesOfTime, string AddedFrom)
         {
+            this.AddedFrom = AddedFrom;
             Artist = artist;
             StartTime = startTime;
             EndTime = startTime.AddMinutes(minutesOfTime);

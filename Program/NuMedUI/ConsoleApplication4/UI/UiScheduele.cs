@@ -18,13 +18,20 @@ namespace Recommender
         List<RoskildeArtist> HardSelected;
         List<RecommendGUI> GUIList;
 
+        List<SchedueleElement> Elements;
+        Scheduele FullScheduele;
+
         public UiScheduele(int ID, CreateRecommendations Recommender, List<RoskildeArtist> HardSelected)
         {
             this.ID = ID;
             this.Recommender = Recommender;
             this.HardSelected = HardSelected;
             HardSelected.ForEach(x => Console.WriteLine(x.Name));
+
             InitializeComponent();
+
+            Elements = new List<SchedueleElement>();
+            FullScheduele = new Scheduele();
 
             label1.Text = "Select a date from above!";
             label1.Location = new Point(Width / 2 - label1.Width / 2, label1.Location.Y);
@@ -37,22 +44,29 @@ namespace Recommender
             //Getting the artist the user added
             foreach (RoskildeArtist artist in HardSelected)
             {
-                RecommendedArtist temp = new RecommendedArtist(artist);
-                GUIList.Add(new RecommendGUI(temp, "HardAdd"));
+                Elements.Add(new SchedueleElement(new RecommendedArtist(artist), artist.TimeOfConcert, 60, "HardAdd"));
             }
             //Getting Recommendations
             Recommender.Recommender(ID);
             foreach (var artist in Recommender.GetCollabRecommendedArtists())
             {
-                GUIList.Add(new RecommendGUI(artist.Value, "Collab"));
+                Elements.Add(new SchedueleElement(artist.Value, artist.Value.TimeOfConcert, 60, "Collab"));
             }
             foreach (var artist in Recommender.GetcontentRecommendedArtists())
             {
-                GUIList.Add(new RecommendGUI(artist.Value, "Content"));
+                Elements.Add(new SchedueleElement(artist.Value, artist.Value.TimeOfConcert, 60, "Content"));
+            }
+            Elements.ForEach(x => FullScheduele.AddConcert(x));
+            
+            //Lægger det fra scheduele til liste der bliver vist
+            foreach (SchedueleElement element in FullScheduele.Concerts)
+            {
+                GUIList.Add(new RecommendGUI(element.Artist, element.AddedFrom, " - " + element.EndTime.TimeOfDay.ToString()));
             }
 
             //Adding Buttons
             List<DateTime> Days = new List<DateTime>();
+            
             foreach (RecommendGUI item in GUIList.OrderBy(x => x.artist.TimeOfConcert))
             {
                 if (!Days.Any(x => x.Month == item.artist.TimeOfConcert.Month && x.Day == item.artist.TimeOfConcert.Day))
@@ -103,6 +117,7 @@ namespace Recommender
         public Label NameLabel;
         public Label RatingLabel;
         public Label TimeOfConcertLabel;
+        public Label EndTimeLabel;
         public Label Scene;
         public Panel Element;
         public Color color;
@@ -110,7 +125,7 @@ namespace Recommender
         public string RatingFrom;
         public RecommendedArtist artist;
 
-        public RecommendGUI(RecommendedArtist artist, string RatingFrom)
+        public RecommendGUI(RecommendedArtist artist, string RatingFrom, string EndTimeString)
         {
             this.artist = artist;
             this.RatingFrom = RatingFrom;
@@ -119,6 +134,7 @@ namespace Recommender
             NameLabel = new Label();
             RatingLabel = new Label();
             TimeOfConcertLabel = new Label();
+            EndTimeLabel = new Label();
             Scene = new Label();
             color = new Color();
 
@@ -159,6 +175,12 @@ namespace Recommender
             {
                 Picture.Image = Image.FromFile(startupPath + @"\Images\UnkownImage.jpg");
             }
+            
+            Scene.Text = artist.Scene;
+            NameLabel.Text = artist.Name;
+            EndTimeLabel.Text = EndTimeString;
+            TimeOfConcertLabel.Text = artist.TimeOfConcert.TimeOfDay.ToString();
+
             Scene.Visible = true;
             Scene.AutoSize = true;
             NameLabel.Visible = true;
@@ -167,11 +189,8 @@ namespace Recommender
             RatingLabel.AutoSize = true;
             TimeOfConcertLabel.Visible = true;
             TimeOfConcertLabel.AutoSize = true;
-            
-            Scene.Text = artist.Scene;
-            NameLabel.Text = artist.Name;
-            
-            TimeOfConcertLabel.Text = artist.TimeOfConcert.TimeOfDay.ToString();
+            EndTimeLabel.Visible = true;
+            EndTimeLabel.AutoSize = true;
         }
         
         public void calcLocation(Point TopLeft, Size size)
@@ -187,12 +206,13 @@ namespace Recommender
             NameLabel.Location = new Point(size.Height + 2, 5);
             RatingLabel.Location = new Point(size.Height + 2, 25);
             TimeOfConcertLabel.Location = new Point(size.Height + 2, 45);
+            EndTimeLabel.Location = new Point(size.Height + 4 + TimeOfConcertLabel.Size.Width, 45);
 
             Element.Controls.Add(Picture);
             Element.Controls.Add(NameLabel);
             Element.Controls.Add(RatingLabel);
             Element.Controls.Add(TimeOfConcertLabel);
-
+            Element.Controls.Add(EndTimeLabel);
         }
     }
 }
