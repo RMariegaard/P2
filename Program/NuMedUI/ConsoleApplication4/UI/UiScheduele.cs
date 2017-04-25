@@ -41,11 +41,27 @@ namespace Recommender
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
 
+            //Adding the headphones icon if the user has listed to this artist before
+            foreach (RoskildeArtist artist in Recommender.GetRoskildeArtists())
+            {
+                foreach (var userArtist in Recommender.GetUser(ID).Artists)
+                {
+                    if (userArtist.Value.ThisArtist.Name.ToUpper() == artist.Name.ToUpper())
+                    {
+                        RecommendedArtist TempArtist = new RecommendedArtist(artist);
+                        TempArtist.CollaborativeFilteringRating = 100.00;
+                        TempArtist.ContentBasedFilteringRating = 1.00;
+                        Elements.Add(new SchedueleElement(TempArtist, artist.TimeOfConcert, 60, "HeardBefore"));
+                    }
+                }
+            }
+
             //Getting the artist the user added
             foreach (RoskildeArtist artist in HardSelected)
             {
                 Elements.Add(new SchedueleElement(new RecommendedArtist(artist), artist.TimeOfConcert, 60, "HardAdd"));
             }
+
             //Getting Recommendations
             Recommender.Recommender(ID);
             foreach (var artist in Recommender.GetCollabRecommendedArtists())
@@ -56,12 +72,21 @@ namespace Recommender
             {
                 Elements.Add(new SchedueleElement(artist.Value, artist.Value.TimeOfConcert, 60, "Content"));
             }
+            
+            //Addig the individual concerts to a full scheduele
             Elements.ForEach(x => FullScheduele.AddConcert(x));
             
-            //Lægger det fra scheduele til liste der bliver vist
+            //From scheduele to GUIlist, in order to show it
             foreach (SchedueleElement element in FullScheduele.Concerts)
             {
                 GUIList.Add(new RecommendGUI(element.Artist, element.AddedFrom, " - " + element.EndTime.TimeOfDay.ToString()));
+            }
+            
+            //Adding the lock icon if the user have added this
+            foreach (RecommendGUI item in GUIList)
+            {
+                if (item.RatingFrom == "HardAdd")
+                    item.Lock = true;
             }
 
             //Adding Buttons
@@ -106,7 +131,6 @@ namespace Recommender
                 item.calcLocation(new Point(5, 105 * counter), new Size(400, 100));
                 panel1.Controls.Add(item.Element);
                 counter++;
-
             }
         }
     }
@@ -121,16 +145,32 @@ namespace Recommender
         public Label Scene;
         public Panel Element;
         public Color color;
-        public Rectangle Rect;
         public string RatingFrom;
         public RecommendedArtist artist;
 
+        string startupPath;
+
+        public PictureBox LockIcon;
+        public bool Lock;
+        public PictureBox HeadphonesIcon;
+        public bool Headphones;
+        public PictureBox ExclamationIcon;
+        public bool Exclamation;
+        
         public RecommendGUI(RecommendedArtist artist, string RatingFrom, string EndTimeString)
         {
+            //Headphones = true;
+            //Lock = true;
+            //Exclamation = true;
+
+            //Init
             this.artist = artist;
             this.RatingFrom = RatingFrom;
             Element = new Panel();
             Picture = new PictureBox();
+            HeadphonesIcon = new PictureBox();
+            LockIcon = new PictureBox();
+            ExclamationIcon = new PictureBox();
             NameLabel = new Label();
             RatingLabel = new Label();
             TimeOfConcertLabel = new Label();
@@ -160,9 +200,15 @@ namespace Recommender
                 RatingLabel.Text = "You have added this";
                 color = Color.FromArgb(238, 113, 3);
             }
+            else if (RatingFrom == "HeardBefore")
+            {
+                RatingLabel.Text = "You have heard this before";
+                color = Color.FromArgb(238, 113, 3);
+                Headphones = true;
+            }
             
             //Creating the visual
-            string startupPath = Environment.CurrentDirectory;
+            startupPath = Environment.CurrentDirectory;
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
 
@@ -195,26 +241,52 @@ namespace Recommender
         
         public void calcLocation(Point TopLeft, Size size)
         {
+            //Panel
             Element.Location = TopLeft;
             Element.Size = size;
             Element.BackColor = color;
 
-            Rect = new Rectangle(TopLeft, size);
+            //Icons
+            Size IconSize = new Size(20,20);
+            int Spacing = 2;
+
+            if (Headphones == true)
+            {
+                HeadphonesIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Headphones.jpg"), IconSize.Width, IconSize.Height);
+            }
+            if (Lock == true)
+            {
+                LockIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Lock.jpg"), IconSize.Width, IconSize.Height);
+            }
+            if (Exclamation == true)
+            {
+                ExclamationIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Exclamation.jpg"), IconSize.Width, IconSize.Height);
+            }
+            HeadphonesIcon.Location = new Point(size.Width - IconSize.Width - Spacing, Spacing);
+            LockIcon.Location = new Point(size.Width - (IconSize.Width * 2) - (Spacing * 2), Spacing);
+            ExclamationIcon.Location = new Point(size.Width - (IconSize.Width * 3) - (Spacing * 3), Spacing);
+
+            //Artist picture
             Picture.Location = new Point(0, 0);
             Picture.Size = new Size(size.Height, size.Height);
 
+            //Labels
             NameLabel.Location = new Point(size.Height + 2, 5);
             RatingLabel.Location = new Point(size.Height + 2, 25);
             TimeOfConcertLabel.Location = new Point(size.Height + 2, 45);
             EndTimeLabel.Location = new Point(size.Height + 4 + TimeOfConcertLabel.Size.Width, 45);
             Scene.Location = new Point(size.Height + 2, 65);
 
+            //Adding to the pannel
             Element.Controls.Add(Picture);
             Element.Controls.Add(NameLabel);
             Element.Controls.Add(RatingLabel);
             Element.Controls.Add(TimeOfConcertLabel);
             Element.Controls.Add(Scene);
             Element.Controls.Add(EndTimeLabel);
+            Element.Controls.Add(HeadphonesIcon);
+            Element.Controls.Add(LockIcon);
+            Element.Controls.Add(ExclamationIcon);
         }
     }
 }

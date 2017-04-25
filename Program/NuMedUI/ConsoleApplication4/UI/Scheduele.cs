@@ -23,10 +23,10 @@ namespace Recommender
             
             foreach (SchedueleElement element in Concerts)
             {
-                //Is hard selected
-                
+                //Does it overlap
                 if (element.StartTime < newConcert.EndTime && element.StartTime >= newConcert.StartTime || element.EndTime > newConcert.StartTime && element.StartTime < newConcert.StartTime)
                 {
+                    //Hard Added
                     if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom != "HardAdd")
                     {
                         noOverlap = false;
@@ -39,6 +39,7 @@ namespace Recommender
                     {
                         MessageBox.Show($"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day} \n {element.Artist.Name} and {newConcert.Artist.Name}");
                     }
+                    //Overlap, but not hard added. Takes the one with the best rating
                     else
                     {
                         double n;
@@ -54,7 +55,7 @@ namespace Recommender
                             o = element.Artist.CollaborativeFilteringRating;
 
 
-                        if (o < n)
+                        if (o < n) //LIGE NU TAGER DEN ALTID COLLABORATIVE DA DEN SOM REGL ER STØRRE END CONTENT
                         {
                             Concerts.Remove(element);
                         }

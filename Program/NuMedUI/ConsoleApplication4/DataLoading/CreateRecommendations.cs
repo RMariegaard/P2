@@ -17,6 +17,12 @@ namespace Recommender
         {
             return Users.ContainsKey(id);
         }
+
+        public User GetUser(int id)
+        {
+            return Users[id];
+        }
+
         public List<RoskildeArtist> GetRoskildeArtists()
         {
             List<RoskildeArtist> RoskildeNames = new List<RoskildeArtist>();
@@ -35,7 +41,6 @@ namespace Recommender
             Users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin");
             Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin");
             RoskildeArtists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
-
             Console.WriteLine("Done Reading File");
         }
 
