@@ -51,38 +51,41 @@ namespace Recommender
             }
 
             //Adding Buttons
-            List<DayOfWeek> Days = new List<DayOfWeek>();
-            foreach (RecommendGUI item in GUIList)
+            List<DateTime> Days = new List<DateTime>();
+            foreach (RecommendGUI item in GUIList.OrderBy(x => x.artist.TimeOfConcert))
             {
-                if (!Days.Contains(item.artist.TimeOfConcert.DayOfWeek))
+                if (!Days.Any(x => x.Month == item.artist.TimeOfConcert.Month && x.Day == item.artist.TimeOfConcert.Day))
                 {
-                    Days.Add(item.artist.TimeOfConcert.DayOfWeek);
+                    Days.Add(item.artist.TimeOfConcert);
                 }
             }
-            
+
             int top = 5;
             int left = 5;
 
-            foreach (DayOfWeek item in Days)
+            foreach (DateTime item in Days)
             {
                 Button button = new Button();
                 button.Left = left;
                 button.Top = top;
-                button.Text = item.ToString();
-                button.Name = item.ToString();
+                button.Text = item.DayOfWeek.ToString() + " - " + item.Date.Day;
+                button.Name = item.Day.ToString();
                 button.Click += new EventHandler(NewButton_Click);
+                button.Tag = item.Date.Day.ToString();
                 ButtonPanel.Controls.Add(button);
+                button.Width += 20;
                 left += button.Width + 2;
             }
-            
+
             //Adding to the Scheduele window
-            int i = 0;
-            foreach (RecommendGUI test in GUIList.OrderBy(x => x.TimeOfConcertLabel.Text).ToList())
-            {
-                test.calcLocation(new Point(5,105*i), new Size(400, 100));
-                panel1.Controls.Add(test.Background);
-                i++;
-            }
+            /* int i = 0;
+             foreach (RecommendGUI test in GUIList.OrderBy(x => x.TimeOfConcertLabel.Text).ToList())
+             {
+                 test.calcLocation(new Point(5,105*i), new Size(400, 100));
+                 panel1.Controls.Add(test.Background);
+                 i++;
+             }*/
+
         }
 
         private void NewButton_Click(object sender, EventArgs e)
@@ -91,12 +94,14 @@ namespace Recommender
             
             panel1.Controls.Clear();
 
+
             int counter = 0;
-            foreach (RecommendGUI item in GUIList.Where(x => x.artist.TimeOfConcert.DayOfWeek.ToString() == btn.Name).OrderBy(x => x.TimeOfConcertLabel.ToString()))
+            foreach (RecommendGUI item in GUIList.Where(x => x.artist.TimeOfConcert.Date.Day.ToString() == btn.Tag.ToString()).OrderBy(x => x.TimeOfConcertLabel.ToString()))
             {
                 item.calcLocation(new Point(5, 105 * counter), new Size(400, 100));
                 panel1.Controls.Add(item.Background);
                 counter++;
+
             }
         }
     }
@@ -172,7 +177,7 @@ namespace Recommender
             Scene.Text = artist.Scene;
             NameLabel.Text = artist.Name;
 
-            TimeOfConcertLabel.Text = artist.TimeOfConcert.ToString();
+            TimeOfConcertLabel.Text = artist.TimeOfConcert.TimeOfDay.ToString();
             
         }
         
