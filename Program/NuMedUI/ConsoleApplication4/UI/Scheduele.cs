@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Recommender
 {
@@ -19,19 +20,50 @@ namespace Recommender
         public bool AddConcert(SchedueleElement newConcert)
         {
             bool noOverlap = true;
-            foreach (SchedueleElement currentConcert in Concerts)
+            
+            foreach (SchedueleElement element in Concerts)
             {
-                if (currentConcert.StartTime.DayOfWeek == newConcert.StartTime.DayOfWeek)
+                //Is hard selected
+                if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom != "HardAdd")
                 {
-                    if (currentConcert.StartTime <= newConcert.EndTime && currentConcert.StartTime > newConcert.StartTime)
+                    noOverlap = false;
+                }
+                else if (element.AddedFrom != "HardAdd" && newConcert.AddedFrom == "HardAdd")
+                {
+                    Concerts.Remove(element);
+                    noOverlap = true;
+                }
+                else if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom == "HardAdd")
+                {
+                    MessageBox.Show($"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day}");
+                    noOverlap = true;
+                }
+                else
+                {
+                    if (element.StartTime < newConcert.EndTime && element.StartTime > newConcert.StartTime)
                     {
-                        noOverlap = false;
-                    }
-                    //Start time is now before the current concert
-                    //therefore we check wether the end time is after the start time of the current concert
-                    else if (newConcert.EndTime > currentConcert.StartTime)
-                    {
-                        noOverlap = false;
+                        double n;
+                        double o;
+                        if (newConcert.Artist.CollaborativeFilteringRating < newConcert.Artist.ContentBasedFilteringRating)
+                            n = newConcert.Artist.ContentBasedFilteringRating;
+                        else
+                            n = newConcert.Artist.CollaborativeFilteringRating;
+
+                        if (element.Artist.CollaborativeFilteringRating < element.Artist.ContentBasedFilteringRating)
+                            o = element.Artist.ContentBasedFilteringRating;
+                        else
+                            o = element.Artist.CollaborativeFilteringRating;
+
+
+                        if (o < n)
+                        {
+                            Concerts.Remove(element);
+                            noOverlap = true;
+                        }
+                        else
+                        {
+                            noOverlap = false;
+                        }
                     }
                 }
             }
