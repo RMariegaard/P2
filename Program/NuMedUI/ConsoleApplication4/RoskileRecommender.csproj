@@ -45,16 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Artist.cs" />
-    <Compile Include="BaseArtist.cs" />
-    <Compile Include="BinaryData.cs" />
-    <Compile Include="BinarySerialization.cs" />
-    <Compile Include="CollaborativeFiltering.cs" />
-    <Compile Include="ContentBasedFiltering.cs" />
+    <Compile Include="Recommender\Artist.cs" />
+    <Compile Include="Recommender\BaseArtist.cs" />
+    <Compile Include="DataLoading\BinaryData.cs" />
+    <Compile Include="DataLoading\BinarySerialization.cs" />
+    <Compile Include="Recommender\CollaborativeFiltering.cs" />
+    <Compile Include="Recommender\ContentBasedFiltering.cs" />
     <Compile Include="ConvertIdName.cs" />
-    <Compile Include="Cosine.cs" />
-    <Compile Include="CreateRecommendations.cs" />
-    <Compile Include="PearsonCor.cs" />
+    <Compile Include="Recommender\Cosine.cs" />
+    <Compile Include="DataLoading\CreateRecommendations.cs" />
+    <Compile Include="Recommender\PearsonCor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -62,35 +62,34 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RecommendedArtist.cs" />
-    <Compile Include="ResizeBitmap.cs" />
-    <Compile Include="RoskildeArtist.cs" />
-    <Compile Include="Scheduele.cs" />
-    <Compile Include="SchedueleElement.cs" />
-    <Compile Include="SimilarUser.cs" />
-    <Compile Include="Tag.cs" />
-    <Compile Include="UI.cs">
+    <Compile Include="Recommender\RecommendedArtist.cs" />
+    <Compile Include="UI\ResizeBitmap.cs" />
+    <Compile Include="Recommender\RoskildeArtist.cs" />
+    <Compile Include="UI\Scheduele.cs" />
+    <Compile Include="UI\SchedueleElement.cs" />
+    <Compile Include="Recommender\SimilarUser.cs" />
+    <Compile Include="Recommender\Tag.cs" />
+    <Compile Include="UI\UI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI.Designer.cs">
+    <Compile Include="UI\UI.Designer.cs">
       <DependentUpon>UI.cs</DependentUpon>
     </Compile>
-    <Compile Include="UiAfterLogin.cs">
+    <Compile Include="UI\UiAfterLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UiAfterLogin.Designer.cs">
+    <Compile Include="UI\UiAfterLogin.Designer.cs">
       <DependentUpon>UiAfterLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="UiScheduele.cs">
+    <Compile Include="UI\UiScheduele.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UiScheduele.Designer.cs">
+    <Compile Include="UI\UiScheduele.Designer.cs">
       <DependentUpon>UiScheduele.cs</DependentUpon>
     </Compile>
-    <Compile Include="UpdateData.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="Userartist.cs" />
-    <Compile Include="UserInput.cs" />
+    <Compile Include="DataLoading\UpdateData.cs" />
+    <Compile Include="Recommender\User.cs" />
+    <Compile Include="Recommender\Userartist.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -100,13 +99,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI.resx">
+    <EmbeddedResource Include="UI\UI.resx">
       <DependentUpon>UI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UiAfterLogin.resx">
+    <EmbeddedResource Include="UI\UiAfterLogin.resx">
       <DependentUpon>UiAfterLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UiScheduele.resx">
+    <EmbeddedResource Include="UI\UiScheduele.resx">
       <DependentUpon>UiScheduele.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
