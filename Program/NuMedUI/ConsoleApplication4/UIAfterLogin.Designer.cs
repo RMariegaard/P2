@@ -33,8 +33,8 @@
             this.GetRecommendationButton = new System.Windows.Forms.Button();
             this.InfoLabel = new System.Windows.Forms.Label();
             this.SeachBar = new System.Windows.Forms.TextBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // GreetingLabel
@@ -86,32 +86,30 @@
             this.SeachBar.Text = "Seach";
             this.SeachBar.TextChanged += new System.EventHandler(this.SeachBar_TextChanged);
             // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.CheckOnClick = true;
-            this.checkedListBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(397, 99);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(271, 329);
-            this.checkedListBox1.TabIndex = 5;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(397, 83);
+            this.label1.Location = new System.Drawing.Point(495, 77);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 13);
+            this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Hard Selected";
+            this.label1.Text = "Selected Artists";
+            // 
+            // listView1
+            // 
+            this.listView1.Location = new System.Drawing.Point(428, 99);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(213, 329);
+            this.listView1.TabIndex = 7;
+            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // UIAfterLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 494);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.SeachBar);
             this.Controls.Add(this.InfoLabel);
             this.Controls.Add(this.GetRecommendationButton);
@@ -131,7 +129,7 @@
         private System.Windows.Forms.Button GetRecommendationButton;
         private System.Windows.Forms.Label InfoLabel;
         private System.Windows.Forms.TextBox SeachBar;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListView listView1;
     }
 }

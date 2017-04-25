@@ -105,21 +105,13 @@ namespace Recommender
                 }
             }
 
-            checkedListBox1.Items.Clear();
+            listView1.Items.Clear();
             foreach (RoskildeArtist item in HardSelected)
             {
-                checkedListBox1.Items.Add(item.Name);
+                listView1.Items.Add(item.Name);
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            checkedListBox1.Items.Clear();
-            foreach (RoskildeArtist item in HardSelected)
-            {
-                checkedListBox1.Items.Add(item.Name);
-            }
-        }
     }
 
 }

@@ -24,9 +24,10 @@ namespace Recommender
             this.Recommender = Recommender;
             this.HardSelected = HardSelected;
             HardSelected.ForEach(x => Console.WriteLine(x.Name));
-
             InitializeComponent();
 
+            label1.Text = "Select a date from above!";
+            label1.Location = new Point(Width / 2 - label1.Width / 2, label1.Location.Y);
             GUIList = new List<RecommendGUI>();
             
             string startupPath = Environment.CurrentDirectory;
@@ -83,7 +84,7 @@ namespace Recommender
             Button btn = (Button)sender;
             
             panel1.Controls.Clear();
-
+            label1.Text = btn.Text;
 
             int counter = 0;
             foreach (RecommendGUI item in GUIList.Where(x => x.artist.TimeOfConcert.Date.Day.ToString() == btn.Tag.ToString()).OrderBy(x => x.TimeOfConcertLabel.ToString()))

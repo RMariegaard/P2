@@ -27,7 +27,6 @@ namespace Recommender
             
             Recommender = new CreateRecommendations();
             Recommender.LoadFiles();
-
             ErrorLabelFrontPage.Text = "";
         }
 
@@ -35,12 +34,11 @@ namespace Recommender
         {
             if (!int.TryParse(UserIdTextbox.Text, out ID))
             {
-
-                ErrorLabelFrontPage.Text = "Please enter a number";
+                MessageBox.Show("Please enter a valid number");
             }
             else if (!Recommender.CheckForUserId(ID))
             {
-                ErrorLabelFrontPage.Text = "User not found!";
+                MessageBox.Show("User not found!");
             }
             else
             {
