@@ -11,7 +11,7 @@ namespace Recommender
     {
         public int Id { get; private set; }
         // The number of times the tag has been used
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         // The weight of the tag compared to all other tags in the list
         public double Weight { get; set; }
         public string Name;

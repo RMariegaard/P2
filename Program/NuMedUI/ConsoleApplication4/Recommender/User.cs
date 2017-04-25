@@ -43,19 +43,23 @@ namespace Recommender
         {
             foreach(KeyValuePair<int, Userartist> artist in Artists)
             {
-                Tag[] ArrayOfTags = artist.Value.ThisArtist.Tags.Values.ToArray().OrderByDescending(p => p.Amount).ToArray();
+                Tag[] ArrayOfTags = artist.Value.ThisArtist.Tags.Values.OrderByDescending(p => p.Amount).ToArray();
 
-                for (int i = 0; i < 5 && i < ArrayOfTags.Count(); i++)
+                //Set limit to numbers of tags if it is below 10
+                int limit = 10 > ArrayOfTags.Count() ? ArrayOfTags.Count() : 10; 
+
+                for (int i = 0; i < limit; i++)
                 {
-                    if (Tags.ContainsKey(ArrayOfTags[i].Id))
+                    int currentTagID = ArrayOfTags[i].Id;
+                    if (Tags.ContainsKey(currentTagID))
                     {
-                        Tags[ArrayOfTags[i].Id].Amount += artist.Value.Amount; 
+                        Tags[currentTagID].Amount += artist.Value.Amount * artist.Value.ThisArtist.Tags[currentTagID].Weight; 
                     }
 
                     else
                     {
-                        Tag Temptag = new Tag(ArrayOfTags[i].Id);
-                        Temptag.Amount = artist.Value.Amount; 
+                        Tag Temptag = new Tag(currentTagID);
+                        Temptag.Amount = artist.Value.Amount * artist.Value.ThisArtist.Tags[currentTagID].Weight; 
                         Tags.Add(Temptag.Id, Temptag);
                     }
                 }
