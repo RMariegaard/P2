@@ -24,23 +24,22 @@ namespace Recommender
             foreach (SchedueleElement element in Concerts)
             {
                 //Is hard selected
-                if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom != "HardAdd")
+                
+                if (element.StartTime < newConcert.EndTime && element.StartTime > newConcert.StartTime)
                 {
-                    noOverlap = false;
-                }
-                else if (element.AddedFrom != "HardAdd" && newConcert.AddedFrom == "HardAdd")
-                {
-                    Concerts.Remove(element);
-                    noOverlap = true;
-                }
-                else if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom == "HardAdd")
-                {
-                    MessageBox.Show($"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day}");
-                    noOverlap = true;
-                }
-                else
-                {
-                    if (element.StartTime < newConcert.EndTime && element.StartTime > newConcert.StartTime)
+                    if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom != "HardAdd")
+                    {
+                        noOverlap = false;
+                    }
+                    else if (element.AddedFrom != "HardAdd" && newConcert.AddedFrom == "HardAdd")
+                    {
+                        Concerts.Remove(element);
+                    }
+                    else if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom == "HardAdd")
+                    {
+                        MessageBox.Show($"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day}");
+                    }
+                    else
                     {
                         double n;
                         double o;
@@ -58,7 +57,6 @@ namespace Recommender
                         if (o < n)
                         {
                             Concerts.Remove(element);
-                            noOverlap = true;
                         }
                         else
                         {
