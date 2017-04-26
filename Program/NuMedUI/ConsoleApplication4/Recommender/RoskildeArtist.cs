@@ -12,7 +12,6 @@ namespace Recommender
     {
         public DateTime TimeOfConcert { get; private set; }
         public string Scene { get; private set; }
-        public Artist someArtist;
 
         public RoskildeArtist(DateTime timeOfConcert, string scene, Artist artist) : base(artist.Id, artist.Name)
         {
