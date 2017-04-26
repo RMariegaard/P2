@@ -13,6 +13,17 @@ namespace Recommender
         public DateTime EndTime;
         public string AddedFrom;
 
+        public bool Exclamation => OverlappingArtist != null;
+        public List<SchedueleElement> OverlappingArtist;
+        
+        public void OverlappingAdd(SchedueleElement Concert)
+        {
+            if (OverlappingArtist == null)
+                OverlappingArtist = new List<SchedueleElement>();
+
+            OverlappingArtist.Add(Concert);
+        }
+
         public SchedueleElement(RecommendedArtist artist, DateTime startTime, double minutesOfTime, string AddedFrom)
         {
             this.AddedFrom = AddedFrom;

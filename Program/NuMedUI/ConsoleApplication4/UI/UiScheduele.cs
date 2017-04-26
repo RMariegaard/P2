@@ -79,7 +79,15 @@ namespace Recommender
             //From scheduele to GUIlist, in order to show it
             foreach (SchedueleElement element in FullScheduele.Concerts)
             {
-                GUIList.Add(new RecommendGUI(element.Artist, element.AddedFrom, " - " + element.EndTime.TimeOfDay.ToString()));
+                RecommendGUI Temp = new RecommendGUI(element.Artist, element.AddedFrom, $" - {element.EndTime.TimeOfDay.ToString()}");
+                
+                if (element.Exclamation)
+                {
+                    element.OverlappingArtist.ForEach(x => Temp.Overlapping.Add(x));
+                    Temp.Exclamation = true;
+                }
+                
+                GUIList.Add(Temp);
             }
             
             //Adding the lock icon if the user have added this
@@ -147,7 +155,7 @@ namespace Recommender
         public Color color;
         public string RatingFrom;
         public RecommendedArtist artist;
-
+        public List<SchedueleElement> Overlapping;
         string startupPath;
 
         public PictureBox LockIcon;
@@ -157,8 +165,28 @@ namespace Recommender
         public PictureBox ExclamationIcon;
         public bool Exclamation;
         
+        public void ExclamationHover(object sender, EventArgs e)
+        {
+            Panel PanelShown = new Panel();
+
+            int i = 0;
+            foreach (SchedueleElement item in Overlapping)
+            {
+                RecommendGUI Temp = new RecommendGUI(item.Artist, item.AddedFrom, $" - {item.EndTime.ToString()}");
+                Temp.calcLocation(new Point(5, 105 * i), new Size(400, 100));
+                PanelShown.Controls.Add(Temp.Element);
+                i++;
+            }
+
+            PanelShown.AutoScroll = true;
+            
+            HoverWindow Window = new HoverWindow(PanelShown, Cursor.Position);
+            Window.Show();
+        }
+
         public RecommendGUI(RecommendedArtist artist, string RatingFrom, string EndTimeString)
         {
+            Overlapping = new List<SchedueleElement>();
             //Headphones = true;
             //Lock = true;
             //Exclamation = true;
@@ -177,6 +205,12 @@ namespace Recommender
             EndTimeLabel = new Label();
             Scene = new Label();
             color = new Color();
+
+            //Icons hover
+            //HeadphonesIcon.MouseHover += new EventHandler(HeadPhones_MouseHover);
+
+            //Hover the exclamation mark
+            ExclamationIcon.MouseHover += new EventHandler(ExclamationHover);
 
             //Creating color
             if (RatingFrom == "Collab")
@@ -265,7 +299,7 @@ namespace Recommender
             HeadphonesIcon.Location = new Point(size.Width - IconSize.Width - Spacing, Spacing);
             LockIcon.Location = new Point(size.Width - (IconSize.Width * 2) - (Spacing * 2), Spacing);
             ExclamationIcon.Location = new Point(size.Width - (IconSize.Width * 3) - (Spacing * 3), Spacing);
-
+            
             //Artist picture
             Picture.Location = new Point(0, 0);
             Picture.Size = new Size(size.Height, size.Height);

@@ -29,10 +29,18 @@ namespace Recommender
                     //Hard Added
                     if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom != "HardAdd")
                     {
+                        if (element.Artist.Name != newConcert.Artist.Name)
+                        {
+                            element.OverlappingAdd(newConcert);
+                        }
                         noOverlap = false;
                     }
                     else if (element.AddedFrom != "HardAdd" && newConcert.AddedFrom == "HardAdd")
                     {
+                        if (element.Artist.Name != newConcert.Artist.Name)
+                        {
+                            element.OverlappingAdd(element);
+                        }
                         Concerts.Remove(element);
                     }
                     else if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom == "HardAdd")
