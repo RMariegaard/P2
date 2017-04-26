@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Recommender
 {
     [Serializable]
-    public class User
+    public class User : ITag
     {
         public int Id { get; private set; }
         public Dictionary<int, Userartist> Artists { get; private set; }
