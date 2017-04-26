@@ -64,6 +64,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Recommender\RecommendedArtist.cs" />
+    <Compile Include="UI\HoverWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\HoverWindow.Designer.cs">
+      <DependentUpon>HoverWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ResizeBitmap.cs" />
     <Compile Include="Recommender\RoskildeArtist.cs" />
     <Compile Include="UI\Scheduele.cs" />

@@ -79,7 +79,7 @@ namespace Recommender
             //From scheduele to GUIlist, in order to show it
             foreach (SchedueleElement element in FullScheduele.Concerts)
             {
-                RecommendGUI Temp = new RecommendGUI(element.Artist, element.AddedFrom, $" - {element.EndTime.TimeOfDay.ToString()}");
+                RecommendGUI Temp = new RecommendGUI(element.Artist, element.AddedFrom, $" - {element.EndTime.TimeOfDay.ToString()}", this);
                 
                 if (element.Exclamation)
                 {
@@ -157,6 +157,7 @@ namespace Recommender
         public RecommendedArtist artist;
         public List<SchedueleElement> Overlapping;
         string startupPath;
+        public Form SomeForm;
 
         public PictureBox LockIcon;
         public bool Lock;
@@ -172,20 +173,26 @@ namespace Recommender
             int i = 0;
             foreach (SchedueleElement item in Overlapping)
             {
-                RecommendGUI Temp = new RecommendGUI(item.Artist, item.AddedFrom, $" - {item.EndTime.ToString()}");
+                RecommendGUI Temp = new RecommendGUI(item.Artist, item.AddedFrom, $" - {item.EndTime.ToString()}", SomeForm);
                 Temp.calcLocation(new Point(5, 105 * i), new Size(400, 100));
                 PanelShown.Controls.Add(Temp.Element);
                 i++;
             }
 
             PanelShown.AutoScroll = true;
-            
-            HoverWindow Window = new HoverWindow(PanelShown, Cursor.Position);
+
+            PictureBox pic = (PictureBox)sender;
+
+            HoverWindow Window = new HoverWindow(PanelShown);
+            Window.Location = new Point(Cursor.Position.X -10, Cursor.Position.Y -10);
+            Window.StartPosition = FormStartPosition.Manual;
+
             Window.Show();
         }
 
-        public RecommendGUI(RecommendedArtist artist, string RatingFrom, string EndTimeString)
+        public RecommendGUI(RecommendedArtist artist, string RatingFrom, string EndTimeString, Form form)
         {
+            SomeForm = form;
             Overlapping = new List<SchedueleElement>();
             //Headphones = true;
             //Lock = true;

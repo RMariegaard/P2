@@ -14,11 +14,11 @@ namespace Recommender
     {
         Panel BackGround;
         int Spacing;
-        public HoverWindow(Panel Content, Point appearFrom)
+        public HoverWindow(Panel Content)
         {
+            
             Spacing = 2;
             
-            InitializeComponent();
             BackGround = new Panel();
             Height = 300;
             Width = 500;
@@ -35,7 +35,7 @@ namespace Recommender
             BackGround.MouseLeave += new EventHandler(Leves);
             MouseLeave += new EventHandler(Leves);
 
-            this.Location = appearFrom;
+            InitializeComponent();
         }
 
         public void Leves(object sender, EventArgs e)
