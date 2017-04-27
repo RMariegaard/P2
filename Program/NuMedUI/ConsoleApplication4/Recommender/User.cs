@@ -14,6 +14,11 @@ namespace Recommender
         public Dictionary<int, Tag> Tags { get; private set; }
         private double _total_tag_amount;
         private double _totalt_listen_amount;
+        private double _averageContentRating;
+        private double _averageColabRating;
+        public double AverageContentRating { get { return _averageContentRating; } }
+        public double AverageColabRating { get { return _averageColabRating; } }
+
 
         public double TotalTagAmount { get { return _total_tag_amount; } }
         public double TotalListenAmount { get { return _totalt_listen_amount; } }
@@ -85,6 +90,21 @@ namespace Recommender
             {
                 artist.Value.Weight = (artist.Value.Amount / _totalt_listen_amount) * 100;
             }
+        }
+
+        // After Recommendations are made, the users average rating value is calculated for deciding which recommendation to choose in a possible conflict.
+        public void CalculateAverageOfUserRatings(List<RecommendedArtist> listOfRecommendations)
+        {
+            double totalColabRating = 0;
+            double totalContentRating = 0;
+            foreach (RecommendedArtist artist in listOfRecommendations)
+            {
+                totalColabRating += artist.CollaborativeFilteringRating;
+                totalContentRating += artist.ContentBasedFilteringRating;
+
+            }
+            _averageColabRating = (100 / totalColabRating) * listOfRecommendations.Count;
+            _averageContentRating = (100 / totalContentRating) * listOfRecommendations.Count;
         }
     }
 }

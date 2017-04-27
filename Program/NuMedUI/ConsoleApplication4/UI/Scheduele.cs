@@ -51,7 +51,12 @@ namespace Recommender
                     //Overlap, but not hard added. Takes the one with the best rating
                     else
                     {
-                        double n;
+
+
+
+
+
+                      /*  double n;
                         double o;
                         if (newConcert.Artist.CollaborativeFilteringRating < newConcert.Artist.ContentBasedFilteringRating)
                             n = newConcert.Artist.ContentBasedFilteringRating;
@@ -71,7 +76,7 @@ namespace Recommender
                         else
                         {
                             noOverlap = false;
-                        }
+                        } */
                     }
                 }
             }

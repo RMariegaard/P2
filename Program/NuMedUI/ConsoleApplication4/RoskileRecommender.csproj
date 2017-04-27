@@ -64,6 +64,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Recommender\RecommendedArtist.cs" />
+    <Compile Include="Switching.cs" />
     <Compile Include="UI\HoverWindow.cs">
       <SubType>Form</SubType>
     </Compile>
