@@ -21,7 +21,8 @@ namespace Recommender
         {
             bool noOverlap = true;
             
-            foreach (SchedueleElement element in Concerts)
+            //We are writing ToList() becuse we are romoving elements inside the foreach. With .ToList() We are creating a new list, that we use for the forech. But still removing in the original.
+            foreach (SchedueleElement element in Concerts.ToList())
             {
                 //Does it overlap
                 if (element.StartTime < newConcert.EndTime && element.StartTime >= newConcert.StartTime || element.EndTime > newConcert.StartTime && element.StartTime < newConcert.StartTime)

@@ -194,31 +194,19 @@ namespace Recommender
         {
             SomeForm = form;
             Overlapping = new List<SchedueleElement>();
-            //Headphones = true;
-            //Lock = true;
-            //Exclamation = true;
 
             //Init
             this.artist = artist;
             this.RatingFrom = RatingFrom;
             Element = new Panel();
             Picture = new PictureBox();
-            HeadphonesIcon = new PictureBox();
-            LockIcon = new PictureBox();
-            ExclamationIcon = new PictureBox();
             NameLabel = new Label();
             RatingLabel = new Label();
             TimeOfConcertLabel = new Label();
             EndTimeLabel = new Label();
             Scene = new Label();
             color = new Color();
-
-            //Icons hover
-            //HeadphonesIcon.MouseHover += new EventHandler(HeadPhones_MouseHover);
-
-            //Hover the exclamation mark
-            ExclamationIcon.MouseHover += new EventHandler(ExclamationHover);
-
+            
             //Creating color
             if (RatingFrom == "Collab")
             {
@@ -290,22 +278,29 @@ namespace Recommender
             //Icons
             Size IconSize = new Size(20,20);
             int Spacing = 2;
-
+            
             if (Headphones == true)
             {
+                HeadphonesIcon = new PictureBox();
                 HeadphonesIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Headphones.jpg"), IconSize.Width, IconSize.Height);
+                HeadphonesIcon.Location = new Point(size.Width - IconSize.Width - Spacing, Spacing);
+                Element.Controls.Add(HeadphonesIcon);
             }
             if (Lock == true)
             {
+                LockIcon = new PictureBox();
                 LockIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Lock.jpg"), IconSize.Width, IconSize.Height);
+                LockIcon.Location = new Point(size.Width - (IconSize.Width * 2) - (Spacing * 2), Spacing);
+                Element.Controls.Add(LockIcon);
             }
             if (Exclamation == true)
             {
+                ExclamationIcon = new PictureBox();
                 ExclamationIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Exclamation.jpg"), IconSize.Width, IconSize.Height);
+                ExclamationIcon.MouseHover += new EventHandler(ExclamationHover);
+                ExclamationIcon.Location = new Point(size.Width - (IconSize.Width * 3) - (Spacing * 3), Spacing);
+                Element.Controls.Add(ExclamationIcon);
             }
-            HeadphonesIcon.Location = new Point(size.Width - IconSize.Width - Spacing, Spacing);
-            LockIcon.Location = new Point(size.Width - (IconSize.Width * 2) - (Spacing * 2), Spacing);
-            ExclamationIcon.Location = new Point(size.Width - (IconSize.Width * 3) - (Spacing * 3), Spacing);
             
             //Artist picture
             Picture.Location = new Point(0, 0);
@@ -325,9 +320,6 @@ namespace Recommender
             Element.Controls.Add(TimeOfConcertLabel);
             Element.Controls.Add(Scene);
             Element.Controls.Add(EndTimeLabel);
-            Element.Controls.Add(HeadphonesIcon);
-            Element.Controls.Add(LockIcon);
-            Element.Controls.Add(ExclamationIcon);
         }
     }
 }
