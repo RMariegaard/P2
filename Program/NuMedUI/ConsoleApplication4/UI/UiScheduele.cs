@@ -142,7 +142,7 @@ namespace Recommender
             }
         }
     }
-    
+
     class RecommendGUI
     {
         public PictureBox Picture;
@@ -285,6 +285,10 @@ namespace Recommender
                 HeadphonesIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Headphones.jpg"), IconSize.Width, IconSize.Height);
                 HeadphonesIcon.Location = new Point(size.Width - IconSize.Width - Spacing, Spacing);
                 Element.Controls.Add(HeadphonesIcon);
+
+                ToolTip tooltip = new ToolTip();
+                tooltip.SetToolTip(HeadphonesIcon, "This artist is in your playlist!");
+
             }
             if (Lock == true)
             {
@@ -292,6 +296,8 @@ namespace Recommender
                 LockIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Lock.jpg"), IconSize.Width, IconSize.Height);
                 LockIcon.Location = new Point(size.Width - (IconSize.Width * 2) - (Spacing * 2), Spacing);
                 Element.Controls.Add(LockIcon);
+                ToolTip tooltip = new ToolTip();
+                tooltip.SetToolTip(LockIcon, "You selected this artist!");
             }
             if (Exclamation == true)
             {
