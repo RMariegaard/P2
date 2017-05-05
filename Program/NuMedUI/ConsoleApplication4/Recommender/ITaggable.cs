@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    public interface ITag
+    public interface ITaggable
     {
         //The interface only requires a getter
         Dictionary<int, Tag> Tags { get;}

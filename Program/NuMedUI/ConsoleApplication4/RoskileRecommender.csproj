@@ -54,7 +54,7 @@
     <Compile Include="ConvertIdName.cs" />
     <Compile Include="Recommender\Cosine.cs" />
     <Compile Include="DataLoading\CreateRecommendations.cs" />
-    <Compile Include="Recommender\ITag.cs" />
+    <Compile Include="Recommender\ITaggable.cs" />
     <Compile Include="Recommender\PearsonCor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -55,21 +55,24 @@ namespace Recommender
         public double CalculateUserMean(User user)
         {
             double temp = 0.0;
-            temp = user.Artists.Values.Sum(x => x.Weight);
+            temp = user.Artists.Values.Sum(x => x.Amount);
             temp /= user.Artists.Count;
             return temp;
         }
         public double CalculateNumerator(User user, User otherUser, double userMean, double otherUserMean)
         {
             double temp = 0.0;
+            int artistInCommon = 0;
             foreach (var userArtist in user.Artists)
             {
                 if (otherUser.Artists.ContainsKey(userArtist.Key))
                 {
-                    temp += (userArtist.Value.Weight - userMean) * (otherUser.Artists[userArtist.Key].Weight - otherUserMean);
+                    temp += (userArtist.Value.Amount - userMean) *
+                            (otherUser.Artists[userArtist.Key].Amount - otherUserMean);
+                    artistInCommon++;
                 }
             }
-            return temp;
+            return artistInCommon > 5 ? temp : 0.0;
         }
         public double CalculateDenumerator(User user, User otherUser, double userMean, double otherUserMean)
         {
@@ -79,8 +82,8 @@ namespace Recommender
             {
                 if (otherUser.Artists.ContainsKey(userArtist.Key))
                 {
-                    temp += Math.Pow((userArtist.Value.Weight - userMean), 2);
-                    temp2 += Math.Pow((otherUser.Artists[userArtist.Key].Weight - otherUserMean),2);
+                    temp += Math.Pow(userArtist.Value.Amount - userMean, 2);
+                    temp2 += Math.Pow(otherUser.Artists[userArtist.Key].Amount - otherUserMean, 2);
                 }
             }
             return Math.Sqrt(temp * temp2);

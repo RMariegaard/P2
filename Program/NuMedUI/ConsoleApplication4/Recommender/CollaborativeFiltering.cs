@@ -26,7 +26,7 @@ namespace Recommender
 
         public static List<SimilarUser> KNearestNeighbours(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> users)
         {
-            return KNearestNeighbours(correlationMeasure, newUser, users, 10);
+            return KNearestNeighbours(correlationMeasure, newUser, users, 100);
         }
 
         public static Dictionary<int, RecommendedArtist> RecommendArtists(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist)
@@ -60,6 +60,7 @@ namespace Recommender
                 }
             }
     */      double tempCorelation = 0.0;
+            
             int n = 0;
             int secondCount = 0;
             foreach (var artist in roskildeArtist)
@@ -74,19 +75,12 @@ namespace Recommender
                         n++;
                     }
                 }
-                if(n != 0)
+                if (n != 0)
                 {
                     dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
                     dicOfRecommendations[artist.Key].CollaborativeFilteringRating = tempCorelation / n;
                     secondCount++;
                 }
-                else if(newUser.Artists.ContainsKey(artist.Key))
-                {
-                    dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
-                    dicOfRecommendations[artist.Key].CollaborativeFilteringRating = 5555.0;
-                    secondCount++;
-                }
-
             }
 
             var final = dicOfRecommendations
