@@ -9,6 +9,16 @@ namespace Recommender
 {
     public class CreateRecommendations
     {
+        public CreateRecommendations()
+        {
+
+        }
+        public CreateRecommendations(Dictionary<int, User> users, Dictionary<int, Artist> artists, Dictionary<int, RoskildeArtist> roskildeArtists)
+        {
+            Users = users;
+            Artists = artists;
+            RoskildeArtists = roskildeArtists;
+        }
         private Dictionary<int, User> Users;
         Dictionary<int, Artist> Artists;
         Dictionary<int, RoskildeArtist> RoskildeArtists;

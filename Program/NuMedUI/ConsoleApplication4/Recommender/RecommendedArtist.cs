@@ -10,7 +10,7 @@ namespace Recommender
     {
         public double CollaborativeFilteringRating { get; set; }
         public double ContentBasedFilteringRating { get; set; }
-
+        public int userID;
         public RecommendedArtist(RoskildeArtist artist) : base(artist.TimeOfConcert, artist.Scene, artist)
         {
         }

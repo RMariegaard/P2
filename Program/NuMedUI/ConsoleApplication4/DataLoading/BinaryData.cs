@@ -208,6 +208,44 @@ namespace Recommender
                 user.CalculateArtistWeight();
             }
         }
+        /*
+        public void CalcCorrelationAverage(out double totalAvgContentRating, out double totalAvgCollabRating)
+        {
+            CreateRecommendations Recommender = new CreateRecommendations(UsersDic, Artists, RoskildeArtists);
+
+            Dictionary<int, RecommendedArtist> collab;
+            Dictionary<int, RecommendedArtist> content;
+            List<RecommendedArtist> array = new List<RecommendedArtist>();
+            List<RecommendedArtist> array1 = new List<RecommendedArtist>();
+            for (int i = 0; i < 2500; i++)
+            {
+                Recommender.Recommender(i);
+                collab = Recommender.GetCollabRecommendedArtists();
+                content = Recommender.GetcontentRecommendedArtists();
+                if (collab != null && collab.Count() != 0)
+                {
+                    foreach (var element in collab)
+                    {
+                        element.Value.userID = i;
+                        array.Add(element.Value);
+                    }
+                }
+                if (content != null && content.Count() != 0)
+                {
+                    foreach (var element in content)
+                    {
+                        element.Value.userID = i;
+                        array1.Add(element.Value);
+                    }
+                }
+            }
+
+            array1 = array1.OrderByDescending(x => x.ContentBasedFilteringRating).ToList();
+            array = array.OrderByDescending(x => x.CollaborativeFilteringRating).ToList();
+
+            totalAvgCollabRating = array.Sum(x => x.CollaborativeFilteringRating) / array.Count();
+            totalAvgContentRating = array1.Sum(x => x.ContentBasedFilteringRating) / array1.Count();
+        }*/
 
         public void WriteToFile()
         {
