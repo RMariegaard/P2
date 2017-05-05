@@ -9,8 +9,8 @@ namespace Recommender
     public class Cosine
     {
         public double GetCosine<T1, T2>(T1 user, T2 artist) 
-            where T1 : ITag 
-            where T2 : ITag
+            where T1 : ITaggable 
+            where T2 : ITaggable
         {
             double dot = 0;
             double denumerator = 0;
@@ -34,8 +34,8 @@ namespace Recommender
         }
 
         public double CalcDotInCosine<T1, T2>(T1 user, T2 artist)
-            where T1 : ITag
-            where T2 : ITag
+            where T1 : ITaggable
+            where T2 : ITaggable
         {
             double dot = 0.0;
             foreach (var element in user.Tags)
@@ -50,8 +50,8 @@ namespace Recommender
 
         //length, this is the vector definicion of length, so its acctually just the sum of all tag.weigths
         public double GetDenumerator<T1, T2>(T1 user, T2 artist)
-            where T1 : ITag
-            where T2 : ITag
+            where T1 : ITaggable
+            where T2 : ITaggable
         {
             double temp = user.Tags.Sum(x => Math.Pow(x.Value.Weight, 2));
 
