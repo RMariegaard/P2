@@ -73,7 +73,7 @@ namespace Recommender
                 }
             }
             //Only return user with more than 6 artist in common
-            return artistInCommon > 6 ? temp : 0.0;
+            return artistInCommon > 4 ? temp : 0.0;
         }
         public double CalculateDenumerator(User user, User otherUser, double userMean, double otherUserMean)
         {

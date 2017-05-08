@@ -9,34 +9,37 @@ namespace Recommender
 {
     public class CreateRecommendations
     {
-        public CreateRecommendations()
-        {
+        private Dictionary<int, User> _users;
+        private Dictionary<int, Artist> _artists;
+        private Dictionary<int, RoskildeArtist> _roskildeArtists;
 
-        }
+        public Dictionary<int, RecommendedArtist> RecommendedCollabArtists { get; private set; }
+        public Dictionary<int, RecommendedArtist> RecommendedContetArtists { get; private set; }
+
+        public CreateRecommendations()
+        { }
+
         public CreateRecommendations(Dictionary<int, User> users, Dictionary<int, Artist> artists, Dictionary<int, RoskildeArtist> roskildeArtists)
         {
-            Users = users;
-            Artists = artists;
-            RoskildeArtists = roskildeArtists;
+            _users = users;
+            _artists = artists;
+            _roskildeArtists = roskildeArtists;
         }
-        private Dictionary<int, User> Users;
-        Dictionary<int, Artist> Artists;
-        Dictionary<int, RoskildeArtist> RoskildeArtists;
 
         public bool CheckForUserId(int id)
         {
-            return Users.ContainsKey(id);
+            return _users.ContainsKey(id);
         }
 
         public User GetUser(int id)
         {
-            return Users[id];
+            return _users[id];
         }
 
         public List<RoskildeArtist> GetRoskildeArtists()
         {
             List<RoskildeArtist> RoskildeNames = new List<RoskildeArtist>();
-            RoskildeArtists.Values.ToList().ForEach(x => RoskildeNames.Add(x));
+            _roskildeArtists.Values.ToList().ForEach(x => RoskildeNames.Add(x));
             return RoskildeNames;
         }
 
@@ -48,48 +51,32 @@ namespace Recommender
             startupPath = Path.GetDirectoryName(startupPath);
 
             Console.WriteLine("Reading File");
-            Users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin");
-            Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin");
-            RoskildeArtists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
+            _users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin");
+            _artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin");
+            _roskildeArtists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
             Console.WriteLine("Done Reading File");
         }
 
-        Dictionary<int, RecommendedArtist> recommendedArtists;
-        Dictionary<int, RecommendedArtist> recommendedArtists2;
-
-        public Dictionary<int, RecommendedArtist> GetCollabRecommendedArtists()
-        {
-            return recommendedArtists;
-        }
-        public Dictionary<int, RecommendedArtist> GetcontentRecommendedArtists()
-        {
-            return recommendedArtists2;
-        }
-
-        public void Recommender(int id)
+        public void GenerateRecommendations(int id)
         {
             var cosine = new Cosine();
             var pearson = new PearsonCor();
             User newUser = new User(0);
 
-            if (Users.ContainsKey(id))
+            if (_users.ContainsKey(id))
             {
-                newUser = Users[id];
-            }
-            else
-            {
-                //der skal være en popup
+                newUser = _users[id];
             }
                 
             StringBuilder streng = new StringBuilder();
 
-            recommendedArtists = CollaborativeFiltering.RecommendArtists(pearson.CalculateUser, newUser, Users, RoskildeArtists);// ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10); 
+            RecommendedCollabArtists = CollaborativeFiltering.RecommendArtists(pearson.CalculateUser, newUser, _users, _roskildeArtists);
             streng.AppendLine("Collarborative");
-            recommendedArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.CollaborativeFilteringRating));
+            RecommendedCollabArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.CollaborativeFilteringRating));
 
-            recommendedArtists2 = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, RoskildeArtists, 10);
+            RecommendedContetArtists = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, _roskildeArtists, 10);
             streng.AppendLine("\nContentBasedFiltering: ");
-            recommendedArtists2.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.ContentBasedFilteringRating));
+            RecommendedContetArtists.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.ContentBasedFilteringRating));
 
             streng.AppendLine(" ---------");
             newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => streng.AppendLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));

@@ -63,12 +63,12 @@ namespace Recommender
             }
 
             //Getting Recommendations
-            Recommender.Recommender(ID);
-            foreach (var artist in Recommender.GetCollabRecommendedArtists())
+            Recommender.GenerateRecommendations(ID);
+            foreach (var artist in Recommender.RecommendedCollabArtists)
             {
                 Elements.Add(new SchedueleElement(artist.Value, artist.Value.TimeOfConcert, 60, "Collab"));
             }
-            foreach (var artist in Recommender.GetcontentRecommendedArtists())
+            foreach (var artist in Recommender.RecommendedContetArtists)
             {
                 Elements.Add(new SchedueleElement(artist.Value, artist.Value.TimeOfConcert, 60, "Content"));
             }

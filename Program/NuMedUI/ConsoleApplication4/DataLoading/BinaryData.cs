@@ -10,7 +10,7 @@ namespace Recommender
     public class BinaryData
     {
         //Getting the path for the location of the text files from data set
-        string startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
+        string _startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
 
         string[] _userFile;
         string[] _artistFile;
@@ -43,13 +43,13 @@ namespace Recommender
             //Reading the different files as string arrays to the fields
             try
             {
-                _userFile = File.ReadAllLines(startupPath + @"\DataFiles\user_artists.dat");
-                _artistFile = File.ReadAllLines(startupPath + @"\DataFiles\artists.dat");
-                _userTagFile = File.ReadAllLines(startupPath + @"\DataFiles\user_taggedartists.dat");
+                _userFile = File.ReadAllLines(_startupPath + @"\DataFiles\user_artists.dat");
+                _artistFile = File.ReadAllLines(_startupPath + @"\DataFiles\artists.dat");
+                _userTagFile = File.ReadAllLines(_startupPath + @"\DataFiles\user_taggedartists.dat");
             }
             catch (Exception)
             {
-                throw new Exception($"One or more files are missing at this location: {startupPath}");
+                throw new Exception($"One or more files are missing at this location: {_startupPath}");
             }
         }
 
@@ -129,11 +129,11 @@ namespace Recommender
             List<string> artistNameList = Artists.Values.Select(x => x.Name).ToList();
 
             // Read all tags from the dataset
-            List<string> tagFile = File.ReadAllLines(startupPath + @"\DataFiles\tags.dat").ToList();
+            List<string> tagFile = File.ReadAllLines(_startupPath + @"\DataFiles\tags.dat").ToList();
 
             // Reading the roskilde artists that did not have tags in the dataset
             // File is created using Last.FM api
-            string[] inputFile = File.ReadAllLines(startupPath + @"\DataFiles\test.txt");
+            string[] inputFile = File.ReadAllLines(_startupPath + @"\DataFiles\test.txt");
 
             int fileLength = inputFile.Length;
             for (int i = 0; i < fileLength; i++)
@@ -248,14 +248,14 @@ namespace Recommender
         private void WriteToFile()
         {
 
-            BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin", Users);
-            BinarySerialization.WriteToBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin", Artists);
-            BinarySerialization.WriteToBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin", RoskildeArtists);
+            BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(_startupPath + @"\DataFiles\users.bin", Users);
+            BinarySerialization.WriteToBinaryFile<Dictionary<int, Artist>>(_startupPath + @"\DataFiles\artists.bin", Artists);
+            BinarySerialization.WriteToBinaryFile<Dictionary<int, RoskildeArtist>>(_startupPath + @"\DataFiles\Roskildeartists.bin", RoskildeArtists);
         }
 
         private void ReadRoskildeSchedule(string date)
         {
-            string[] roskildeFile = File.ReadAllLines(startupPath + @"\DataFiles\" + date + ".txt");
+            string[] roskildeFile = File.ReadAllLines(_startupPath + @"\DataFiles\" + date + ".txt");
             string[] scenes = { "APOLLO", "PAVILION", "AVALON", "ORANGE", "GLORIA", "ARENA", "RISING" };
             string currentScene = default(string);
             DateTime currentTime = default(DateTime);

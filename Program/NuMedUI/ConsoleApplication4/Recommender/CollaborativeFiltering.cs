@@ -26,13 +26,33 @@ namespace Recommender
 
         public static List<SimilarUser> KNearestNeighbours(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> users)
         {
-            return KNearestNeighbours(correlationMeasure, newUser, users, 100);
+            return KNearestNeighbours(correlationMeasure, newUser, users, 10);
         }
 
         public static Dictionary<int, RecommendedArtist> RecommendArtists(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist)
         {
             Dictionary<int, RecommendedArtist> dicOfRecommendations = new Dictionary<int, RecommendedArtist>();
             List<SimilarUser> KNN = KNearestNeighbours(correlationMeasure, newUser, allUsers);
+
+            foreach (var neighbour in KNN)
+            {
+                if (neighbour.Id == newUser.Id)
+                {
+                    continue;
+                }
+                //Adds Neighbours top 3 artists to recommendations
+                foreach (var artist in neighbour.Artists.OrderByDescending(x => x.Value.Weight).Take(3))
+                {
+                    if (roskildeArtist.ContainsKey(artist.Key) && !dicOfRecommendations.ContainsKey(artist.Key))
+                    {
+                        dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
+                        dicOfRecommendations[artist.Key].CollaborativeFilteringRating = neighbour.similarity;
+                    }
+                }
+            }
+
+            return dicOfRecommendations;
+
             /*
             foreach (SimilarUser user in KNN)
             {
@@ -59,7 +79,7 @@ namespace Recommender
                     }
                 }
             }
-    */      double tempCorelation = 0.0;
+    */ /*  double tempCorelation = 0.0;
             
             int n = 0;
             int secondCount = 0;
@@ -73,6 +93,7 @@ namespace Recommender
                     {
                         tempCorelation += user.similarity * (user.Artists[artist.Key].Weight);
                         n++;
+
                     }
                 }
                 if (n != 0)
@@ -87,17 +108,9 @@ namespace Recommender
                 .OrderByDescending(x => x.Value.CollaborativeFilteringRating)
                 .Take(10)
                 .ToDictionary(x => x.Key, x => x.Value);
-            /*
-            foreach (var artist in dicOfRecommendations)
-            {
-                if (roskildeArtist.Any(x => x.Key == artist.Key))
-                {
-                    final.Add(artist.Key, artist.Value);
-                }
-            }
-            */
+            
             //.OrderByDescending(x => x.Value.CollaborativeFilteringRating).Take(5).ToDictionary(x => x.Key, x => x.Value);
-            return final;
+            return final;*/
         }
     }
-}
+} 
