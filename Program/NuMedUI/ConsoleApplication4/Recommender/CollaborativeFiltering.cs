@@ -9,7 +9,7 @@ namespace Recommender
     public class CollaborativeFiltering
     {
         //Finds the users with the highest correlation based on a given correltion measure
-        public static List<SimilarUser> KNearestNeighbours(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> users, int k)
+        public static List<SimilarUser> KNearestNeighbours(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, Dictionary<int, User> users, int k, Dictionary<int, Artist> allArtists)
         {
             List<SimilarUser> listOfNeighbours = new List<SimilarUser>();
 
@@ -17,22 +17,23 @@ namespace Recommender
             foreach (var user in users.Values)
             {
                 SimilarUser tempUser = new SimilarUser(user.Id);
-                tempUser.similarity = correlationMeasure(newUser, user);
+                tempUser.similarity = correlationMeasure(newUser, user, allArtists);
                 tempUser.Artists = user.Artists;
                 listOfNeighbours.Add(tempUser);
             }
             return listOfNeighbours.OrderByDescending(x => x.similarity).Where(x => x.similarity > 0).ToList();
         }
 
-        public static List<SimilarUser> KNearestNeighbours(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> users)
+        public static List<SimilarUser> KNearestNeighbours(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, Dictionary<int, User> users, Dictionary<int, Artist> allArtists)
         {
-            return KNearestNeighbours(correlationMeasure, newUser, users, 10);
+            return KNearestNeighbours(correlationMeasure, newUser, users, 10, allArtists);
         }
 
-        public static Dictionary<int, RecommendedArtist> RecommendArtists(Func<User, User, double> correlationMeasure, User newUser, Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist)
+        public static Dictionary<int, RecommendedArtist> RecommendArtists(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, 
+            Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist, Dictionary<int, Artist> allArtists)
         {
             Dictionary<int, RecommendedArtist> dicOfRecommendations = new Dictionary<int, RecommendedArtist>();
-            List<SimilarUser> KNN = KNearestNeighbours(correlationMeasure, newUser, allUsers);
+            List<SimilarUser> KNN = KNearestNeighbours(correlationMeasure, newUser, allUsers, allArtists);
 
             foreach (var neighbour in KNN)
             {

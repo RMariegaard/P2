@@ -70,7 +70,7 @@ namespace Recommender
                 
             StringBuilder streng = new StringBuilder();
 
-            RecommendedCollabArtists = CollaborativeFiltering.RecommendArtists(pearson.CalculateUser, newUser, _users, _roskildeArtists);
+            RecommendedCollabArtists = CollaborativeFiltering.RecommendArtists(pearson.CalculateUser, newUser, _users, _roskildeArtists, _artists);
             streng.AppendLine("Collarborative");
             RecommendedCollabArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.CollaborativeFilteringRating));
 
