@@ -9,22 +9,23 @@ namespace Recommender
 {
     public class BinaryData
     {
+        //Getting the path for the location of the text files from data set
         string startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
 
-        string[] file;
-        string[] artistFile;
-        string[] userTagFile;
-        public Dictionary<int, User> UsersDic = new Dictionary<int, User>();
+        string[] _userFile;
+        string[] _artistFile;
+        string[] _userTagFile;
+        public Dictionary<int, User> Users = new Dictionary<int, User>();
         public Dictionary<int, Artist> Artists = new Dictionary<int, Artist>();
-        List<User> Users = new List<User>();
-        Dictionary<int, RoskildeArtist> RoskildeArtists = new Dictionary<int, RoskildeArtist>();
+        public Dictionary<int, RoskildeArtist> RoskildeArtists = new Dictionary<int, RoskildeArtist>();
 
-        public void DoItAll()
+        public void MakeBinaryFiles()
         {
+            //Names for text files of roskilde scheduele
             List<string> listOfDates = new List<string>()
             { "Søndag 26", "Mandag 27", "Tirsdag 28", "Onsdag 29", "Torsdag 30", "Fredag 01", "Lørdag 02", "Søndag 03" };
 
-            ReadFile();
+            ReadFiles();
             ReadArtist();
             ReadUsers();
             ReadTags();
@@ -37,14 +38,14 @@ namespace Recommender
             WriteToFile();
         }
 
-        public void ReadFile()
+        public void ReadFiles()
         {
-            //Reading the different files
+            //Reading the different files as string arrays to the fields
             try
             {
-                file = File.ReadAllLines(startupPath + @"\DataFiles\user_artists.dat");
-                artistFile = File.ReadAllLines(startupPath + @"\DataFiles\artists.dat");
-                userTagFile = File.ReadAllLines(startupPath + @"\DataFiles\user_taggedartists.dat");
+                _userFile = File.ReadAllLines(startupPath + @"\DataFiles\user_artists.dat");
+                _artistFile = File.ReadAllLines(startupPath + @"\DataFiles\artists.dat");
+                _userTagFile = File.ReadAllLines(startupPath + @"\DataFiles\user_taggedartists.dat");
             }
             catch (Exception)
             {
@@ -52,75 +53,67 @@ namespace Recommender
             }
         }
 
-        public void ReadArtist()
+        private void ReadArtist()
         {
-            // "Artists" dic gets filled with all the artists from the dataset
-            foreach (var String in artistFile.Skip(1))
+            // "Artists" dictonary gets filled with all the artists from the dataset
+            foreach (var line in _artistFile.Skip(1))
             {
-                string[] data = String.Split('\t');
-                Artists.Add(int.Parse(data[0]), new Artist(int.Parse(data[0]), data[1]));
+                string[] data = line.Split('\t');
+                int id = int.Parse(data[0]);
+                Artists.Add(id, new Artist(id, data[1]));
             }
         }
 
-        public void ReadUsers()
+        private void ReadUsers()
         {
-            int prev = 0;
-            int index = -1;
-            var file1 = file.Skip(1);
-
-            foreach (var line in file1)
+            foreach (var line in _userFile.Skip(1))
             {
                 // Splits up file
                 string[] data = line.Split('\t');
-
+                int id = int.Parse(data[0]);
                 // If the user ID dosn´t allready exsits. A new will be made:
-                if (prev != int.Parse(data[0]))
+                if (!Users.ContainsKey(id))
                 {
-                    User _User = new User(int.Parse(data[0]));
-                    Users.Add(_User);
-                    index++;
+                    User user = new User(id);
+                    Users.Add(id, user);
                 }
 
-                // Creats a tempoary artist for later use:
-                int tempId = int.Parse(data[1]);
+                int ArtistId = int.Parse(data[1]);
 
                 // The artist ID and play count, gets inserted in the user list. A pointer for the allready exsisting artist is created
-                Users[index].Artists.Add(tempId, new Userartist(tempId, int.Parse(data[2]), Artists[tempId]));
-
-                // The current ID is moved to Prev
-                prev = int.Parse(data[0]);
+                Users[id].Artists.Add(ArtistId, new Userartist(ArtistId, int.Parse(data[2]), Artists[ArtistId]));
             }
         }
 
-        public void ReadTags()
+        private void ReadTags()
         {
             // The tags gets transfered to the artists:
-            int TempTagID;
-            foreach (string streng in userTagFile.Skip(1))
+            int tagID;
+            int artistID;
+            foreach (string streng in _userTagFile.Skip(1))
             {
                 string[] data = streng.Split('\t');
-                TempTagID = int.Parse(data[2]);
-                foreach (var artist in Artists)
-                {
-                    if (int.Parse(data[1]) == artist.Value.Id)
-                    {
-                        if (artist.Value.Tags.ContainsKey(TempTagID))
-                            artist.Value.Tags[TempTagID].Amount++;
-                        else
-                            artist.Value.Tags.Add(TempTagID, new Tag(TempTagID));
+                tagID = int.Parse(data[2]);
+                artistID = int.Parse(data[1]);
 
-                        break;
-                    }
+                //Creates adds tag to artist but if it is allready added the ammont is incremented
+                if (Artists[artistID].Tags.ContainsKey(tagID))
+                {
+                    Artists[artistID].Tags[tagID].Amount++;
+                }
+                else
+                {
+
+                    Artists[artistID].Tags.Add(tagID, new Tag(tagID));
                 }
             }
         }
 
-        public void MakeRemainingRoskildeArtists()
+        private void MakeRemainingRoskildeArtists()
         {
-            // var dicArtists = Data.Artists;
-            var dicTags = new Dictionary<int, Tag>();
-            // dicArtists.Values.ToList().ForEach(x => x.Tags.ToList().ForEach(t => dicTags.Add(t.Key, t.Value)));
 
+            //Creates dictonary of all tags
+            var dicTags = new Dictionary<int, Tag>();
             foreach (var artist in Artists.Values)
             {
                 foreach (var tag in artist.Tags)
@@ -132,43 +125,48 @@ namespace Recommender
                 }
             }
 
+            //Get a list of string with the names of the artist
             List<string> artistNameList = Artists.Values.Select(x => x.Name).ToList();
 
             // Read all tags from the dataset
             List<string> tagFile = File.ReadAllLines(startupPath + @"\DataFiles\tags.dat").ToList();
 
             // Reading the roskilde artists that did not have tags in the dataset
-            string[] input = File.ReadAllLines(startupPath + @"\DataFiles\test.txt");
+            // File is created using Last.FM api
+            string[] inputFile = File.ReadAllLines(startupPath + @"\DataFiles\test.txt");
 
-            int inputLength = input.Length;
-            for (int i = 0; i < inputLength; i++)
+            int fileLength = inputFile.Length;
+            for (int i = 0; i < fileLength; i++)
             {
                 // If a line starts with "0 ", then it is a new artist
-                if (input[i].Contains("0\t"))
+                if (inputFile[i].Contains("0\t"))
                 {
-                    if (!artistNameList.Contains(input[i].Substring(2)))
+                    if (!artistNameList.Contains(inputFile[i].Substring(2)))
                     {
                         // An ID for the new artists can be made, based on the key.
                         int newId = Artists.Keys.Max() + 1;
-                        Artists.Add(newId, new Artist(newId, input[i].Substring(2))); // Kunstneren tilføjes.
+                        string name = inputFile[i].Substring(2);
+                        Artists.Add(newId, new Artist(newId, name)); 
                         i++;
                         // All the upcomming lines from the file shoud contain a tag, until a new artists arrives with the start letters "0 "
-                        while (!input[i].Contains("0\t") && input[i] != (""))
+                        while (!inputFile[i].Contains("0\t") && inputFile[i] != (""))
                         {
-                            string[] tag = input[i].Split('\t');
-
+                            string[] tag = inputFile[i].Split('\t');
+                            string tagName = tag[0];
+                            int tagAmount = int.Parse(tag[1]);
+                            var exsistingTagNames = tagFile.Select(x => x.Split('\t')[1]);
                             // If the tag allready excits
-                            if (tagFile.Any(x => x.Split('\t')[1].Equals(tag[0])))
+                            if (exsistingTagNames.Contains(tagName))
                             {
-                                //Console.WriteLine("hej");
-                                string[] tagLine = tagFile.Single(x => x.Split('\t')[1].Equals(tag[0])).Split('\t');
+                                //Gets a line from the tag database file where the tagname matches and then splits the line
+                                string[] tagLine = tagFile.Single(x => x.Split('\t')[1] == tagName).Split('\t');
                                 int id = int.Parse(tagLine[0]);
                                 // We make sure that there is an artists that contains this tag
                                 if (dicTags.ContainsKey(id))
                                 {
                                     // The tags are added to the relevent artist, and the number of tags:
                                     Artists[newId].Tags.Add(id, dicTags[id]);
-                                    Artists[newId].Tags[id].Amount = int.Parse(tag[1]);
+                                    Artists[newId].Tags[id].Amount = tagAmount;
                                 }
                             }
                             // If the tag is not in the dataset
@@ -176,10 +174,10 @@ namespace Recommender
                             {
                                 // There is an ID for the new Tag
                                 int newTagId = dicTags.Keys.Max() + 1;
-                                string newTagName = input[i];
+                                string newTagName = name;
                                 // Adding the new tag:
                                 dicTags.Add(newTagId, new Tag(newTagId));
-                                tagFile.Add(newTagId + "\t" + input[i]);
+                                tagFile.Add(newTagId + "\t" + newTagName);
                                 // The tag is added to the relevent artist, and the number of tags.
                                 Artists[newId].Tags.Add(newTagId, dicTags[newTagId]);
                                 Artists[newId].Tags[newTagId].Amount = int.Parse(tag[1]);
@@ -191,18 +189,18 @@ namespace Recommender
             }
         }
 
-        public void CalculateWeight()
+        private void CalculateWeight()
         {
-            foreach (var artist in Artists)
+            foreach (var artist in Artists.Values)
             {
-                artist.Value.CalcTagWeight();
+                artist.CalcTagWeight();
             }
-            foreach (var artist in RoskildeArtists)
+            foreach (var artist in RoskildeArtists.Values)
             {
-                artist.Value.CalcTagWeight();
+                artist.CalcTagWeight();
             }
 
-            foreach (User user in Users)
+            foreach (var user in Users.Values)
             {
                 user.TagCalc();
                 user.CalculateArtistWeight();
@@ -211,7 +209,7 @@ namespace Recommender
         /*
         public void CalcCorrelationAverage(out double totalAvgContentRating, out double totalAvgCollabRating)
         {
-            CreateRecommendations Recommender = new CreateRecommendations(UsersDic, Artists, RoskildeArtists);
+            CreateRecommendations Recommender = new CreateRecommendations(Users, Artists, RoskildeArtists);
 
             Dictionary<int, RecommendedArtist> collab;
             Dictionary<int, RecommendedArtist> content;
@@ -247,18 +245,15 @@ namespace Recommender
             totalAvgContentRating = array1.Sum(x => x.ContentBasedFilteringRating) / array1.Count();
         }*/
 
-        public void WriteToFile()
+        private void WriteToFile()
         {
-            //TEMP
-            foreach (var userr in Users)
-                UsersDic.Add(userr.Id, userr);
 
-            BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin", UsersDic);
+            BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin", Users);
             BinarySerialization.WriteToBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin", Artists);
             BinarySerialization.WriteToBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin", RoskildeArtists);
         }
 
-        public void ReadRoskildeSchedule(string date)
+        private void ReadRoskildeSchedule(string date)
         {
             string[] roskildeFile = File.ReadAllLines(startupPath + @"\DataFiles\" + date + ".txt");
             string[] scenes = { "APOLLO", "PAVILION", "AVALON", "ORANGE", "GLORIA", "ARENA", "RISING" };
@@ -267,10 +262,12 @@ namespace Recommender
 
             foreach (string line in roskildeFile.Skip(1))
             {
+                //if the line is a scene
                 if (scenes.Any(line.Contains))
                 {
                     currentScene = line;
                 }
+                //if the line contains : then is it playing time
                 else if (line.Contains(" : "))
                 {
                     int day = int.Parse(date.Substring(date.Length - 2));
@@ -281,6 +278,7 @@ namespace Recommender
                     int second = 0;
                     currentTime = new DateTime(year, month, day, hour, minute, second);
                 }
+                //else if it is not empty then it is an artist
                 else if (line != "")
                 {
                     foreach (var artist in Artists)

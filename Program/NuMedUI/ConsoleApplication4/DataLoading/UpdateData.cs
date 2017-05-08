@@ -15,7 +15,7 @@ namespace Recommender
             BinaryData Data = new BinaryData();
             try
             {
-                Data.DoItAll();
+                Data.MakeBinaryFiles();
             }
             catch (Exception e)
             {
