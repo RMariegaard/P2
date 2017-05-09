@@ -15,10 +15,7 @@ namespace Recommender
             /*************************************** The Program ***************************************/
             Application.EnableVisualStyles();
             Application.Run(new UI());
-
-
             
-            /* 4 (.Y.) skal den ha'! */
         }
     }
 }

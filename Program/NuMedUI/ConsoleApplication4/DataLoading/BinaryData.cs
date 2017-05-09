@@ -111,13 +111,10 @@ namespace Recommender
 
                         Artists[artistID].Tags.Add(tagID, new Tag(tagID));
                     }
-                }
-                else
-                {
-                    if (!strs.Contains(artistID))
+
+                    if (artistID == 2 && tagID == 127)
                     {
-                        strs.Add(artistID);
-                        Console.WriteLine(artistID);
+                        Console.WriteLine();
                     }
                 }
             }
