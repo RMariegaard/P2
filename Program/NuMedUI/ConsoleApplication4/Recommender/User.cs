@@ -9,7 +9,13 @@ namespace Recommender
     [Serializable]
     public class User : ITaggable
     {
-        public int Id { get; private set; }
+        private int _id;
+        public int Id
+        {
+            get { return _id; }
+            private set { _id = value; }
+        }
+
         public Dictionary<int, Userartist> Artists { get; private set; }
         public Dictionary<int, Tag> Tags { get; private set; }
         private double _total_tag_amount;
@@ -43,6 +49,7 @@ namespace Recommender
             Artists = artists;
             Id = id;
         }
+
         // Makes the users tag list depending on the users its heard, their top 5 tags, and how much the user has heard theese artists:
         public void TagCalc()
         {
