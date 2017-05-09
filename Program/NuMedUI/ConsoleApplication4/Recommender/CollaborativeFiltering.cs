@@ -35,83 +35,40 @@ namespace Recommender
             Dictionary<int, RecommendedArtist> dicOfRecommendations = new Dictionary<int, RecommendedArtist>();
             List<SimilarUser> KNN = KNearestNeighbours(correlationMeasure, newUser, allUsers, allArtists);
 
-            foreach (var neighbour in KNN)
-            {
-                if (neighbour.Id == newUser.Id)
-                {
-                    continue;
-                }
-                //Adds Neighbours top 3 artists to recommendations
-                foreach (var artist in neighbour.Artists.OrderByDescending(x => x.Value.Weight).Take(3))
-                {
-                    if (roskildeArtist.ContainsKey(artist.Key) && !dicOfRecommendations.ContainsKey(artist.Key))
-                    {
-                        dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
-                        dicOfRecommendations[artist.Key].CollaborativeFilteringRating = neighbour.similarity;
-                    }
-                }
-            }
-
-            return dicOfRecommendations;
-
-            /*
-            foreach (SimilarUser user in KNN)
-            {
-                foreach (var artist in allUsers[user.Id].Artists.OrderByDescending(x => x.Value.Weight))
-                {
-                    //Checks whether artist is already in dic
-                    if (dicOfRecommendations.ContainsKey(artist.Key))
-                    {
-                        continue;
-                    }
-                    /* else if(newUser.Artists.ContainsKey(artist.Key))
-                     // Hvad nu hvis at brugeren har hørt kunsteren lidt men recmonden value er høj?
-                     {
-                         // Håndter dette problem 
-                         //Evt med top Artist
-                     }
-                    else
-                    {
-                        if (roskildeArtist.ContainsKey(artist.Key))
-                        {
-                            dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
-                            dicOfRecommendations[artist.Key].CollaborativeFilteringRating = (user.similarity + artist.Value.Weight) / 2;
-                        }
-                    }
-                }
-            }
-    */ /*  double tempCorelation = 0.0;
+           //Used to sum up the weight times the correlation value
+            double sum;
+            //n represents the number of users listened to the artist
+            int n;
             
-            int n = 0;
-            int secondCount = 0;
+            //Goes through all the roskilde artists and checks if any similar user have heard if
+            //if this is the case the score contributed by the user is added to the sum, which then is diveded
+            //by the number of users who have heard the artist
             foreach (var artist in roskildeArtist)
             {
                 n = 0;
-                tempCorelation = 0.0;
+                sum = 0.0;
                 foreach (SimilarUser user in KNN)
                 {
                     if (user.Artists.ContainsKey(artist.Key))
                     {
-                        tempCorelation += user.similarity * (user.Artists[artist.Key].Weight);
+                        sum += user.similarity * user.Artists[artist.Key].Weight;
                         n++;
-
                     }
                 }
-                if (n != 0)
+                //n is larger than zero if the artist have been heard by any similar user
+                if (n > 0)
                 {
                     dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
-                    dicOfRecommendations[artist.Key].CollaborativeFilteringRating = tempCorelation / n;
-                    secondCount++;
+                    dicOfRecommendations[artist.Key].CollaborativeFilteringRating = sum / n;
                 }
             }
-
+            //Takes the top 10 artist based on the filtering rating and returns them in a dictonary of recommended artists
             var final = dicOfRecommendations
                 .OrderByDescending(x => x.Value.CollaborativeFilteringRating)
                 .Take(10)
                 .ToDictionary(x => x.Key, x => x.Value);
             
-            //.OrderByDescending(x => x.Value.CollaborativeFilteringRating).Take(5).ToDictionary(x => x.Key, x => x.Value);
-            return final;*/
+            return final;
         }
     }
 } 
