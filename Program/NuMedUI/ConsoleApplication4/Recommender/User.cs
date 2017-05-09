@@ -9,9 +9,8 @@ namespace Recommender
     [Serializable]
     public class User : ITaggable
     {
-        // The id of the user is stored here:
+        // The id of the user is stored:
         private int _id;
-
         public int Id
         {
             get { return _id; }
@@ -24,20 +23,6 @@ namespace Recommender
 
         // Tags dictionary will be filled by using the method UserTagHandling(), which will be called when making the data:
         public Dictionary<int, Tag> Tags { get; private set; }
-
-        private double _totalTagAmount;
-
-        public double TotalTagAmount
-        {
-            get { return _totalTagAmount; }
-        }
-
-        private double _totaltListenAmount;
-
-        public double TotalListenAmount
-        {
-            get { return _totaltListenAmount; }
-        }
 
         // Constructer:
         public User(int id)
@@ -53,7 +38,7 @@ namespace Recommender
             // Itterating though all artists in the users ArtistDictionary:
             foreach (KeyValuePair<int, Userartist> artist in Artists)
             {
-                // And array of tags is made of the tags the current artist has:
+                // An array of tags is made of the tags the current artist has, and ordered by the tag the artist has been tagged with the most first:
                 Tag[] ArrayOfTags = artist.Value.ThisArtist.Tags.Values.OrderByDescending(p => p.Amount).ToArray();
 
                 //Set limit to numbers of tags if it is below 10, so its only the top 10 most used tag for an artist that is used:
@@ -72,33 +57,35 @@ namespace Recommender
                     // If its a new tag a new tag is added:
                     else
                     {
-                        Tag Temptag = new Tag(currentTagID);
-                        Temptag.Amount = artist.Value.Amount * artist.Value.ThisArtist.Tags[currentTagID].Weight;
-                        Tags.Add(Temptag.Id, Temptag);
+                        Tag temptag = new Tag(currentTagID);
+                        temptag.Amount = artist.Value.Amount * artist.Value.ThisArtist.Tags[currentTagID].Weight;
+                        Tags.Add(temptag.Id, temptag);
                     }
                 }
             }
             // After the Tag Dictionay is made, the total tag amount, and the weight of each individual tags will be calculated:
+            double totalTagAmount = 0;
             foreach (var tag in Tags)
             {
-                _totalTagAmount += tag.Value.Amount;
+                totalTagAmount += tag.Value.Amount;
             }
             foreach (var tag in Tags)
             {
-                tag.Value.Weight = (100 / _totalTagAmount) * tag.Value.Amount;
+                tag.Value.Weight = (100 / totalTagAmount) * tag.Value.Amount;
             }
         }
 
         // Calculates the percentage an artist has been heard by this user, based on all the artists the user has heard:
         public void CalculateArtistWeight()
         {
+            double totaltListenAmount = 0;
             foreach (var artist in Artists)
             {
-                _totaltListenAmount += artist.Value.Amount;
+                totaltListenAmount += artist.Value.Amount;
             }
             foreach (var artist in Artists)
             {
-                artist.Value.Weight = (artist.Value.Amount / _totaltListenAmount) * 100;
+                artist.Value.Weight = (artist.Value.Amount / totaltListenAmount) * 100;
             }
         }
     }
