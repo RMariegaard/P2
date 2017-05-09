@@ -64,6 +64,12 @@ namespace Recommender
                 }
             }
             // After the Tag Dictionay is made, the total tag amount, and the weight of each individual tags will be calculated:
+            CalculateTagWeight();
+        }
+
+        // Calculates the weight of each tags relative to the user in percentage:
+        private void CalculateTagWeight()
+        {
             double totalTagAmount = 0;
             foreach (var tag in Tags)
             {
