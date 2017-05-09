@@ -13,7 +13,8 @@ namespace Recommender
             /*************************************** Write file ***************************************/
             Console.WriteLine("Reading text files, and writing binary files");
             BinaryData Data = new BinaryData();
-            try
+            Data.MakeBinaryFiles();
+            /*try
             {
                 Data.MakeBinaryFiles();
             }
@@ -21,7 +22,7 @@ namespace Recommender
             {
                 Console.WriteLine(e);
                 Console.ReadKey();
-            }
+            }*/
             Console.WriteLine("Done writing files");
         }
     }

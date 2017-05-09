@@ -87,6 +87,7 @@ namespace Recommender
 
         private void ReadTags()
         {
+            List<int> strs = new List<int>();
             // The tags gets transfered to the artists:
             int tagID;
             int artistID;
@@ -96,15 +97,28 @@ namespace Recommender
                 tagID = int.Parse(data[2]);
                 artistID = int.Parse(data[1]);
 
-                //Creates adds tag to artist but if it is allready added the ammont is incremented
-                if (Artists[artistID].Tags.ContainsKey(tagID))
+                //There is atleast one artist that is tagged but has is not apart of the artist file
+                //Therefor we check for the key
+                if (Artists.ContainsKey(artistID))
                 {
-                    Artists[artistID].Tags[tagID].Amount++;
+                    //Creates adds tag to artist but if it is allready added the ammont is incremented
+                    if (Artists[artistID].Tags.ContainsKey(tagID))
+                    {
+                        Artists[artistID].Tags[tagID].Amount++;
+                    }
+                    else
+                    {
+
+                        Artists[artistID].Tags.Add(tagID, new Tag(tagID));
+                    }
                 }
                 else
                 {
-
-                    Artists[artistID].Tags.Add(tagID, new Tag(tagID));
+                    if (!strs.Contains(artistID))
+                    {
+                        strs.Add(artistID);
+                        Console.WriteLine(artistID);
+                    }
                 }
             }
         }
@@ -174,7 +188,7 @@ namespace Recommender
                             {
                                 // There is an ID for the new Tag
                                 int newTagId = dicTags.Keys.Max() + 1;
-                                string newTagName = name;
+                                string newTagName = tagName;
                                 // Adding the new tag:
                                 dicTags.Add(newTagId, new Tag(newTagId));
                                 tagFile.Add(newTagId + "\t" + newTagName);
