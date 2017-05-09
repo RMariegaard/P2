@@ -24,7 +24,7 @@ namespace Recommender
         // Tags dictionary will be filled by using the method UserTagHandling(), which will be called when making the data:
         public Dictionary<int, Tag> Tags { get; private set; }
 
-        // Constructer:
+        // Constructor:
         public User(int id)
         {
             Artists = new Dictionary<int, Userartist>();
