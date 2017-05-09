@@ -21,12 +21,12 @@ namespace Recommender
                 tempUser.Artists = user.Artists;
                 listOfNeighbours.Add(tempUser);
             }
-            return listOfNeighbours.OrderByDescending(x => x.similarity).Where(x => x.similarity > 0).ToList();
+            return listOfNeighbours.OrderByDescending(x => x.similarity).Where(x => x.similarity > 0).Take(k).ToList();
         }
 
         public static List<SimilarUser> KNearestNeighbours(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, Dictionary<int, User> users, Dictionary<int, Artist> allArtists)
         {
-            return KNearestNeighbours(correlationMeasure, newUser, users, 10, allArtists);
+            return KNearestNeighbours(correlationMeasure, newUser, users, 15, allArtists);
         }
 
         public static Dictionary<int, RecommendedArtist> RecommendArtists(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, 
