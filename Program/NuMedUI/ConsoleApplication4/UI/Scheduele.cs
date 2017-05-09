@@ -48,36 +48,6 @@ namespace Recommender
                     {
                         MessageBox.Show($"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day} \n {element.Artist.Name} and {newConcert.Artist.Name}");
                     }
-                    //Overlap, but not hard added. Takes the one with the best rating
-                    else
-                    {
-
-
-
-
-
-                      /*  double n;
-                        double o;
-                        if (newConcert.Artist.CollaborativeFilteringRating < newConcert.Artist.ContentBasedFilteringRating)
-                            n = newConcert.Artist.ContentBasedFilteringRating;
-                        else
-                            n = newConcert.Artist.CollaborativeFilteringRating;
-
-                        if (element.Artist.CollaborativeFilteringRating < element.Artist.ContentBasedFilteringRating)
-                            o = element.Artist.ContentBasedFilteringRating;
-                        else
-                            o = element.Artist.CollaborativeFilteringRating;
-
-
-                        if (o < n) //LIGE NU TAGER DEN ALTID COLLABORATIVE DA DEN SOM REGL ER STØRRE END CONTENT
-                        {
-                            Concerts.Remove(element);
-                        }
-                        else
-                        {
-                            noOverlap = false;
-                        } */
-                    }
                 }
             }
 

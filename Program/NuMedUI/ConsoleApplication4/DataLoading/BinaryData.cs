@@ -202,7 +202,7 @@ namespace Recommender
 
             foreach (var user in Users.Values)
             {
-                user.TagCalc();
+                user.UserTagHandling();
                 user.CalculateArtistWeight();
             }
         }

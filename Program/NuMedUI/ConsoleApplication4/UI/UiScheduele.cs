@@ -49,8 +49,6 @@ namespace Recommender
                     if (userArtist.Value.ThisArtist.Name.ToUpper() == artist.Name.ToUpper())
                     {
                         RecommendedArtist TempArtist = new RecommendedArtist(artist);
-                        TempArtist.CollaborativeFilteringRating = 100.00;
-                        TempArtist.ContentBasedFilteringRating = 1.00;
                         Elements.Add(new SchedueleElement(TempArtist, artist.TimeOfConcert, 60, "HeardBefore"));
                     }
                 }
