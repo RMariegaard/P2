@@ -31,6 +31,7 @@ namespace Recommender
             Thread loadThread = new Thread(() => loading.ShowDialog());
             loadThread.Start();
 
+
             IContentBasedFiltering IContentBased = new ContentBasedFiltering();
             ICollaborativeFiltering ICollaborative = new CollaborativeFiltering();
 
@@ -55,7 +56,6 @@ namespace Recommender
             }
             else
             {
-                
                 UIAfterLogin frm2 = new UIAfterLogin(ID, Recommender);
                 frm2.Show();
             }
@@ -63,8 +63,17 @@ namespace Recommender
 
         private void UpdateDataButton_Click(object sender, EventArgs e)
         {
+            //Showing loading screen
+            LoadingScreen loading = new LoadingScreen("ReadingFiles");
+            Thread loadThread = new Thread(() => loading.ShowDialog());
+            loadThread.Start();
+
+            //Update and read files
             UpdateData.UpdateDataFiles();
             Recommender.LoadFiles();
+
+            //Close loading screen
+            loadThread.Abort();
         }
 
         private void UserIdTextbox_KeyDown(object sender, KeyEventArgs e)
