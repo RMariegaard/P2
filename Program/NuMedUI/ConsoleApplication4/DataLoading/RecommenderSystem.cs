@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Recommender
 {
-    public class CreateRecommendations
+    public class RecommenderSystem
     {
         private Dictionary<int, User> _users;
         private Dictionary<int, Artist> _artists;
@@ -18,7 +18,7 @@ namespace Recommender
         public Dictionary<int, RecommendedArtist> RecommendedCollabArtists { get; private set; }
         public Dictionary<int, RecommendedArtist> RecommendedContetArtists { get; private set; }
 
-        public CreateRecommendations(IRecommendationsMethods recommendationsMethods)
+        public RecommenderSystem(IRecommendationsMethods recommendationsMethods)
         {
             _recommandationsMethods = recommendationsMethods;
         }
@@ -64,8 +64,8 @@ namespace Recommender
             }
                 
 
-            RecommendedCollabArtists = _recommandationsMethods.RecommendArtistsCollab(_recommandationsMethods.CalculateCorrelation, newUser, _users, _roskildeArtists, _artists);
-            RecommendedContetArtists = _recommandationsMethods.RecommedArtistsContent(_recommandationsMethods.GetCosine, newUser, _roskildeArtists, 10);
+            RecommendedCollabArtists = _recommandationsMethods.RecommendArtistsCollaborative(_recommandationsMethods.GetPearson, newUser, _users, _roskildeArtists, _artists);
+            RecommendedContetArtists = _recommandationsMethods.RecommedArtistsContentBased(_recommandationsMethods.GetCosine, newUser, _roskildeArtists, 10);
 
             RecommendedCollabArtists = _giveRecomendationStars(RecommendedCollabArtists, _collabRating);
             RecommendedContetArtists = _giveRecomendationStars(RecommendedContetArtists, _contentRating);

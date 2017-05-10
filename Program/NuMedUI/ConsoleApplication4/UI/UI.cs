@@ -15,7 +15,7 @@ namespace Recommender
     public partial class UI : Form
     {
         public int ID;
-        CreateRecommendations Recommender;
+        RecommenderSystem Recommender;
         
         public UI()
         {
@@ -35,7 +35,7 @@ namespace Recommender
             IRecommendationsMethods recommandationsMethods = new MethodsForRecommending();
 
             //Reading files
-            Recommender = new CreateRecommendations(recommandationsMethods);
+            Recommender = new RecommenderSystem(recommandationsMethods);
             Recommender.LoadFiles();
             ErrorLabelFrontPage.Text = "";
 

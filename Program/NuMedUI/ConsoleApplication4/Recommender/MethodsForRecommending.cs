@@ -31,18 +31,44 @@ namespace Recommender
             }
             return value;
         }
+        
+        //Method used in GetCosine
+        private double CalculateDotProductInCosine<T>(T element1, T element2)
+            where T : ITaggable
+        {
+            double dot = 0.0;
+            foreach (var tag in element1.Tags)
+            {
+                if (element2.Tags.ContainsKey(tag.Key))
+                {
+                    dot += element2.Tags[tag.Key].Weight * tag.Value.Weight;
+                }
+            }
+            return dot;
+        }
+
+        //Method used in GetCosine
+        //Calculates the length of each vector and multiplies them
+        //The length is calculated by the coordinates squares summed and then taking the square root
+        private double CalculateProductOfLengths<T>(T element1, T element2)
+            where T : ITaggable
+        {
+            double temp = element1.Tags.Sum(x => Math.Pow(x.Value.Weight, 2));
+            double temp2 = element2.Tags.Sum(x => Math.Pow(x.Value.Weight, 2));
+            return Math.Sqrt(temp) * Math.Sqrt(temp2);
+        }
 
         //Calcuates the Pearson Correlation between two users based on artists
-        public double CalculateCorrelation(User user, User otherUser, Dictionary<int, Artist> allArtists)
+        public double GetPearson(User user, User otherUser, Dictionary<int, Artist> allArtists)
         {
             //Calculates the mean of the artist weight for the two users
             double userMean = CalculateUserMean(user, allArtists.Count);
             double otherUserMean = CalculateUserMean(otherUser, allArtists.Count);
 
             //Calculates the numerator of the Pearson Correlation
-            double numerator = CalculateNumerator(user, otherUser, userMean, otherUserMean, allArtists);
+            double numerator = CalculatePearsonNumerator(user, otherUser, userMean, otherUserMean, allArtists);
             //Calculates the denumerator of the Pearson Correlation
-            double denumerator = CalculateDenuminator(user, otherUser, userMean, otherUserMean, allArtists);
+            double denumerator = CalculatePearsonDenuminator(user, otherUser, userMean, otherUserMean, allArtists);
 
             //Returns the Pearson Correlation
             if (denumerator == 0.0)
@@ -50,11 +76,85 @@ namespace Recommender
             else
                 return numerator / denumerator;
         }
+        //Method for gettin PearsonCorrelation 
 
+        private double CalculateUserMean(User user, int totalNumberOfArtists)
+        {
+            double temp = 0.0;
+            temp = user.Artists.Values.Sum(x => x.Amount);
+            temp /= totalNumberOfArtists;
+            return temp;
+        }
+
+        private double CalculatePearsonNumerator(User user, User otherUser, double userMean, double otherUserMean, Dictionary<int, Artist> allArtists)
+        {
+            double temp = 0.0;
+            foreach (Artist artist in allArtists.Values)
+            {
+                int artistID = artist.Id;
+                if (user.Artists.ContainsKey(artist.Id))
+                {
+                    if (otherUser.Artists.ContainsKey(artist.Id))
+                    {
+                        temp += (user.Artists[artistID].Amount - userMean) *
+                                (otherUser.Artists[artistID].Amount - otherUserMean);
+                    }
+                    else
+                    {
+
+                        temp += (user.Artists[artistID].Amount - userMean) *
+                                (0 - otherUserMean);
+                    }
+                }
+                else if (otherUser.Artists.ContainsKey(artist.Id))
+                {
+
+                    temp += (0 - userMean) *
+                            (otherUser.Artists[artistID].Amount - otherUserMean);
+                }
+                else
+                {
+
+                    temp += (0 - userMean) *
+                            (0 - otherUserMean);
+                }
+            }
+            return temp;
+
+
+        }
+
+        private double CalculatePearsonDenuminator(User user, User otherUser, double userMean, double otherUserMean, Dictionary<int, Artist> allArtists)
+        {
+            double temp = 0.0;
+            double temp2 = 0.0;
+            foreach (Artist artist in allArtists.Values)
+            {
+                int artistID = artist.Id;
+                if (user.Artists.ContainsKey(artist.Id))
+                {
+                    temp += Math.Pow(user.Artists[artistID].Amount - userMean, 2);
+                }
+                else if (!user.Artists.ContainsKey(artistID))
+                {
+                    temp += Math.Pow(0 - userMean, 2);
+                }
+
+                if (otherUser.Artists.ContainsKey(artist.Id))
+                {
+                    temp2 += Math.Pow(otherUser.Artists[artistID].Amount - otherUserMean, 2);
+                }
+                else if (!otherUser.Artists.ContainsKey(artistID))
+                {
+                    temp2 += Math.Pow(0 - otherUserMean, 2);
+                }
+            }
+            return Math.Sqrt(temp * temp2);
+        }
 
         //Methods Used for CollaborativeFiltering
-        public Dictionary<int, RecommendedArtist> RecommendArtistsCollab(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser,
-        Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist, Dictionary<int, Artist> allArtists)
+        public Dictionary<int, RecommendedArtist> RecommendArtistsCollaborative(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser,
+                            Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist, Dictionary<int, Artist> allArtists)
         {
             Dictionary<int, RecommendedArtist> dicOfRecommendations = new Dictionary<int, RecommendedArtist>();
             List<SimilarUser> KNN = KNearestNeighbours(correlationMeasure, newUser, allUsers, allArtists);
@@ -75,7 +175,7 @@ namespace Recommender
                 {
                     if (user.Artists.ContainsKey(artist.Key))
                     {
-                        sum += user.similarity * user.Artists[artist.Key].Weight;
+                        sum += user.Similarity * user.Artists[artist.Key].Weight;
                         n++;
                     }
                 }
@@ -94,10 +194,30 @@ namespace Recommender
 
             return final;
         }
+        //Finds the users with the highest correlation based on a given correltion measure
+        private List<SimilarUser> KNearestNeighbours(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, Dictionary<int, User> users, int k, Dictionary<int, Artist> allArtists)
+        {
+            List<SimilarUser> listOfNeighbours = new List<SimilarUser>();
+
+            //Calculates the correlation
+            foreach (var user in users.Values)
+            {
+                SimilarUser tempUser = new SimilarUser(user.Id);
+                tempUser.Similarity = correlationMeasure(newUser, user, allArtists);
+                tempUser.Artists = user.Artists;
+                listOfNeighbours.Add(tempUser);
+            }
+            return listOfNeighbours.OrderByDescending(x => x.Similarity).Where(x => x.Similarity > 0).Take(k).ToList();
+        }
+
+        private List<SimilarUser> KNearestNeighbours(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, Dictionary<int, User> users, Dictionary<int, Artist> allArtists)
+        {
+            return KNearestNeighbours(correlationMeasure, newUser, users, 15, allArtists);
+        }
 
 
         //Method Used for getting ContentBasedFiltering
-        public Dictionary<int, RecommendedArtist> RecommedArtistsContent(Func<ITaggable, ITaggable, double> correlationMeasure, User newUser, Dictionary<int, RoskildeArtist> roskildeArtist, int k)
+        public Dictionary<int, RecommendedArtist> RecommedArtistsContentBased(Func<ITaggable, ITaggable, double> correlationMeasure, User newUser, Dictionary<int, RoskildeArtist> roskildeArtist, int k)
         {
             var recommendedArtist = new Dictionary<int, RecommendedArtist>();
 

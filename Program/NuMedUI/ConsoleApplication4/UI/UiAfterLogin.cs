@@ -12,13 +12,13 @@ namespace Recommender
 {
     public partial class UIAfterLogin : Form
     {
-        CreateRecommendations Recommender;
+        RecommenderSystem Recommender;
         int ID;
         List<RoskildeArtist> RoskildeNames;
         List<string> Names;
         List<RoskildeArtist> HardSelected;
 
-        public UIAfterLogin(int ID, CreateRecommendations Recommender)
+        public UIAfterLogin(int ID, RecommenderSystem Recommender)
         {
             this.ID = ID;
             this.Recommender = Recommender;

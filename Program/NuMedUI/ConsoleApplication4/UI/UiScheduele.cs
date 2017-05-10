@@ -14,7 +14,7 @@ namespace Recommender
         List<SchedueleElement> Elements;
         Scheduele FullScheduele;
         
-        public UiScheduele(int ID, CreateRecommendations Recommender, List<RoskildeArtist> HardSelected)
+        public UiScheduele(int ID, RecommenderSystem Recommender, List<RoskildeArtist> HardSelected)
         {
             //Starting a new thread to show loading screen
             LoadingScreen loading = new LoadingScreen("Getting your recommendations");
