@@ -55,11 +55,9 @@ namespace Recommender
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
 
-            Console.WriteLine("Reading File");
             _users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin");
             _artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin");
             _roskildeArtists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
-            Console.WriteLine("Done Reading File");
         }
 
         public void GenerateRecommendations(int id)
@@ -73,20 +71,11 @@ namespace Recommender
                 newUser = _users[id];
             }
                 
-            StringBuilder streng = new StringBuilder();
 
             RecommendedCollabArtists = _collaborativeFiltering.RecommendArtists(pearson.CalculateCorrelation, newUser, _users, _roskildeArtists, _artists);
-            streng.AppendLine("Collarborative");
-            RecommendedCollabArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.CollaborativeFilteringRating));
-
             RecommendedContetArtists = _contentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, _roskildeArtists, 10);
-            streng.AppendLine("\nContentBasedFiltering: ");
-            RecommendedContetArtists.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.ContentBasedFilteringRating));
-
-            streng.AppendLine(" ---------");
-            newUser.Artists.OrderByDescending(x => x.Value.Weight).ToList().ForEach(x => streng.AppendLine(x.Value.ThisArtist.Name + " - " + x.Value.Weight));
-
-            Console.WriteLine(streng);
+            
+         
         }
     }
 }

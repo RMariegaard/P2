@@ -15,7 +15,6 @@ namespace Recommender
             /*************************************** The Program ***************************************/
             Application.EnableVisualStyles();
             Application.Run(new UI());
-            
         }
     }
 }

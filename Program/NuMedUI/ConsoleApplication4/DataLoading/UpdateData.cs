@@ -11,10 +11,9 @@ namespace Recommender
         public static void UpdateDataFiles()
         {
             /*************************************** Write file ***************************************/
-            Console.WriteLine("Reading text files, and writing binary files");
+            
             BinaryData Data = new BinaryData();
             Data.MakeBinaryFiles();
-            Console.WriteLine("Done writing files");
         }
     }
 }

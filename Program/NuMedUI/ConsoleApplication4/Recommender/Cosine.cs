@@ -11,8 +11,8 @@ namespace Recommender
         public double GetCosine<T>(T element1, T element2) 
             where T : ITaggable 
         {
-            double numerator = CalculateProductOfLengths(element1, element2);
-            double denominator = CalculateDotProductInCosine(element1, element2);
+            double denominator = CalculateProductOfLengths(element1, element2);
+            double numerator = CalculateDotProductInCosine(element1, element2);
             double value;
             //Can't devide by zero
             //The denominator is zero when atleast one of the vectors has length 0

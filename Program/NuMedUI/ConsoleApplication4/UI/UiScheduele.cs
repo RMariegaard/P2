@@ -33,7 +33,6 @@ namespace Recommender
             this.ID = ID;
             this.Recommender = Recommender;
             this.HardSelected = HardSelected;
-            HardSelected.ForEach(x => Console.WriteLine(x.Name));
             
             InitializeComponent();
 
