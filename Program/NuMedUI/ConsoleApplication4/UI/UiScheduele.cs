@@ -215,10 +215,11 @@ namespace Recommender
             color = new Color();
             
             //Creating color
+            int starNeededForColor = 8;
             if (RatingFrom == "Collab")
             {
                 RatingLabel.Text = $"Collaborative: {artist.Stars}";
-                if (artist.FilteringRating > 5)
+                if (artist.Stars >= starNeededForColor)
                 {
                     color = Color.FromArgb(238, 113, 3);
                 }
@@ -226,7 +227,7 @@ namespace Recommender
             else if (RatingFrom == "Content")
             {
                 RatingLabel.Text = $"ContentBased: { artist.Stars}";
-                if (artist.FilteringRating > 0.5)
+                if (artist.Stars >= starNeededForColor)
                 {
                     color = Color.FromArgb(238, 113, 3);
                 }
@@ -314,7 +315,18 @@ namespace Recommender
                 ExclamationIcon.Location = new Point(size.Width - (IconSize.Width * 3) - (Spacing * 3), Spacing);
                 Element.Controls.Add(ExclamationIcon);
             }
-            
+
+            //Creating stars
+            for (int i = 0; i <= artist.Stars; i++)
+            {
+                PictureBox Star = new PictureBox();
+                Star.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Star.jpg"), IconSize.Width, IconSize.Height);
+                Star.Visible = true;
+                Star.Size = IconSize;
+                Star.Location = new Point(size.Width - (IconSize.Width * i) - Spacing * i, size.Height - Spacing - IconSize.Height);
+                Element.Controls.Add(Star);
+            }
+
             //Artist picture
             Picture.Location = new Point(0, 0);
             Picture.Size = new Size(size.Height, size.Height);
