@@ -10,7 +10,7 @@ namespace Recommender
     {
         public double FilteringRating { get; set; }
         public int Stars { get; set; }
-        public int userID;
+
         public RecommendedArtist(RoskildeArtist artist) : base(artist.TimeOfConcert, artist.Scene, artist)
         {
         }
