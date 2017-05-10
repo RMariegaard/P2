@@ -12,14 +12,19 @@ namespace Recommender
         private Dictionary<int, User> _users;
         private Dictionary<int, Artist> _artists;
         private Dictionary<int, RoskildeArtist> _roskildeArtists;
+        private ICollaborativeFiltering _collaborativeFiltering;
+        private IContentBasedFiltering _contentBasedFiltering;
 
         public Dictionary<int, RecommendedArtist> RecommendedCollabArtists { get; private set; }
         public Dictionary<int, RecommendedArtist> RecommendedContetArtists { get; private set; }
 
-        public CreateRecommendations()
-        { }
+        public CreateRecommendations(IContentBasedFiltering contentBasedFiltering, ICollaborativeFiltering collaborativeFiltering)
+        {
+            _collaborativeFiltering = collaborativeFiltering;
+            _contentBasedFiltering = contentBasedFiltering;
+        }
 
-        public CreateRecommendations(Dictionary<int, User> users, Dictionary<int, Artist> artists, Dictionary<int, RoskildeArtist> roskildeArtists)
+        public CreateRecommendations(IContentBasedFiltering contentBasedFiltering, ICollaborativeFiltering collaborativeFiltering, Dictionary<int, User> users, Dictionary<int, Artist> artists, Dictionary<int, RoskildeArtist> roskildeArtists) :this(contentBasedFiltering, collaborativeFiltering)
         {
             _users = users;
             _artists = artists;
@@ -70,11 +75,11 @@ namespace Recommender
                 
             StringBuilder streng = new StringBuilder();
 
-            RecommendedCollabArtists = CollaborativeFiltering.RecommendArtists(pearson.CalculateCorrelation, newUser, _users, _roskildeArtists, _artists);
+            RecommendedCollabArtists = _collaborativeFiltering.RecommendArtists(pearson.CalculateCorrelation, newUser, _users, _roskildeArtists, _artists);
             streng.AppendLine("Collarborative");
             RecommendedCollabArtists.OrderByDescending(x => x.Value.CollaborativeFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.CollaborativeFilteringRating));
 
-            RecommendedContetArtists = ContentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, _roskildeArtists, 10);
+            RecommendedContetArtists = _contentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, _roskildeArtists, 10);
             streng.AppendLine("\nContentBasedFiltering: ");
             RecommendedContetArtists.OrderByDescending(x => x.Value.ContentBasedFilteringRating).ToList().ForEach(x => streng.AppendLine(x.Value.Name + " - " + x.Value.ContentBasedFilteringRating));
 

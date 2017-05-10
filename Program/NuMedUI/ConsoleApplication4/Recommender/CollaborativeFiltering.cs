@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    public class CollaborativeFiltering
+    public class CollaborativeFiltering : ICollaborativeFiltering
     {
         //Finds the users with the highest correlation based on a given correltion measure
-        public static List<SimilarUser> KNearestNeighbours(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, Dictionary<int, User> users, int k, Dictionary<int, Artist> allArtists)
+        public List<SimilarUser> KNearestNeighbours(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, Dictionary<int, User> users, int k, Dictionary<int, Artist> allArtists)
         {
             List<SimilarUser> listOfNeighbours = new List<SimilarUser>();
 
@@ -24,12 +24,12 @@ namespace Recommender
             return listOfNeighbours.OrderByDescending(x => x.similarity).Where(x => x.similarity > 0).Take(k).ToList();
         }
 
-        public static List<SimilarUser> KNearestNeighbours(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, Dictionary<int, User> users, Dictionary<int, Artist> allArtists)
+        public List<SimilarUser> KNearestNeighbours(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, Dictionary<int, User> users, Dictionary<int, Artist> allArtists)
         {
             return KNearestNeighbours(correlationMeasure, newUser, users, 15, allArtists);
         }
 
-        public static Dictionary<int, RecommendedArtist> RecommendArtists(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, 
+        public Dictionary<int, RecommendedArtist> RecommendArtists(Func<User, User, Dictionary<int, Artist>, double> correlationMeasure, User newUser, 
             Dictionary<int, User> allUsers, Dictionary<int, RoskildeArtist> roskildeArtist, Dictionary<int, Artist> allArtists)
         {
             Dictionary<int, RecommendedArtist> dicOfRecommendations = new Dictionary<int, RecommendedArtist>();

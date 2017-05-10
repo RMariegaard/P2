@@ -51,3 +51,5 @@ C:\Users\Kasperca\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\De
 C:\Users\Kasperca\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UIAfterLogin.resources
 C:\Users\Kasperca\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UiScheduele.resources
 C:\Users\Kasperca\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\RoskileRecommender.csproj.GenerateResource.Cache
+C:\Users\Kasperca\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\bin\Debug\ConsoleApplication4.exe
+C:\Users\Kasperca\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\bin\Debug\ConsoleApplication4.pdb

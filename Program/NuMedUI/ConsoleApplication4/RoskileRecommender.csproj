@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Recommender\ICosine.cs" />
+    <Compile Include="Recommender\Interfaces\ICollaborativeFiltering.cs" />
+    <Compile Include="Recommender\Interfaces\IContentBasedFiltering.cs" />
     <Compile Include="UI\LoadingScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,7 +61,7 @@
     <Compile Include="ConvertIdName.cs" />
     <Compile Include="Recommender\Cosine.cs" />
     <Compile Include="DataLoading\CreateRecommendations.cs" />
-    <Compile Include="Recommender\ITaggable.cs" />
+    <Compile Include="Recommender\Interfaces\ITaggable.cs" />
     <Compile Include="Recommender\PearsonCor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

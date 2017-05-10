@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    public class Cosine
+    public class Cosine : ICosine
     {
         public double GetCosine<T>(T element1, T element2) 
             where T : ITaggable 
@@ -29,7 +29,7 @@ namespace Recommender
             return value;
         }
 
-        private double CalculateDotProductInCosine<T>(T element1, T element2)
+        public double CalculateDotProductInCosine<T>(T element1, T element2)
             where T : ITaggable
         { 
             double dot = 0.0;
@@ -45,7 +45,7 @@ namespace Recommender
 
         //Calculates the length of each vector and multiplies them
         //The length is calculated by the coordinates squares summed and then taking the square root
-        private double CalculateProductOfLengths<T>(T element1, T element2)
+        public double CalculateProductOfLengths<T>(T element1, T element2)
             where T : ITaggable
         {
             double temp = element1.Tags.Sum(x => Math.Pow(x.Value.Weight, 2));

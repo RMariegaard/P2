@@ -31,8 +31,11 @@ namespace Recommender
             Thread loadThread = new Thread(() => loading.ShowDialog());
             loadThread.Start();
 
+            IContentBasedFiltering IContentBased = new ContentBasedFiltering();
+            ICollaborativeFiltering ICollaborative = new CollaborativeFiltering();
+
             //Reading files
-            Recommender = new CreateRecommendations();
+            Recommender = new CreateRecommendations(IContentBased, ICollaborative);
             Recommender.LoadFiles();
             ErrorLabelFrontPage.Text = "";
 
