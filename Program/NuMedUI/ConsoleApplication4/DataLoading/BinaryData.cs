@@ -175,6 +175,8 @@ namespace Recommender
             // Read all tags from the dataset
             List<string> tagFile = File.ReadAllLines(_startupPath + @"\DataFiles\tags.dat").ToList();
 
+            List<string> exsistingTagNames = tagFile.Select(x => x.Split('\t')[1]).ToList();
+
             // Reading the roskilde artists that did not have tags in the dataset
             // File is created using Last.FM api
             string[] inputFile = File.ReadAllLines(_startupPath + @"\DataFiles\test.txt");
@@ -198,7 +200,6 @@ namespace Recommender
                             string[] tag = inputFile[i].Split('\t');
                             string tagName = tag[0];
                             int tagAmount = int.Parse(tag[1]);
-                            var exsistingTagNames = tagFile.Select(x => x.Split('\t')[1]);
                             // If the tag allready excits
                             if (exsistingTagNames.Contains(tagName))
                             {
@@ -209,7 +210,7 @@ namespace Recommender
                                 if (dicTags.ContainsKey(id))
                                 {
                                     // The tags are added to the relevent artist, and the number of tags:
-                                    Artists[newId].Tags.Add(id, dicTags[id]);
+                                    Artists[newId].Tags.Add(id, new Tag(id));
                                     Artists[newId].Tags[id].Amount = tagAmount;
                                 }
                             }
@@ -222,6 +223,7 @@ namespace Recommender
                                 // Adding the new tag:
                                 dicTags.Add(newTagId, new Tag(newTagId));
                                 tagFile.Add(newTagId + "\t" + newTagName);
+                                exsistingTagNames.Add(newTagName);
                                 // The tag is added to the relevent artist, and the number of tags.
                                 Artists[newId].Tags.Add(newTagId, dicTags[newTagId]);
                                 Artists[newId].Tags[newTagId].Amount = int.Parse(tag[1]);
