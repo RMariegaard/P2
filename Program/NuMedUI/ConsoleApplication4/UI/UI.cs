@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -24,10 +25,19 @@ namespace Recommender
 
             InitializeComponent();
             pictureBox1.Image = Image.FromFile(startupPath + @"\Images\Orange.jpg");
-            
+
+            //Showing loading screen
+            LoadingScreen loading = new LoadingScreen("ReadingFiles");
+            Thread loadThread = new Thread(() => loading.ShowDialog());
+            loadThread.Start();
+
+            //Reading files
             Recommender = new CreateRecommendations();
             Recommender.LoadFiles();
             ErrorLabelFrontPage.Text = "";
+
+            //Closeing loading screen
+            loadThread.Abort();
         }
 
         private void button1_Click(object sender, EventArgs e)

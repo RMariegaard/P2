@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,14 +21,20 @@ namespace Recommender
 
         List<SchedueleElement> Elements;
         Scheduele FullScheduele;
-
+        
         public UiScheduele(int ID, CreateRecommendations Recommender, List<RoskildeArtist> HardSelected)
         {
+            //Starting a new thread to show loading screen
+            LoadingScreen loading = new LoadingScreen("Getting your recommendations");
+            Thread load = new Thread(() => loading.ShowDialog());
+            load.Start();
+
+            //Init
             this.ID = ID;
             this.Recommender = Recommender;
             this.HardSelected = HardSelected;
             HardSelected.ForEach(x => Console.WriteLine(x.Name));
-
+            
             InitializeComponent();
 
             Elements = new List<SchedueleElement>();
@@ -122,6 +129,9 @@ namespace Recommender
                 button.Width += 20;
                 left += button.Width + 2;
             }
+
+            //Closeing the thead with loading screen
+            load.Abort();
         }
 
         private void NewButton_Click(object sender, EventArgs e)
@@ -238,8 +248,8 @@ namespace Recommender
             startupPath = Environment.CurrentDirectory;
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
-
             Element.BackColor = color;
+            
             try
             {
                 Picture.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + $"\\pics\\{artist.Name.ToUpper()}.png"), 100, 100);
