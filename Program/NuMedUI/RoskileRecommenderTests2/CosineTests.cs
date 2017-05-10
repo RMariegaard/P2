@@ -44,7 +44,7 @@ namespace Recommender.Tests
             User testUser = createTestType<User>(user);
             Artist testArtist = createTestType<Artist>(artist);
 
-            double dot = cosineTest.CalcDotInCosine(testUser, testArtist);
+            double dot = cosineTest.CalculateDotProductInCosine(testUser, testArtist);
             return dot;
         }
 
@@ -59,7 +59,7 @@ namespace Recommender.Tests
             User testUser = createTestType<User>(userKeys, user);
             Artist testArtist = createTestType<Artist>(artistKeys, artist);
 
-            double dot = cosineTest.CalcDotInCosine(testUser, testArtist);
+            double dot = cosineTest.CalculateDotProductInCosine(testUser, testArtist);
             return dot;
         }
 

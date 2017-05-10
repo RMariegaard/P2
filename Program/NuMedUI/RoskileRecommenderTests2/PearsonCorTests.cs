@@ -28,7 +28,7 @@ namespace Recommender.Tests
         {
             //Assert
             double expected = 2.45;
-            double actual = TestCase.CalculateUser(user1, user2);
+            double actual = TestCase.CalculateCorrelation(user1, user2);
             Assert.AreEqual(expected, Math.Round(actual, 2));
 
         }

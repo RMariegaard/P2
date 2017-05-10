@@ -12,7 +12,7 @@ namespace Recommender
         {
             var recommendedArtist = new Dictionary<int, RecommendedArtist>();
 
-            //Calculates the correlation
+            //Calculates the correlation for the artists and adds them to the dictionary above
             foreach (RoskildeArtist artist in roskildeArtist.Values)
             {
                 var tempArtist = new RecommendedArtist(artist);
@@ -20,7 +20,7 @@ namespace Recommender
                 recommendedArtist.Add(tempArtist.Id, tempArtist);
 
             }
-
+            //Takes the k best artists and returns them as a dictornary
             var final = recommendedArtist
                 .OrderByDescending(x => x.Value.ContentBasedFilteringRating)
                 .Take(k)
