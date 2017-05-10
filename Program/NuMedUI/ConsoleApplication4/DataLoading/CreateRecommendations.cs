@@ -91,10 +91,10 @@ namespace Recommender
             int eight = (int)(count * 0.3);
             int seven = (int)(count * 0.4);
             int six = (int)(count * 0.5);
-            int five = (int)(count * 0.4);
-            int four = (int)(count * 0.3);
-            int three = (int)(count * 0.2);
-            int two = (int)(count * 0.1);
+            int five = (int)(count * 0.6);
+            int four = (int)(count * 0.7);
+            int three = (int)(count * 0.8);
+            int two = (int)(count * 0.9);
             foreach (var element in recommendedArtists)
             {
                 if (element.Value.FilteringRating > overallRatings[ten])
