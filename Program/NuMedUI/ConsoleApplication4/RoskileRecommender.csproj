@@ -77,6 +77,7 @@
     <Compile Include="UI\HoverWindow.Designer.cs">
       <DependentUpon>HoverWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\RecommendedArtistUiElement.cs" />
     <Compile Include="UI\ResizeBitmap.cs" />
     <Compile Include="Recommender\RoskildeArtist.cs" />
     <Compile Include="UI\Scheduele.cs" />
