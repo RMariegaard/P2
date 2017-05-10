@@ -217,7 +217,7 @@ namespace Recommender
             //Creating color
             if (RatingFrom == "Collab")
             {
-                RatingLabel.Text = $"Collaborative: {artist.CollaborativeFilteringRating}";
+                RatingLabel.Text = $"Collaborative: {artist.Stars}";
                 if (artist.CollaborativeFilteringRating > 5)
                 {
                     color = Color.FromArgb(238, 113, 3);
@@ -225,7 +225,7 @@ namespace Recommender
             }
             else if (RatingFrom == "Content")
             {
-                RatingLabel.Text = $"ContentBased: { artist.ContentBasedFilteringRating}";
+                RatingLabel.Text = $"ContentBased: { artist.Stars}";
                 if (artist.ContentBasedFilteringRating > 0.5)
                 {
                     color = Color.FromArgb(238, 113, 3);
