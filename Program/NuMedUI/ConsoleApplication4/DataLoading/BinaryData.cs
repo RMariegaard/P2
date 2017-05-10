@@ -12,9 +12,12 @@ namespace Recommender
         //Getting the path for the location of the text files from data set
         string _startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
 
+        public Func<string, int> getArtistIdFromString = line => int.Parse(line.Split('\t')[1]);
+
         string[] _userFile;
         string[] _artistFile;
         string[] _userTagFile;
+        private Dictionary<int, string> _dicArtistNames = new Dictionary<int, string>();
         public Dictionary<int, User> Users = new Dictionary<int, User>();
         public Dictionary<int, Artist> Artists = new Dictionary<int, Artist>();
         public Dictionary<int, RoskildeArtist> RoskildeArtists = new Dictionary<int, RoskildeArtist>();
@@ -26,9 +29,10 @@ namespace Recommender
             { "Søndag 26", "Mandag 27", "Tirsdag 28", "Onsdag 29", "Torsdag 30", "Fredag 01", "Lørdag 02", "Søndag 03" };
 
             ReadFiles();
+            MakeArtistDictornary();
+            ReadTags();
             ReadArtist();
             ReadUsers();
-            ReadTags();
             MakeRemainingRoskildeArtists();
             foreach (string date in listOfDates)
             {
@@ -53,24 +57,46 @@ namespace Recommender
             }
         }
 
+        private void MakeArtistDictornary()
+        {
+            int artistID;
+            string[] lineInArtistFile;
+            string artistName;
+            foreach (string line in _artistFile.Skip(1))
+            {
+                lineInArtistFile = line.Split('\t');
+                artistID = int.Parse(lineInArtistFile[0]);
+                artistName = lineInArtistFile[1];
+                _dicArtistNames.Add(artistID, artistName);
+            }
+        }
+
         private void ReadArtist()
         {
+            string[] lineInArtistFile;
+            int artistID;
+            string artistName;
             // "Artists" dictonary gets filled with all the artists from the dataset
             foreach (var line in _artistFile.Skip(1))
             {
-                string[] data = line.Split('\t');
-                int id = int.Parse(data[0]);
-                Artists.Add(id, new Artist(id, data[1]));
+                lineInArtistFile = line.Split('\t');
+                artistID = int.Parse(lineInArtistFile[0]);
+                artistName = lineInArtistFile[1];
+                if (Artists.ContainsKey(artistID) == false)
+                {
+                    Artists.Add(artistID, new Artist(artistID, artistName));
+                }
             }
         }
 
         private void ReadUsers()
         {
+            int id = 2;
             foreach (var line in _userFile.Skip(1))
             {
                 // Splits up file
                 string[] data = line.Split('\t');
-                int id = int.Parse(data[0]);
+                id = int.Parse(data[0]);
                 // If the user ID dosn´t allready exsits. A new will be made:
                 if (!Users.ContainsKey(id))
                 {
@@ -87,37 +113,44 @@ namespace Recommender
 
         private void ReadTags()
         {
-            List<int> strs = new List<int>();
+
             // The tags gets transfered to the artists:
             int tagID;
-            int artistID;
-            foreach (string streng in _userTagFile.Skip(1))
+            int artistID = 1;
+            int newArtistID;
+            Dictionary<int, Tag> dicArtistTags = new Dictionary<int, Tag>();
+
+            string[] tagFile = _userTagFile.ToArray();
+
+            var sortedTagFile = tagFile.Skip(1).Take(tagFile.Length).OrderBy(getArtistIdFromString).ToArray();
+
+            foreach (string streng in sortedTagFile)
             {
                 string[] data = streng.Split('\t');
                 tagID = int.Parse(data[2]);
-                artistID = int.Parse(data[1]);
+                newArtistID = int.Parse(data[1]);
 
-                //There is atleast one artist that is tagged but has is not apart of the artist file
-                //Therefor we check for the key
-                if (Artists.ContainsKey(artistID))
+                if (artistID != newArtistID)
                 {
-                    //Creates adds tag to artist but if it is allready added the ammont is incremented
-                    if (Artists[artistID].Tags.ContainsKey(tagID))
+                    if (_dicArtistNames.ContainsKey(artistID) == true)
                     {
-                        Artists[artistID].Tags[tagID].Amount++;
+                        Artists.Add(artistID, new Artist(artistID, dicArtistTags, _dicArtistNames[artistID]));
                     }
-                    else
-                    {
-
-                        Artists[artistID].Tags.Add(tagID, new Tag(tagID));
-                    }
-
-                    if (artistID == 2 && tagID == 127)
-                    {
-                        Console.WriteLine();
-                    }
+                    artistID = newArtistID;
+                    dicArtistTags = new Dictionary<int, Tag>();
                 }
+
+                if (dicArtistTags.ContainsKey(tagID))
+                {
+                    dicArtistTags[tagID].Amount++;
+                }
+                else
+                {
+                    dicArtistTags.Add(tagID, new Tag(tagID));
+                }
+
             }
+
         }
 
         private void MakeRemainingRoskildeArtists()
@@ -157,7 +190,7 @@ namespace Recommender
                         // An ID for the new artists can be made, based on the key.
                         int newId = Artists.Keys.Max() + 1;
                         string name = inputFile[i].Substring(2);
-                        Artists.Add(newId, new Artist(newId, name)); 
+                        Artists.Add(newId, new Artist(newId, name));
                         i++;
                         // All the upcomming lines from the file shoud contain a tag, until a new artists arrives with the start letters "0 "
                         while (!inputFile[i].Contains("0\t") && inputFile[i] != (""))
@@ -202,10 +235,6 @@ namespace Recommender
 
         private void CalculateWeight()
         {
-            foreach (var artist in Artists.Values)
-            {
-                artist.CalcTagWeight();
-            }
             foreach (var artist in RoskildeArtists.Values)
             {
                 artist.CalcTagWeight();

@@ -13,7 +13,11 @@ namespace Recommender
 
         public Artist(int ID, string name) : base(ID, name) { }
 
-        public Artist(int ID, Dictionary<int, Tag> tag) : base(ID, tag) { }
+        public Artist(int ID, Dictionary<int, Tag> tag, string name) : base(ID, tag)
+        {
+            this.Name = name;
+            CalcTagWeight();
+        }
 
         public void CalcTagWeight()
         {

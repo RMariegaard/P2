@@ -53,3 +53,6 @@ C:\Users\kaspe\Desktop\Fixbanry\NuMedUI\ConsoleApplication4\obj\Debug\Recommende
 C:\Users\kaspe\Desktop\Fixbanry\NuMedUI\ConsoleApplication4\obj\Debug\RoskileRecommender.csproj.GenerateResource.Cache
 C:\Users\kaspe\Desktop\Fixbanry\NuMedUI\ConsoleApplication4\obj\Debug\ConsoleApplication4.exe
 C:\Users\kaspe\Desktop\Fixbanry\NuMedUI\ConsoleApplication4\obj\Debug\ConsoleApplication4.pdb
+C:\Users\Kasperca\Documents\GitHub\P2\Program\Fixbanry\NuMedUI\ConsoleApplication4\bin\Debug\ConsoleApplication4.exe.config
+C:\Users\Kasperca\Documents\GitHub\P2\Program\Fixbanry\NuMedUI\ConsoleApplication4\obj\Debug\ConsoleApplication4.exe
+C:\Users\Kasperca\Documents\GitHub\P2\Program\Fixbanry\NuMedUI\ConsoleApplication4\obj\Debug\ConsoleApplication4.pdb

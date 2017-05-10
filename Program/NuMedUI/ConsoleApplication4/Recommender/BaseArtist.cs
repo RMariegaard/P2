@@ -10,7 +10,7 @@ namespace Recommender
     abstract public class BaseArtist : ITaggable
     {
         public int Id { get; private set; }
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
 
         public Dictionary<int, Tag> Tags { get; private set; }
 
