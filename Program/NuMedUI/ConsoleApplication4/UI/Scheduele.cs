@@ -46,7 +46,16 @@ namespace Recommender
                     }
                     else if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom == "HardAdd")
                     {
-                        MessageBox.Show($"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day} \n {element.Artist.Name} and {newConcert.Artist.Name}");
+                        MessageBox.Show(
+                            $"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day} \n {element.Artist.Name} and {newConcert.Artist.Name}");
+                    }
+                    else
+                    {
+                        //Only show one of each artist
+                        if (element.Artist.Stars > newConcert.Artist.Stars)
+                            noOverlap = false;
+                        else
+                            Concerts.Remove(element);
                     }
                 }
             }
