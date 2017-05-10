@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
-    public class MethodsForRecommending : PrivateMethodsUsedInMethodsForRecommending , IRecommendationsMethods
+    public class MethodsForRecommending : IRecommendationsMethods
     {
         //Methods for getting Cosine 
 
