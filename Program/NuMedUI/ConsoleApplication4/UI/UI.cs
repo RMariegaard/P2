@@ -32,11 +32,10 @@ namespace Recommender
             loadThread.Start();
 
 
-            IContentBasedFiltering IContentBased = new ContentBasedFiltering();
-            ICollaborativeFiltering ICollaborative = new CollaborativeFiltering();
+            IRecommendationsMethods recommandationsMethods = new MethodsForRecommending();
 
             //Reading files
-            Recommender = new CreateRecommendations(IContentBased, ICollaborative);
+            Recommender = new CreateRecommendations(recommandationsMethods);
             Recommender.LoadFiles();
             ErrorLabelFrontPage.Text = "";
 

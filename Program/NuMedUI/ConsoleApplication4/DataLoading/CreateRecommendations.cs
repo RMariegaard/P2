@@ -12,25 +12,17 @@ namespace Recommender
         private Dictionary<int, User> _users;
         private Dictionary<int, Artist> _artists;
         private Dictionary<int, RoskildeArtist> _roskildeArtists;
-        private ICollaborativeFiltering _collaborativeFiltering;
-        private IContentBasedFiltering _contentBasedFiltering;
+        private IRecommendationsMethods _recommandationsMethods;
         private List<double> _collabRating;
         private List<double> _contentRating;
+
 
         public Dictionary<int, RecommendedArtist> RecommendedCollabArtists { get; private set; }
         public Dictionary<int, RecommendedArtist> RecommendedContetArtists { get; private set; }
 
-        public CreateRecommendations(IContentBasedFiltering contentBasedFiltering, ICollaborativeFiltering collaborativeFiltering)
+        public CreateRecommendations(IRecommendationsMethods recommendationsMethods)
         {
-            _collaborativeFiltering = collaborativeFiltering;
-            _contentBasedFiltering = contentBasedFiltering;
-        }
-
-        public CreateRecommendations(IContentBasedFiltering contentBasedFiltering, ICollaborativeFiltering collaborativeFiltering, Dictionary<int, User> users, Dictionary<int, Artist> artists, Dictionary<int, RoskildeArtist> roskildeArtists) :this(contentBasedFiltering, collaborativeFiltering)
-        {
-            _users = users;
-            _artists = artists;
-            _roskildeArtists = roskildeArtists;
+            _recommandationsMethods = recommendationsMethods;
         }
 
         public bool CheckForUserId(int id)
@@ -66,8 +58,6 @@ namespace Recommender
 
         public void GenerateRecommendations(int id)
         {
-            var cosine = new Cosine();
-            var pearson = new PearsonCor();
             User newUser = new User(0);
 
             if (_users.ContainsKey(id))
@@ -76,8 +66,8 @@ namespace Recommender
             }
                 
 
-            RecommendedCollabArtists = _collaborativeFiltering.RecommendArtists(pearson.CalculateCorrelation, newUser, _users, _roskildeArtists, _artists);
-            RecommendedContetArtists = _contentBasedFiltering.RecommedArtists(cosine.GetCosine, newUser, _roskildeArtists, 10);
+            RecommendedCollabArtists = _recommandationsMethods.RecommendArtistsCollab(_recommandationsMethods.CalculateCorrelation, newUser, _users, _roskildeArtists, _artists);
+            RecommendedContetArtists = _recommandationsMethods.RecommedArtistsContent(_recommandationsMethods.GetCosine, newUser, _roskildeArtists, 10);
 
             RecommendedCollabArtists = _giveRecomendationStars(RecommendedCollabArtists, _collabRating);
             RecommendedContetArtists = _giveRecomendationStars(RecommendedContetArtists, _contentRating);

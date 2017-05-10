@@ -8,7 +8,6 @@ namespace Recommender
 {
     public interface ITaggable
     {
-        //The interface only requires a getter
-        Dictionary<int, Tag> Tags { get;}
+        Dictionary<int, Tag> Tags { get; }
     }
 }

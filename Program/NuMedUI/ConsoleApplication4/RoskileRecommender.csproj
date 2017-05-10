@@ -48,9 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Recommender\ICosine.cs" />
-    <Compile Include="Recommender\Interfaces\ICollaborativeFiltering.cs" />
-    <Compile Include="Recommender\Interfaces\IContentBasedFiltering.cs" />
+    <Compile Include="Recommender\Interfaces\IRecommendationsMethods.cs" />
+    <Compile Include="Recommender\Interfaces\ITaggable.cs" />
+    <Compile Include="Recommender\MethodsForRecommending.cs" />
+    <Compile Include="Recommender\PrivateMethodsUsedInMethodsForRecommending.cs" />
     <Compile Include="UI\LoadingScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,13 +60,8 @@
     <Compile Include="Recommender\BaseArtist.cs" />
     <Compile Include="DataLoading\BinaryData.cs" />
     <Compile Include="DataLoading\BinarySerialization.cs" />
-    <Compile Include="Recommender\CollaborativeFiltering.cs" />
-    <Compile Include="Recommender\ContentBasedFiltering.cs" />
     <Compile Include="ConvertIdName.cs" />
-    <Compile Include="Recommender\Cosine.cs" />
     <Compile Include="DataLoading\CreateRecommendations.cs" />
-    <Compile Include="Recommender\Interfaces\ITaggable.cs" />
-    <Compile Include="Recommender\PearsonCor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
