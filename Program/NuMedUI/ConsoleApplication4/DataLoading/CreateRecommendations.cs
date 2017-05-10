@@ -15,8 +15,6 @@ namespace Recommender
         private IRecommendationsMethods _recommandationsMethods;
         private List<double> _collabRating;
         private List<double> _contentRating;
-
-
         public Dictionary<int, RecommendedArtist> RecommendedCollabArtists { get; private set; }
         public Dictionary<int, RecommendedArtist> RecommendedContetArtists { get; private set; }
 

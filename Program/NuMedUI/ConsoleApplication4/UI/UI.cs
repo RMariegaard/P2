@@ -68,7 +68,8 @@ namespace Recommender
             loadThread.Start();
 
             //Update and read files
-            UpdateData.UpdateDataFiles();
+            var data = new DataHandling();
+            data.MakeBinaryFiles();
             Recommender.LoadFiles();
 
             //Close loading screen

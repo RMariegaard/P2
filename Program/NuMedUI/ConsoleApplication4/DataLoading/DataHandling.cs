@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Recommender
 {
-    public class BinaryData
+    public class DataHandling
     {
         //Getting the path for the location of the text files from data set
         string _startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
@@ -29,16 +29,16 @@ namespace Recommender
             { "Søndag 26", "Mandag 27", "Tirsdag 28", "Onsdag 29", "Torsdag 30", "Fredag 01", "Lørdag 02", "Søndag 03" };
 
             ReadFiles();
-            MakeArtistDictornary();
-            ReadTags();
-            ReadArtist();
+            MakeArtistNameDictornary();
+            ReadArtistsWithTags();
+            ReadArtistWithoutTags();
             ReadUsers();
             MakeRemainingRoskildeArtists();
             foreach (string date in listOfDates)
             {
                 ReadRoskildeSchedule(date);
             }
-            CalculateWeight();
+            CalculateTagWeights();
             WriteToFile();
         }
 
@@ -57,7 +57,7 @@ namespace Recommender
             }
         }
 
-        private void MakeArtistDictornary()
+        private void MakeArtistNameDictornary()
         {
             int artistID;
             string[] lineInArtistFile;
@@ -71,72 +71,38 @@ namespace Recommender
             }
         }
 
-        private void ReadArtist()
-        {
-            string[] lineInArtistFile;
-            int artistID;
-            string artistName;
-            // "Artists" dictonary gets filled with all the artists from the dataset
-            foreach (var line in _artistFile.Skip(1))
-            {
-                lineInArtistFile = line.Split('\t');
-                artistID = int.Parse(lineInArtistFile[0]);
-                artistName = lineInArtistFile[1];
-                if (Artists.ContainsKey(artistID) == false)
-                {
-                    Artists.Add(artistID, new Artist(artistID, artistName));
-                }
-            }
-        }
 
-        private void ReadUsers()
-        {
-            int id = 2;
-            foreach (var line in _userFile.Skip(1))
-            {
-                // Splits up file
-                string[] data = line.Split('\t');
-                id = int.Parse(data[0]);
-                // If the user ID dosn´t allready exsits. A new will be made:
-                if (!Users.ContainsKey(id))
-                {
-                    User user = new User(id);
-                    Users.Add(id, user);
-                }
-
-                int ArtistId = int.Parse(data[1]);
-
-                // The artist ID and play count, gets inserted in the user list. A pointer for the allready exsisting artist is created
-                Users[id].Artists.Add(ArtistId, new Userartist(ArtistId, int.Parse(data[2]), Artists[ArtistId]));
-            }
-        }
-
-        private void ReadTags()
+        private void ReadArtistsWithTags()
         {
 
             // The tags gets transfered to the artists:
             int tagID;
-            int artistID = 1;
+            int previousArtistID;
             int newArtistID;
             Dictionary<int, Tag> dicArtistTags = new Dictionary<int, Tag>();
 
             string[] tagFile = _userTagFile.ToArray();
 
+            //Sorts the file after ArtistID
             var sortedTagFile = tagFile.Skip(1).Take(tagFile.Length).OrderBy(getArtistIdFromString).ToArray();
+            
+            //Gets the ID of the first artist from sorted file
+            previousArtistID = int.Parse(sortedTagFile[0].Split('\t')[1]);
 
             foreach (string streng in sortedTagFile)
             {
                 string[] data = streng.Split('\t');
                 tagID = int.Parse(data[2]);
                 newArtistID = int.Parse(data[1]);
-
-                if (artistID != newArtistID)
+                
+                if (previousArtistID != newArtistID)
                 {
-                    if (_dicArtistNames.ContainsKey(artistID) == true)
+                    if (_dicArtistNames.ContainsKey(previousArtistID))
                     {
-                        Artists.Add(artistID, new Artist(artistID, dicArtistTags, _dicArtistNames[artistID]));
+                        Artists.Add(previousArtistID, new Artist(previousArtistID, dicArtistTags, _dicArtistNames[previousArtistID]));
                     }
-                    artistID = newArtistID;
+                    previousArtistID = newArtistID;
+                    //Resets the artists tags
                     dicArtistTags = new Dictionary<int, Tag>();
                 }
 
@@ -153,6 +119,47 @@ namespace Recommender
 
         }
 
+        private void ReadArtistWithoutTags()
+        {
+            string[] lineInArtistFile;
+            int artistID;
+            string artistName;
+            // "Artists" dictonary gets filled with all the artists from the dataset
+            foreach (var line in _artistFile.Skip(1))
+            {
+                lineInArtistFile = line.Split('\t');
+                artistID = int.Parse(lineInArtistFile[0]);
+                artistName = lineInArtistFile[1];
+                //only add the artists which have not already been added
+                if (!Artists.ContainsKey(artistID))
+                {
+                    Artists.Add(artistID, new Artist(artistID, artistName));
+                }
+            }
+        }
+
+        private void ReadUsers()
+        {
+            foreach (var line in _userFile.Skip(1))
+            {
+                // Splits up file
+                string[] data = line.Split('\t');
+                int id = int.Parse(data[0]);
+                // If the user ID dosn´t allready exsits. A new will be made:
+                if (!Users.ContainsKey(id))
+                {
+                    User user = new User(id);
+                    Users.Add(id, user);
+                }
+ 
+                int ArtistId = int.Parse(data[1]);
+
+                // The artist ID and play count, gets inserted in the user list. A pointer for the allready exsisting artist is created
+                Users[id].Artists.Add(ArtistId, new Userartist(ArtistId, int.Parse(data[2]), Artists[ArtistId]));
+            }
+        }
+
+        
         private void MakeRemainingRoskildeArtists()
         {
 
@@ -235,7 +242,7 @@ namespace Recommender
             }
         }
 
-        private void CalculateWeight()
+        private void CalculateTagWeights()
         {
             foreach (var artist in RoskildeArtists.Values)
             {
@@ -248,44 +255,6 @@ namespace Recommender
                 user.CalculateArtistWeight();
             }
         }
-        /*
-        public void CalcCorrelationAverage(out double totalAvgContentRating, out double totalAvgCollabRating)
-        {
-            CreateRecommendations Recommender = new CreateRecommendations(Users, Artists, RoskildeArtists);
-
-            Dictionary<int, RecommendedArtist> collab;
-            Dictionary<int, RecommendedArtist> content;
-            List<RecommendedArtist> array = new List<RecommendedArtist>();
-            List<RecommendedArtist> array1 = new List<RecommendedArtist>();
-            for (int i = 0; i < 2500; i++)
-            {
-                Recommender.Recommender(i);
-                collab = Recommender.GetCollabRecommendedArtists();
-                content = Recommender.GetcontentRecommendedArtists();
-                if (collab != null && collab.Count() != 0)
-                {
-                    foreach (var element in collab)
-                    {
-                        element.Value.userID = i;
-                        array.Add(element.Value);
-                    }
-                }
-                if (content != null && content.Count() != 0)
-                {
-                    foreach (var element in content)
-                    {
-                        element.Value.userID = i;
-                        array1.Add(element.Value);
-                    }
-                }
-            }
-
-            array1 = array1.OrderByDescending(x => x.ContentBasedFilteringRating).ToList();
-            array = array.OrderByDescending(x => x.CollaborativeFilteringRating).ToList();
-
-            totalAvgCollabRating = array.Sum(x => x.CollaborativeFilteringRating) / array.Count();
-            totalAvgContentRating = array1.Sum(x => x.ContentBasedFilteringRating) / array1.Count();
-        }*/
 
         private void WriteToFile()
         {

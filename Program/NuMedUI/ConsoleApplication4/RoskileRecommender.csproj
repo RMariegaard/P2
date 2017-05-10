@@ -58,7 +58,7 @@
     <Compile Include="UI\LoadingScreen.Designer.cs" />
     <Compile Include="Recommender\Artist.cs" />
     <Compile Include="Recommender\BaseArtist.cs" />
-    <Compile Include="DataLoading\BinaryData.cs" />
+    <Compile Include="DataLoading\DataHandling.cs" />
     <Compile Include="DataLoading\BinarySerialization.cs" />
     <Compile Include="ConvertIdName.cs" />
     <Compile Include="DataLoading\CreateRecommendations.cs" />
@@ -102,12 +102,12 @@
     <Compile Include="UI\UiScheduele.Designer.cs">
       <DependentUpon>UiScheduele.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataLoading\UpdateData.cs" />
     <Compile Include="Recommender\User.cs" />
     <Compile Include="Recommender\Userartist.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
