@@ -59,12 +59,12 @@ namespace Recommender
                 if (n > 0)
                 {
                     dicOfRecommendations.Add(artist.Key, new RecommendedArtist(roskildeArtist[artist.Key]));
-                    dicOfRecommendations[artist.Key].CollaborativeFilteringRating = sum / n;
+                    dicOfRecommendations[artist.Key].FilteringRating = sum / n;
                 }
             }
             //Takes the top 10 artist based on the filtering rating and returns them in a dictonary of recommended artists
             var final = dicOfRecommendations
-                .OrderByDescending(x => x.Value.CollaborativeFilteringRating)
+                .OrderByDescending(x => x.Value.FilteringRating)
                 .Take(10)
                 .ToDictionary(x => x.Key, x => x.Value);
             

@@ -16,13 +16,13 @@ namespace Recommender
             foreach (RoskildeArtist artist in roskildeArtist.Values)
             {
                 var tempArtist = new RecommendedArtist(artist);
-                tempArtist.ContentBasedFilteringRating = correlationMeasure(newUser, artist);
+                tempArtist.FilteringRating = correlationMeasure(newUser, artist);
                 recommendedArtist.Add(tempArtist.Id, tempArtist);
 
             }
             //Takes the k best artists and returns them as a dictornary
             var final = recommendedArtist
-                .OrderByDescending(x => x.Value.ContentBasedFilteringRating)
+                .OrderByDescending(x => x.Value.FilteringRating)
                 .Take(k)
                 .ToDictionary((x => x.Key), (x => x.Value));
 
