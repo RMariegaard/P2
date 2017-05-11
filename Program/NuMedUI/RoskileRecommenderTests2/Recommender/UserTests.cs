@@ -26,7 +26,7 @@ namespace Recommender.Tests
         public void UserIDTest(int userID)
         {
             User testUser = new User(userID);
-            Assert.AreEqual(userID, testUser.Id);
+            Assert.AreEqual(userID, testUser.ID);
         }
 
         // These test will check if the UserArtist dictionary works as intended:
@@ -111,7 +111,7 @@ namespace Recommender.Tests
             {
                 testUser.Artists.Add(i, new Userartist(i, 0, new Artist(i, null, "Test")));
             }
-            Assert.AreEqual(testUser.Artists[ID].Id, ID);
+            Assert.AreEqual(testUser.Artists[ID].ID, ID);
         }
 
 
