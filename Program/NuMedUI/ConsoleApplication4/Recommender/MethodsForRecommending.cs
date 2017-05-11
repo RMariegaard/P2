@@ -89,12 +89,12 @@ namespace Recommender
         private double CalculatePearsonNumerator(User user, User otherUser, double userMean, double otherUserMean, Dictionary<int, Artist> allArtists)
         {
             double temp = 0.0;
-            foreach (Artist artist in allArtists.Values)
+            foreach (int artistId in allArtists.Keys)
             {
-                int artistID = artist.Id;
-                if (user.Artists.ContainsKey(artist.Id))
+                int artistID = artistId;
+                if (user.Artists.ContainsKey(artistID))
                 {
-                    if (otherUser.Artists.ContainsKey(artist.Id))
+                    if (otherUser.Artists.ContainsKey(artistID))
                     {
                         temp += (user.Artists[artistID].Amount - userMean) *
                                 (otherUser.Artists[artistID].Amount - otherUserMean);
@@ -106,7 +106,7 @@ namespace Recommender
                                 (0 - otherUserMean);
                     }
                 }
-                else if (otherUser.Artists.ContainsKey(artist.Id))
+                else if (otherUser.Artists.ContainsKey(artistID))
                 {
 
                     temp += (0 - userMean) *
@@ -128,10 +128,10 @@ namespace Recommender
         {
             double temp = 0.0;
             double temp2 = 0.0;
-            foreach (Artist artist in allArtists.Values)
+            foreach (int artistId in allArtists.Keys)
             {
-                int artistID = artist.Id;
-                if (user.Artists.ContainsKey(artist.Id))
+                int artistID = artistId;
+                if (user.Artists.ContainsKey(artistID))
                 {
                     temp += Math.Pow(user.Artists[artistID].Amount - userMean, 2);
                 }
@@ -140,7 +140,7 @@ namespace Recommender
                     temp += Math.Pow(0 - userMean, 2);
                 }
 
-                if (otherUser.Artists.ContainsKey(artist.Id))
+                if (otherUser.Artists.ContainsKey(artistID))
                 {
                     temp2 += Math.Pow(otherUser.Artists[artistID].Amount - otherUserMean, 2);
                 }

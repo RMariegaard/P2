@@ -20,10 +20,5 @@ namespace Recommender
             Id = ID;
             ThisArtist = thisartist;
         }
-        //Used to test
-        public Userartist(double weight)
-        {
-            Weight = weight;
-        }
     }
 }

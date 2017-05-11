@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Recommender.Tests
 {
-    [TestFixture()]
+    /*[TestFixture()]
     public class PearsonCorTests
     {
         private static User user1;
@@ -74,5 +74,5 @@ namespace Recommender.Tests
             return new User(1, returnDic);
         }
 
-    }
+    }*/
 }
