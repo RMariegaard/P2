@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace Recommender
 {
+    /* ************************************************************************************************ */
+    /* The following code is taken from
+        http://blog.danskingdom.com/saving-and-loading-a-c-objects-data-to-an-xml-json-or-binary-file/
+        The code is lincesend under CC 3.0                                                               */
+    /* ************************************************************************************************* */
+    
     /// <summary>
     /// Functions for performing common binary Serialization operations.
     /// <para>All properties and variables will be serialized.</para>
