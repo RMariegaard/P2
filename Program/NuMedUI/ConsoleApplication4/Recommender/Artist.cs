@@ -21,16 +21,13 @@ namespace Recommender
 
         public void CalcTagWeight()
         {
-            List<Tag> list = Tags.Values.ToList();
-            list.Sort((a, b) => -a.Amount.CompareTo(b.Amount));
-
-            foreach (var tag in list)
+            foreach (var tag in Tags)
             {
-                TotalTagAmount += tag.Amount;
+                TotalTagAmount += tag.Value.Amount;
             }
-            foreach (var tag in list)
+            foreach (var tag in Tags)
             {
-                tag.Weight = (100 / TotalTagAmount) * tag.Amount;
+                tag.Value.Weight = (100 / TotalTagAmount) * tag.Value.Amount;
             }
         }
     }
