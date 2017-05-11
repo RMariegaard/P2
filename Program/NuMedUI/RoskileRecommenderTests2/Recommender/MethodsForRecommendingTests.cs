@@ -63,12 +63,18 @@ namespace Recommender.Tests
             User user2 = createTestUserPearson(user2ArtistId, User2ArtistAmount);
             Assert.Positive(_test.GetPearson(user1, user2, allArtists));
         }
-
+        [TestCase(new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 0, 1, 2, 3, 4 }, new int[] { 0, 1, 2, 3, 4 },ExpectedResult = 1)]
+        public double Pearson_TestSpecifikCase_AssertResultInReturn(int[] user1ArtistAmount, int[] User2ArtistAmount, int[] user1ArtistId, int[] user2ArtistId)
+        {
+            User user1 = createTestUserPearson(user1ArtistId, user1ArtistAmount);
+            User user2 = createTestUserPearson(user2ArtistId, User2ArtistAmount);
+            return _test.GetPearson(user1, user2, allArtists);
+        }
 
         [Test()]
         public void RecommendArtistsCollaborativeTest()
         {
-            Assert.();
+            Assert.Fail();
         }
 
         [Test()]
