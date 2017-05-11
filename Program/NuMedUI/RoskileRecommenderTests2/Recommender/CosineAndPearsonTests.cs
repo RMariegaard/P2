@@ -63,25 +63,18 @@ namespace Recommender.Tests
             User user2 = createTestUserPearson(user2ArtistId, User2ArtistAmount);
             Assert.Positive(_test.GetPearson(user1, user2, allArtists));
         }
-        [TestCase(new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 0, 1, 2, 3, 4 }, new int[] { 0, 1, 2, 3, 4 },ExpectedResult = 1)]
+
+        //The Expected result are calculated on this site http://www.socscistatistics.com/tests/pearson/Default2.aspx
+        [TestCase(new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 0, 1, 2, 3, 4 }, new int[] { 0, 1, 2, 3, 4 },ExpectedResult = 1.000)]
+        [TestCase(new int[] { 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1 }, new int[] { 0, 1, 2, 3 }, new int[] { 4, 5, 6, 7 }, ExpectedResult = -0.667)]
+        [TestCase(new int[] { 23, 32, 0, 44, 32 }, new int[] { 0, 44, 10, 55, 43 }, new int[] { 0, 1, 2, 3, 4 }, new int[] { 0, 1, 2, 3, 4 }, ExpectedResult = 0.896)]
         public double Pearson_TestSpecifikCase_AssertResultInReturn(int[] user1ArtistAmount, int[] User2ArtistAmount, int[] user1ArtistId, int[] user2ArtistId)
         {
             User user1 = createTestUserPearson(user1ArtistId, user1ArtistAmount);
             User user2 = createTestUserPearson(user2ArtistId, User2ArtistAmount);
-            return _test.GetPearson(user1, user2, allArtists);
+            return Math.Round(_test.GetPearson(user1, user2, allArtists),3);
         }
 
-        [Test()]
-        public void RecommendArtistsCollaborativeTest()
-        {
-            Assert.Fail();
-        }
-
-        [Test()]
-        public void RecommedArtistsContentBasedTest()
-        {
-            Assert.Fail();
-        }
         private T createTestTypeCosine<T>(int[] key, double[] value)
         {
             var returnDic = new Dictionary<int, Tag>();
@@ -90,7 +83,7 @@ namespace Recommender.Tests
             int length = value.Length;
             for (int i = 0; i < length; i++)
             {
-                returnDic.Add(key[i], new Tag(value[i]));
+                returnDic.Add(key[i], new Tag(i) { Weight = value[i]});
             }
             object valueobj;
             if (typeof(T) == typeof(User))

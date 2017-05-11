@@ -54,7 +54,7 @@
     <Compile Include="CosineTests.cs" />
     <Compile Include="PearsonCorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Recommender\MethodsForRecommendingTests.cs" />
+    <Compile Include="Recommender\CosineAndPearsonTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
