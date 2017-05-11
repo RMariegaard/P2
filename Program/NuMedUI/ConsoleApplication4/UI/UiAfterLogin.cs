@@ -13,14 +13,14 @@ namespace Recommender
     public partial class UIAfterLogin : Form
     {
         RecommenderSystem Recommender;
-        int ID;
+        private int _userID;
         List<RoskildeArtist> RoskildeNames;
         List<string> Names;
         List<RoskildeArtist> HardSelected;
 
-        public UIAfterLogin(int ID, RecommenderSystem Recommender)
+        public UIAfterLogin(int userId, RecommenderSystem Recommender)
         {
-            this.ID = ID;
+            this._userID = userId;
             this.Recommender = Recommender;
 
             RoskildeNames = Recommender.GetRoskildeArtists();
@@ -28,7 +28,7 @@ namespace Recommender
 
             InitializeComponent();
 
-            GreetingLabel.Text = $"Welcome: {ID}";
+            GreetingLabel.Text = $"Welcome: {userId}";
 
             SeachBar.Text = "Seach";
             SeachBar.ForeColor = Color.LightGray;
@@ -43,7 +43,7 @@ namespace Recommender
             }
         }
 
-        public void RemoveText(object sender, EventArgs e)
+        private void RemoveText(object sender, EventArgs e)
         {
             if (SeachBar.Text == "Seach")
             {
@@ -54,7 +54,7 @@ namespace Recommender
 
         private void GetRecommendationButton_Click(object sender, EventArgs e)
         {
-            UiScheduele Scheduele = new UiScheduele(ID, Recommender, HardSelected);
+            UiScheduele Scheduele = new UiScheduele(_userID, Recommender, HardSelected);
             Scheduele.Show();
             this.Close();
         }

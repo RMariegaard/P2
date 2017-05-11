@@ -51,6 +51,7 @@
     <Compile Include="Recommender\Interfaces\IRecommendationsMethods.cs" />
     <Compile Include="Recommender\Interfaces\ITaggable.cs" />
     <Compile Include="Recommender\MethodsForRecommending.cs" />
+    <Compile Include="UI\ElementOrigin.cs" />
     <Compile Include="UI\LoadingScreen.cs">
       <SubType>Form</SubType>
     </Compile>

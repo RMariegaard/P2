@@ -11,73 +11,77 @@ namespace Recommender
 {
     class RecommendedArtistUiElement
     {
-        public PictureBox Picture;
+        private PictureBox _picture;
         public Label RatingLabel, TimeOfConcertLabel, EndTimeLabel, Scene, NameLabel;
         public Panel Element;
-        public Color color;
-        public string RatingFrom;
-        public RecommendedArtist artist;
+        private Color _color;
+        public ElementOrigin RatingFrom;
+        public RecommendedArtist Artist;
         public List<SchedueleElement> Overlapping;
-        string startupPath;
+        private string _startupPath;
 
         public PictureBox LockIcon, HeadphonesIcon, ExclamationIcon;
         public bool Lock, Headphones, Exclamation;
         
-        public RecommendedArtistUiElement(RecommendedArtist artist, string RatingFrom, string EndTimeString)
+        public RecommendedArtistUiElement(RecommendedArtist artist, ElementOrigin RatingFrom, string EndTimeString)
         {
             Overlapping = new List<SchedueleElement>();
 
             //Init
-            this.artist = artist;
+            this.Artist = artist;
             this.RatingFrom = RatingFrom;
             Element = new Panel();
-            Picture = new PictureBox();
+            _picture = new PictureBox();
             NameLabel = new Label();
             RatingLabel = new Label();
             TimeOfConcertLabel = new Label();
             EndTimeLabel = new Label();
             Scene = new Label();
-            color = new Color();
+            _color = new Color();
 
             //Creating color
             int starNeededForColor = 8;
-            if (RatingFrom == "Collab" || RatingFrom == "Content")
-                if (artist.Stars >= starNeededForColor)
-                    color = Color.FromArgb(238, 113, 3);
-            else if (RatingFrom == "HardAdd")
+            switch (RatingFrom)
             {
-                RatingLabel.Text = "You have added this";
-                color = Color.FromArgb(238, 113, 3);
-            }
-            else if (RatingFrom == "HeardBefore")
-            {
-                RatingLabel.Text = "You have heard this before";
-                color = Color.FromArgb(238, 113, 3);
-                Headphones = true;
+                case ElementOrigin.HeardBefore:
+                    RatingLabel.Text = "You have heard this before";
+                    _color = Color.FromArgb(238, 113, 3);
+                    Headphones = true;
+                    break;
+
+                case ElementOrigin.Collab:
+                case ElementOrigin.Content:
+                    if (artist.Stars >= starNeededForColor)
+                        _color = Color.FromArgb(238, 113, 3);
+                    break;
+
+                case ElementOrigin.HardSelected:
+                    RatingLabel.Text = "You have added this";
+                    _color = Color.FromArgb(238, 113, 3);
+                    break;
             }
 
-            //tekst
-            else if (RatingFrom == "Content")
-                RatingLabel.Text = $"ContentBased: { artist.Stars}";
-            else if (RatingFrom == "Collab")
-                RatingLabel.Text = $"Collaborative: { artist.Stars}";
+            //Text for label
+            if (ElementOrigin.Content == this.RatingFrom)
+                RatingLabel.Text = $"Based on your prefrences: {artist.Stars}";
+            else if (ElementOrigin.Collab == this.RatingFrom)
+                RatingLabel.Text = $"Based on similar users: {artist.Stars}";
 
             //Images of artists from file
-            startupPath = Environment.CurrentDirectory;
-            startupPath = Path.GetDirectoryName(startupPath);
-            startupPath = Path.GetDirectoryName(startupPath);
-            Element.BackColor = color;
+            _startupPath = Environment.CurrentDirectory;
+            _startupPath = Path.GetDirectoryName(_startupPath);
+            _startupPath = Path.GetDirectoryName(_startupPath);
+            Element.BackColor = _color;
 
             try
             {
-                Picture.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + $"\\pics\\{artist.Name.ToUpper()}.png"), 100, 100);
+                _picture.Image = ResizeBitmap.ResizeImage(Image.FromFile(_startupPath + $"\\pics\\{artist.Name.ToUpper()}.png"), 100, 100);
             }
             catch (FileNotFoundException)
             {
-                Picture.Image = Image.FromFile(startupPath + @"\Images\UnkownImage.jpg");
+                _picture.Image = Image.FromFile(_startupPath + @"\Images\UnkownImage.jpg");
             }
 
-            //Size, text
             Scene.Text = artist.Scene;
             NameLabel.Text = artist.Name;
             EndTimeLabel.Text = EndTimeString;
@@ -95,7 +99,7 @@ namespace Recommender
             //Panel
             Element.Location = TopLeft;
             Element.Size = size;
-            Element.BackColor = color;
+            Element.BackColor = _color;
 
             //Icons
             Size IconSize = new Size(20, 20);
@@ -104,7 +108,7 @@ namespace Recommender
             if (Headphones)
             {
                 HeadphonesIcon = new PictureBox();
-                HeadphonesIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Headphones.jpg"), IconSize.Width, IconSize.Height);
+                HeadphonesIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(_startupPath + @"\Images\Headphones.jpg"), IconSize.Width, IconSize.Height);
                 HeadphonesIcon.Location = new Point(size.Width - IconSize.Width - Spacing, Spacing);
                 Element.Controls.Add(HeadphonesIcon);
 
@@ -114,7 +118,7 @@ namespace Recommender
             if (Lock)
             {
                 LockIcon = new PictureBox();
-                LockIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Lock.jpg"), IconSize.Width, IconSize.Height);
+                LockIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(_startupPath + @"\Images\Lock.jpg"), IconSize.Width, IconSize.Height);
                 LockIcon.Location = new Point(size.Width - (IconSize.Width * 2) - (Spacing * 2), Spacing);
                 Element.Controls.Add(LockIcon);
                 ToolTip tooltip = new ToolTip();
@@ -123,17 +127,17 @@ namespace Recommender
             if (Exclamation)
             {
                 ExclamationIcon = new PictureBox();
-                ExclamationIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Exclamation.jpg"), IconSize.Width, IconSize.Height);
+                ExclamationIcon.Image = ResizeBitmap.ResizeImage(Image.FromFile(_startupPath + @"\Images\Exclamation.jpg"), IconSize.Width, IconSize.Height);
                 ExclamationIcon.MouseHover += new EventHandler(ExclamationHover);
                 ExclamationIcon.Location = new Point(size.Width - (IconSize.Width * 3) - (Spacing * 3), Spacing);
                 Element.Controls.Add(ExclamationIcon);
             }
 
             //Creating stars
-            for (int i = 0; i <= artist.Stars; i++)
+            for (int i = 0; i <= Artist.Stars; i++)
             {
                 PictureBox Star = new PictureBox();
-                Star.Image = ResizeBitmap.ResizeImage(Image.FromFile(startupPath + @"\Images\Star.jpg"), IconSize.Width, IconSize.Height);
+                Star.Image = ResizeBitmap.ResizeImage(Image.FromFile(_startupPath + @"\Images\Star.jpg"), IconSize.Width, IconSize.Height);
                 Star.Visible = true;
                 Star.Size = IconSize;
                 Star.Location = new Point(size.Width - (IconSize.Width * i) - Spacing * i, size.Height - Spacing - IconSize.Height);
@@ -141,8 +145,8 @@ namespace Recommender
             }
 
             //Artist picture
-            Picture.Location = new Point(0, 0);
-            Picture.Size = new Size(size.Height, size.Height);
+            _picture.Location = new Point(0, 0);
+            _picture.Size = new Size(size.Height, size.Height);
 
             //Labels
             NameLabel.Location = new Point(size.Height + 2, 5);
@@ -152,7 +156,7 @@ namespace Recommender
             Scene.Location = new Point(size.Height + 2, 65);
 
             //Adding to the pannel
-            Element.Controls.Add(Picture);
+            Element.Controls.Add(_picture);
             Element.Controls.Add(NameLabel);
             Element.Controls.Add(RatingLabel);
             Element.Controls.Add(TimeOfConcertLabel);

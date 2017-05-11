@@ -11,7 +11,7 @@ namespace Recommender
         public DateTime StartTime;
         public RecommendedArtist Artist;
         public DateTime EndTime;
-        public string AddedFrom;
+        public ElementOrigin AddedFrom;
 
         public bool Exclamation => OverlappingArtist != null;
         public List<SchedueleElement> OverlappingArtist;
@@ -24,9 +24,9 @@ namespace Recommender
             OverlappingArtist.Add(Concert);
         }
 
-        public SchedueleElement(RecommendedArtist artist, DateTime startTime, double minutesOfTime, string AddedFrom)
+        public SchedueleElement(RecommendedArtist artist, DateTime startTime, double minutesOfTime, ElementOrigin addedFrom)
         {
-            this.AddedFrom = AddedFrom;
+            this.AddedFrom = addedFrom;
             Artist = artist;
             StartTime = startTime;
             EndTime = startTime.AddMinutes(minutesOfTime);

@@ -28,26 +28,48 @@ namespace Recommender
                 if (element.StartTime < newConcert.EndTime && element.StartTime >= newConcert.StartTime || element.EndTime > newConcert.StartTime && element.StartTime < newConcert.StartTime)
                 {
                     //Hard Added
-                    if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom != "HardAdd")
+                    if (element.AddedFrom == ElementOrigin.HardSelected && newConcert.AddedFrom != ElementOrigin.HardSelected)
                     {
-                        if (element.Artist.Name != newConcert.Artist.Name)
+                        if (element.Artist.Id != newConcert.Artist.Id)
                         {
                             element.OverlappingAdd(newConcert);
                         }
                         noOverlap = false;
                     }
-                    else if (element.AddedFrom != "HardAdd" && newConcert.AddedFrom == "HardAdd")
+                    else if (element.AddedFrom != ElementOrigin.HardSelected && newConcert.AddedFrom == ElementOrigin.HardSelected)
                     {
-                        if (element.Artist.Name != newConcert.Artist.Name)
+                        if (element.Artist.Id != newConcert.Artist.Id)
                         {
                             element.OverlappingAdd(element);
                         }
                         Concerts.Remove(element);
                     }
-                    else if (element.AddedFrom == "HardAdd" && newConcert.AddedFrom == "HardAdd")
+                    else if (element.AddedFrom == ElementOrigin.HardSelected && newConcert.AddedFrom == ElementOrigin.HardSelected)
                     {
                         MessageBox.Show(
                             $"You have added two artists that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day} \n {element.Artist.Name} and {newConcert.Artist.Name}");
+                    }
+                    //Heard Before
+                    else if (element.AddedFrom == ElementOrigin.HeardBefore && newConcert.AddedFrom != ElementOrigin.HeardBefore)
+                    {
+                        if (element.Artist.Id != newConcert.Artist.Id)
+                        {
+                            element.OverlappingAdd(newConcert);
+                        }
+                        noOverlap = false;
+                    }
+                    else if (element.AddedFrom != ElementOrigin.HeardBefore && newConcert.AddedFrom == ElementOrigin.HeardBefore)
+                    {
+                        if (element.Artist.Id != newConcert.Artist.Id)
+                        {
+                            element.OverlappingAdd(element);
+                        }
+                        Concerts.Remove(element);
+                    }
+                    else if (element.AddedFrom == ElementOrigin.HeardBefore && newConcert.AddedFrom == ElementOrigin.HeardBefore)
+                    {
+                        MessageBox.Show(
+                            $"You have heard two artists before that overlap on {element.StartTime.DayOfWeek} - {element.StartTime.Day} \n {element.Artist.Name} and {newConcert.Artist.Name}");
                     }
                     else
                     {
@@ -55,7 +77,13 @@ namespace Recommender
                         if (element.Artist.Stars > newConcert.Artist.Stars)
                             noOverlap = false;
                         else
+                        {
+                            if (element.Artist.Stars > 7 || element.Artist.Stars == newConcert.Artist.Stars)
+                            {
+                                newConcert.OverlappingAdd(element);
+                            }
                             Concerts.Remove(element);
+                        }
                     }
                 }
             }

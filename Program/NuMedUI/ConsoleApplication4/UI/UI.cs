@@ -14,7 +14,7 @@ namespace Recommender
 {
     public partial class UI : Form
     {
-        public int ID;
+        public int UserID;
         RecommenderSystem Recommender;
         
         public UI()
@@ -27,35 +27,49 @@ namespace Recommender
             pictureBox1.Image = Image.FromFile(startupPath + @"\Images\Orange.jpg");
 
             //Showing loading screen
+            
             LoadingScreen loading = new LoadingScreen("ReadingFiles");
-            Thread loadThread = new Thread(() => loading.ShowDialog());
-            loadThread.Start();
+            try
+            {
+                Thread loadThread = new Thread(() => loading.ShowDialog());
+                loadThread.Start();
 
+                IRecommendationsMethods recommandationsMethods = new MethodsForRecommending();
 
-            IRecommendationsMethods recommandationsMethods = new MethodsForRecommending();
+                //Reading files
+                Recommender = new RecommenderSystem(recommandationsMethods);
+                Recommender.LoadFiles();
+                ErrorLabelFrontPage.Text = "";
 
-            //Reading files
-            Recommender = new RecommenderSystem(recommandationsMethods);
-            Recommender.LoadFiles();
-            ErrorLabelFrontPage.Text = "";
+                //Closeing loading screen
+                loadThread.Abort();
+            }
+            catch (Exception)
+            {
+                //Get reconmedations only - shows no loading screen
+                IRecommendationsMethods recommandationsMethods = new MethodsForRecommending();
 
-            //Closeing loading screen
-            loadThread.Abort();
+                //Reading files
+                Recommender = new RecommenderSystem(recommandationsMethods);
+                Recommender.LoadFiles();
+                ErrorLabelFrontPage.Text = "";
+            }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(UserIdTextbox.Text, out ID))
+            if (!int.TryParse(UserIdTextbox.Text, out UserID))
             {
                 MessageBox.Show("Please enter a valid number");
             }
-            else if (!Recommender.CheckForUserId(ID))
+            else if (!Recommender.CheckForUserId(UserID))
             {
                 MessageBox.Show("User not found!");
             }
             else
             {
-                UIAfterLogin frm2 = new UIAfterLogin(ID, Recommender);
+                UIAfterLogin frm2 = new UIAfterLogin(UserID, Recommender);
                 frm2.Show();
             }
         }
@@ -78,8 +92,6 @@ namespace Recommender
 
         private void UserIdTextbox_KeyDown(object sender, KeyEventArgs e)
         {
-
-
             if (Keys.Enter == e.KeyData)
             {
                 button1_Click(sender, e);

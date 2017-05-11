@@ -12,33 +12,33 @@ namespace Recommender
 {
     public partial class HoverWindow : Form
     {
-        Panel BackGround;
-        int Spacing;
+        private Panel _background;
+        private int _spacing;
         public HoverWindow(Panel Content)
-        {
-            
-            Spacing = 2;
-            
-            BackGround = new Panel();
+        {   
+            _spacing = 2;   
+            _background = new Panel();
+
+            //Sets width and height of HoverWindow
             Height = 300;
             Width = 500;
             
-            BackGround.Location = new Point(Spacing, Spacing);
-            BackGround.Size = new Size(Width-Spacing, Height - Spacing);
-            Content.Size = new Size(Width - (Spacing*2), Height - (Spacing*2));
-            BackGround.Controls.Add(Content);
+            _background.Location = new Point(_spacing, _spacing);
+            _background.Size = new Size(Width-_spacing, Height - _spacing);
+            Content.Size = new Size(Width - (_spacing*2), Height - (_spacing*2));
+            _background.Controls.Add(Content);
 
-            Controls.Add(BackGround);
+            Controls.Add(_background);
 
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 
-            BackGround.MouseLeave += new EventHandler(Leves);
-            MouseLeave += new EventHandler(Leves);
+            _background.MouseLeave += new EventHandler(Leaves);
+            MouseLeave += new EventHandler(Leaves);
 
             InitializeComponent();
         }
 
-        public void Leves(object sender, EventArgs e)
+        public void Leaves(object sender, EventArgs e)
         {
             this.Close();
         }

@@ -39,10 +39,10 @@ namespace Recommender
             {
                 foreach (var userArtist in Recommender.GetUser(ID).Artists)
                 {
-                    if (userArtist.Value.ThisArtist.Name.ToUpper() == artist.Name.ToUpper())
+                    if (userArtist.Key == artist.Id)
                     {
                         RecommendedArtist TempArtist = new RecommendedArtist(artist);
-                        Elements.Add(new SchedueleElement(TempArtist, artist.TimeOfConcert, 60, "HeardBefore"));
+                        Elements.Add(new SchedueleElement(TempArtist, artist.TimeOfConcert, 60, ElementOrigin.HeardBefore));
                     }
                 }
             }
@@ -50,18 +50,18 @@ namespace Recommender
             //Getting the artist the user added
             foreach (RoskildeArtist artist in HardSelected)
             {
-                Elements.Add(new SchedueleElement(new RecommendedArtist(artist), artist.TimeOfConcert, 60, "HardAdd"));
+                Elements.Add(new SchedueleElement(new RecommendedArtist(artist), artist.TimeOfConcert, 60, ElementOrigin.HardSelected));
             }
 
             //Getting Recommendations
             Recommender.GenerateRecommendations(ID);
             foreach (var artist in Recommender.RecommendedCollabArtists)
             {
-                Elements.Add(new SchedueleElement(artist.Value, artist.Value.TimeOfConcert, 60, "Collab"));
+                Elements.Add(new SchedueleElement(artist.Value, artist.Value.TimeOfConcert, 60, ElementOrigin.Collab));
             }
             foreach (var artist in Recommender.RecommendedContetArtists)
             {
-                Elements.Add(new SchedueleElement(artist.Value, artist.Value.TimeOfConcert, 60, "Content"));
+                Elements.Add(new SchedueleElement(artist.Value, artist.Value.TimeOfConcert, 60, ElementOrigin.Content));
             }
             
             //Addig the individual concerts to a full scheduele
@@ -84,18 +84,18 @@ namespace Recommender
             //Adding the lock icon if the user have added this
             foreach (RecommendedArtistUiElement item in GUIList)
             {
-                if (item.RatingFrom == "HardAdd")
+                if (item.RatingFrom == ElementOrigin.HardSelected)
                     item.Lock = true;
             }
 
             //Adding Buttons
             List<DateTime> Days = new List<DateTime>();
             
-            foreach (RecommendedArtistUiElement item in GUIList.OrderBy(x => x.artist.TimeOfConcert))
+            foreach (RecommendedArtistUiElement item in GUIList.OrderBy(x => x.Artist.TimeOfConcert))
             {
-                if (!Days.Any(x => x.Month == item.artist.TimeOfConcert.Month && x.Day == item.artist.TimeOfConcert.Day))
+                if (!Days.Any(x => x.Month == item.Artist.TimeOfConcert.Month && x.Day == item.Artist.TimeOfConcert.Day))
                 {
-                    Days.Add(item.artist.TimeOfConcert);
+                    Days.Add(item.Artist.TimeOfConcert);
                 }
             }
 
@@ -129,7 +129,7 @@ namespace Recommender
             label1.Text = btn.Text;
 
             int counter = 0;
-            foreach (RecommendedArtistUiElement item in GUIList.Where(x => x.artist.TimeOfConcert.Date.Day.ToString() == btn.Tag.ToString()).OrderBy(x => x.TimeOfConcertLabel.ToString()))
+            foreach (RecommendedArtistUiElement item in GUIList.Where(x => x.Artist.TimeOfConcert.Date.Day.ToString() == btn.Tag.ToString()).OrderBy(x => x.TimeOfConcertLabel.ToString()))
             {
                 item.calcLocation(new Point(5, 105 * counter), new Size(400, 100));
                 panel1.Controls.Add(item.Element);
