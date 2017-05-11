@@ -12,8 +12,6 @@ namespace Recommender
         //Getting the path for the location of the text files from data set
         string _startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
 
-        public Func<string, int> getArtistIdFromString = line => int.Parse(line.Split('\t')[1]);
-
         string[] _userFile;
         string[] _artistFile;
         string[] _userTagFile;
@@ -71,7 +69,6 @@ namespace Recommender
             }
         }
 
-
         private void ReadArtistsWithTags()
         {
 
@@ -84,7 +81,7 @@ namespace Recommender
             string[] tagFile = _userTagFile.ToArray();
 
             //Sorts the file after ArtistID
-            var sortedTagFile = tagFile.Skip(1).Take(tagFile.Length).OrderBy(getArtistIdFromString).ToArray();
+            var sortedTagFile = tagFile.Skip(1).Take(tagFile.Length).OrderBy(GetArtistIdFromString).ToArray();
             
             //Gets the ID of the first artist from sorted file
             previousArtistID = int.Parse(sortedTagFile[0].Split('\t')[1]);
@@ -118,6 +115,8 @@ namespace Recommender
             }
 
         }
+
+        private Func<string, int> GetArtistIdFromString = line => int.Parse(line.Split('\t')[1]);
 
         private void ReadArtistWithoutTags()
         {
@@ -158,7 +157,6 @@ namespace Recommender
                 Users[id].Artists.Add(ArtistId, new Userartist(ArtistId, int.Parse(data[2]), Artists[ArtistId]));
             }
         }
-
         
         private void MakeRemainingRoskildeArtists()
         {

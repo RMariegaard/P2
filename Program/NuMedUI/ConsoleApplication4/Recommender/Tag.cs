@@ -14,17 +14,11 @@ namespace Recommender
         public double Amount { get; set; }
         // The weight of the tag compared to all other tags in the list
         public double Weight { get; set; }
-        public string Name;
 
         public Tag(int id)
         {
             Id = id;
             Amount = 1;
         }
-        public Tag(double weight)
-        {
-            Weight = weight;
-        }
-
     }
 }

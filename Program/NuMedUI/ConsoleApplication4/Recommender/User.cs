@@ -11,7 +11,7 @@ namespace Recommender
     {
         // The id of the user is stored:
         private int _id;
-        public int Id
+        public int ID
         {
             get { return _id; }
             private set { _id = value; }
@@ -29,7 +29,7 @@ namespace Recommender
         {
             Artists = new Dictionary<int, Userartist>();
             Tags = new Dictionary<int, Tag>();
-            Id = id;
+            ID = id;
         }
 
         // Method that makes the TagsDictionary, relative to the Artists this user has heard:

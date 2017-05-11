@@ -11,14 +11,14 @@ namespace Recommender
     {
         public int Amount { get; private set; }
         public double Weight { get; set; }
-        public int Id { get; private set; }
+        public int ID { get; private set; }
         public Artist ThisArtist { get; private set; }
 
-        public Userartist(int ID, int A, Artist thisartist)
+        public Userartist(int id, int amount, Artist thisArtist)
         {
-            Amount = A;
-            Id = ID;
-            ThisArtist = thisartist;
+            Amount = amount;
+            ID = id;
+            ThisArtist = thisArtist;
         }
     }
 }

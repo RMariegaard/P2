@@ -202,7 +202,7 @@ namespace Recommender
             //Calculates the correlation
             foreach (var user in users.Values)
             {
-                SimilarUser tempUser = new SimilarUser(user.Id);
+                SimilarUser tempUser = new SimilarUser(user.ID);
                 tempUser.Similarity = correlationMeasure(newUser, user, allArtists);
                 tempUser.Artists = user.Artists;
                 listOfNeighbours.Add(tempUser);
