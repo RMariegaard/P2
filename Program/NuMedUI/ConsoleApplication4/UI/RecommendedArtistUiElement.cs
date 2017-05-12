@@ -94,7 +94,7 @@ namespace Recommender
             EndTimeLabel.AutoSize = true;
         }
 
-        public void calcLocation(Point TopLeft, Size size)
+        public void CalcLocation(Point TopLeft, Size size)
         {
             //Panel
             Element.Location = TopLeft;
@@ -163,21 +163,22 @@ namespace Recommender
             Element.Controls.Add(Scene);
             Element.Controls.Add(EndTimeLabel);
         }
-
+        //Creates and shows panel in a hover window for the artists that the current artist overlap
         public void ExclamationHover(object sender, EventArgs e)
         {
+            //Creates the panel 
+            //Overlapping list is populated when the scheduele is created
             Panel PanelShown = new Panel();
-
             int i = 0;
             foreach (SchedueleElement item in Overlapping)
             {
                 RecommendedArtistUiElement Temp = new RecommendedArtistUiElement(item.Artist, item.AddedFrom, $" - {item.EndTime}");
-                Temp.calcLocation(new Point(5, 105 * i), new Size(400, 100));
+                Temp.CalcLocation(new Point(5, 105 * i), new Size(400, 100));
                 PanelShown.Controls.Add(Temp.Element);
                 i++;
             }
             PanelShown.AutoScroll = true;
-
+            //Creates and shows the window with the panel
             HoverWindow Window = new HoverWindow(PanelShown);
             Window.Location = new Point(Cursor.Position.X - 10, Cursor.Position.Y - 10);
             Window.StartPosition = FormStartPosition.Manual;

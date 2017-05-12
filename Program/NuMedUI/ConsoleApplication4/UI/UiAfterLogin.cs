@@ -12,103 +12,101 @@ namespace Recommender
 {
     public partial class UIAfterLogin : Form
     {
-        RecommenderSystem Recommender;
+        private RecommenderSystem _recommender;
         private int _userID;
-        List<RoskildeArtist> RoskildeNames;
-        List<string> Names;
-        List<RoskildeArtist> HardSelected;
+        private Dictionary<int, RoskildeArtist> _roskildeArtists;
+        private List<RoskildeArtist> _hardSelected;
 
         public UIAfterLogin(int userId, RecommenderSystem Recommender)
         {
             this._userID = userId;
-            this.Recommender = Recommender;
+            this._recommender = Recommender;
 
-            RoskildeNames = Recommender.GetRoskildeArtists();
-            HardSelected = new List<RoskildeArtist>();
+            _roskildeArtists = Recommender.RoskildeArtists;
+            _hardSelected = new List<RoskildeArtist>();
 
             InitializeComponent();
 
             GreetingLabel.Text = $"Welcome: {userId}";
 
-            SeachBar.Text = "Seach";
-            SeachBar.ForeColor = Color.LightGray;
-            SeachBar.GotFocus += new EventHandler(RemoveText);
+            SearchBar.Text = "Search";
+            SearchBar.ForeColor = Color.LightGray;
+            SearchBar.GotFocus += new EventHandler(RemoveText);
             
-            Names = new List<string>();
-
-            RoskildeNames.OrderBy(x => x.Name).ToList().ForEach(x => Names.Add(x.Name));
-            foreach (string item in Names)
+            var artists = _roskildeArtists.Values.OrderBy(x => x.Name);
+            foreach (RoskildeArtist artist in artists)
             {
-                RoskildeArtistsList.Items.Add(item);
+                RoskildeArtistsList.Items.Add(artist.Name);
             }
         }
 
         private void RemoveText(object sender, EventArgs e)
         {
-            if (SeachBar.Text == "Seach")
+            if (SearchBar.Text == "Seach")
             {
-                SeachBar.Text = "";
-                SeachBar.ForeColor = Color.Black;
+                SearchBar.Text = "";
+                SearchBar.ForeColor = Color.Black;
             }
         }
 
         private void GetRecommendationButton_Click(object sender, EventArgs e)
         {
-            UiScheduele Scheduele = new UiScheduele(_userID, Recommender, HardSelected);
-            Scheduele.Show();
+            //Shows scheduele windows
+            UiScheduele scheduele = new UiScheduele(_userID, _recommender, _hardSelected);
+            scheduele.Show();
             this.Close();
         }
 
         private void SeachBar_TextChanged(object sender, EventArgs e)
         {
-            Names.RemoveRange(0, Names.Count());
+            //Find mathches from searhced text and display only the matches in the list
             RoskildeArtistsList.Items.Clear();
-
-            RoskildeNames.Where(x => x.Name.ToUpper().Contains(SeachBar.Text.ToUpper())).OrderBy(x => x.Name).ToList().ForEach(x => Names.Add(x.Name));
-            foreach (string item in Names)
+            var searchedText = SearchBar.Text.ToUpper();
+            var matches = _roskildeArtists.Values.Where(x => x.Name.ToUpper().Contains(searchedText));
+            foreach (RoskildeArtist item in matches.OrderBy(x => x.Name))
             {
-                RoskildeArtistsList.Items.Add(item);
+                RoskildeArtistsList.Items.Add(item.Name);
             }
 
-            foreach (RoskildeArtist artist in HardSelected)
+            //Set checkpoint for artists that allready have been selected
+            foreach (RoskildeArtist artist in _hardSelected)
             {
-                if (RoskildeArtistsList.Items.IndexOf(artist.Name) != -1)
-                {
-                    RoskildeArtistsList.SetItemChecked(RoskildeArtistsList.Items.IndexOf(artist.Name), true);
-                }
+                RoskildeArtistsList.SetItemChecked(RoskildeArtistsList.Items.IndexOf(artist.Name), true);
             }
         }
         
         private void RoskildeArtistsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<RoskildeArtist> Temp = new List<RoskildeArtist>();
-
-            foreach (RoskildeArtist item in HardSelected)
+            //Add previous selected artists that is not visible because of search
+            //to an empty hard selected list
+            List<RoskildeArtist> temp = new List<RoskildeArtist>();
+            foreach (RoskildeArtist item in _hardSelected)
             {
                 if (!RoskildeArtistsList.Items.Contains(item.Name))
                 {
-                    Temp.Add(item);
+                    temp.Add(item);
                 }
             }
+            _hardSelected.Clear();
+            temp.ForEach(x => _hardSelected.Add(x));
             
-            HardSelected.Clear();
-            Temp.ForEach(x => HardSelected.Add(x));
-
-            foreach (RoskildeArtist Artist in RoskildeNames)
+            //Add visible selected artists and adds them to hardselected
+            foreach (var selectedArtistName in RoskildeArtistsList.CheckedItems)
             {
-                foreach (var SelectedArtist in RoskildeArtistsList.CheckedItems)
+                //Object is string
+                string name = selectedArtistName as string;
+                if (name != null)
                 {
-                    if (Artist.Name == SelectedArtist.ToString())
-                    {
-                        HardSelected.Add(Artist);
-                    }
+                    RoskildeArtist artist = _roskildeArtists.Values.First(x => x.Name == name);
+                    _hardSelected.Add(artist);
                 }
             }
 
-            listView1.Items.Clear();
-            foreach (RoskildeArtist item in HardSelected)
+            //adds all hard selected artist to list view of selected artists
+            hardSelectedListView.Items.Clear();
+            foreach (RoskildeArtist item in _hardSelected)
             {
-                listView1.Items.Add(item.Name);
+                hardSelectedListView.Items.Add(item.Name);
             }
         }
 

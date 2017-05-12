@@ -14,7 +14,7 @@ namespace Recommender
 {
     public partial class UI : Form
     {
-        public int UserID;
+        private int _userID;
         RecommenderSystem Recommender;
         
         public UI()
@@ -39,9 +39,8 @@ namespace Recommender
                 //Reading files
                 Recommender = new RecommenderSystem(recommandationsMethods);
                 Recommender.LoadFiles();
-                ErrorLabelFrontPage.Text = "";
 
-                //Closeing loading screen
+                //Closing loading screen
                 loadThread.Abort();
             }
             catch (Exception)
@@ -52,49 +51,59 @@ namespace Recommender
                 //Reading files
                 Recommender = new RecommenderSystem(recommandationsMethods);
                 Recommender.LoadFiles();
-                ErrorLabelFrontPage.Text = "";
             }
             
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void LoginButton_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(UserIdTextbox.Text, out UserID))
+            if (!int.TryParse(UserIdTextbox.Text, out _userID))
             {
                 MessageBox.Show("Please enter a valid number");
             }
-            else if (!Recommender.CheckForUserId(UserID))
+            else if (!Recommender.CheckForUserId(_userID))
             {
                 MessageBox.Show("User not found!");
             }
             else
             {
-                UIAfterLogin frm2 = new UIAfterLogin(UserID, Recommender);
-                frm2.Show();
+                UIAfterLogin nextWindow = new UIAfterLogin(_userID, Recommender);
+                nextWindow.Show();
             }
         }
 
         private void UpdateDataButton_Click(object sender, EventArgs e)
         {
-            //Showing loading screen
-            LoadingScreen loading = new LoadingScreen("ReadingFiles");
-            Thread loadThread = new Thread(() => loading.ShowDialog());
-            loadThread.Start();
+            try
+            {
+                //Showing loading screen
+                LoadingScreen loading = new LoadingScreen("ReadingFiles");
+                Thread loadThread = new Thread(() => loading.ShowDialog());
+                loadThread.Start();
 
-            //Update and read files
-            var data = new DataHandling();
-            data.MakeBinaryFiles();
-            Recommender.LoadFiles();
+                //Update and read files
+                var data = new DataHandling();
+                data.MakeBinaryFiles();
+                Recommender.LoadFiles();
 
-            //Close loading screen
-            loadThread.Abort();
+                //Close loading screen
+                loadThread.Abort();
+            }
+            catch (Exception)
+            {
+                //Fails to make new thread then just make files
+                //Update and read files
+                var data = new DataHandling();
+                data.MakeBinaryFiles();
+                Recommender.LoadFiles();
+            }
         }
 
         private void UserIdTextbox_KeyDown(object sender, KeyEventArgs e)
         {
             if (Keys.Enter == e.KeyData)
             {
-                button1_Click(sender, e);
+                LoginButton_Click(sender, e);
             }
         }
     }

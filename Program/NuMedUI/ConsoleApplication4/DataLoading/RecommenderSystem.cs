@@ -9,9 +9,9 @@ namespace Recommender
 {
     public class RecommenderSystem
     {
-        private Dictionary<int, User> _users;
-        private Dictionary<int, Artist> _artists;
-        private Dictionary<int, RoskildeArtist> _roskildeArtists;
+        public Dictionary<int, User> Users { get; private set; }
+        public Dictionary<int, Artist> Artists { get; private set; }
+        public Dictionary<int, RoskildeArtist> RoskildeArtists { get; private set; }
         private IRecommendationsMethods _recommandationsMethods;
         private List<double> _collabRating;
         private List<double> _contentRating;
@@ -25,19 +25,12 @@ namespace Recommender
 
         public bool CheckForUserId(int id)
         {
-            return _users.ContainsKey(id);
+            return Users.ContainsKey(id);
         }
 
         public User GetUser(int id)
         {
-            return _users[id];
-        }
-
-        public List<RoskildeArtist> GetRoskildeArtists()
-        {
-            List<RoskildeArtist> RoskildeNames = new List<RoskildeArtist>();
-            _roskildeArtists.Values.ToList().ForEach(x => RoskildeNames.Add(x));
-            return RoskildeNames;
+            return Users[id];
         }
 
         public void LoadFiles()
@@ -47,9 +40,9 @@ namespace Recommender
             startupPath = Path.GetDirectoryName(startupPath);
             startupPath = Path.GetDirectoryName(startupPath);
 
-            _users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin");
-            _artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin");
-            _roskildeArtists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
+            Users = BinarySerialization.ReadFromBinaryFile<Dictionary<int, User>>(startupPath + @"\DataFiles\users.bin");
+            Artists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, Artist>>(startupPath + @"\DataFiles\artists.bin");
+            RoskildeArtists = BinarySerialization.ReadFromBinaryFile<Dictionary<int, RoskildeArtist>>(startupPath + @"\DataFiles\Roskildeartists.bin");
             _collabRating = BinarySerialization.ReadFromBinaryFile<List<double>>(startupPath + @"\DataFiles\CollabRatings.bin");
             _contentRating = BinarySerialization.ReadFromBinaryFile<List<double>>(startupPath + @"\DataFiles\contentRating.bin");
         }
@@ -58,14 +51,14 @@ namespace Recommender
         {
             User newUser = new User(0);
 
-            if (_users.ContainsKey(id))
+            if (Users.ContainsKey(id))
             {
-                newUser = _users[id];
+                newUser = Users[id];
             }
                 
 
-            RecommendedCollabArtists = _recommandationsMethods.RecommendArtistsCollaborative(_recommandationsMethods.GetPearson, newUser, _users, _roskildeArtists, _artists);
-            RecommendedContetArtists = _recommandationsMethods.RecommedArtistsContentBased(_recommandationsMethods.GetCosine, newUser, _roskildeArtists, 10);
+            RecommendedCollabArtists = _recommandationsMethods.RecommendArtistsCollaborative(_recommandationsMethods.GetPearson, newUser, Users, RoskildeArtists, Artists);
+            RecommendedContetArtists = _recommandationsMethods.RecommedArtistsContentBased(_recommandationsMethods.GetCosine, newUser, RoskildeArtists, 10);
 
             RecommendedCollabArtists = _giveRecomendationStars(RecommendedCollabArtists, _collabRating);
             RecommendedContetArtists = _giveRecomendationStars(RecommendedContetArtists, _contentRating);

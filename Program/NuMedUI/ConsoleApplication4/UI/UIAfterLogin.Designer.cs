@@ -32,9 +32,9 @@
             this.RoskildeArtistsList = new System.Windows.Forms.CheckedListBox();
             this.GetRecommendationButton = new System.Windows.Forms.Button();
             this.InfoLabel = new System.Windows.Forms.Label();
-            this.SeachBar = new System.Windows.Forms.TextBox();
+            this.SearchBar = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.hardSelectedListView = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // GreetingLabel
@@ -77,14 +77,14 @@
             this.InfoLabel.Text = "You can now chose with artists you are sure you want to see. Press \"Get Recommend" +
     "ations\" to continue";
             // 
-            // SeachBar
+            // SearchBar
             // 
-            this.SeachBar.Location = new System.Drawing.Point(16, 74);
-            this.SeachBar.Name = "SeachBar";
-            this.SeachBar.Size = new System.Drawing.Size(375, 20);
-            this.SeachBar.TabIndex = 4;
-            this.SeachBar.Text = "Seach";
-            this.SeachBar.TextChanged += new System.EventHandler(this.SeachBar_TextChanged);
+            this.SearchBar.Location = new System.Drawing.Point(16, 74);
+            this.SearchBar.Name = "SearchBar";
+            this.SearchBar.Size = new System.Drawing.Size(375, 20);
+            this.SearchBar.TabIndex = 4;
+            this.SearchBar.Text = "Seach";
+            this.SearchBar.TextChanged += new System.EventHandler(this.SeachBar_TextChanged);
             // 
             // label1
             // 
@@ -95,22 +95,22 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Selected Artists";
             // 
-            // listView1
+            // hardSelectedListView
             // 
-            this.listView1.Location = new System.Drawing.Point(428, 99);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(213, 329);
-            this.listView1.TabIndex = 7;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.hardSelectedListView.Location = new System.Drawing.Point(428, 99);
+            this.hardSelectedListView.Name = "hardSelectedListView";
+            this.hardSelectedListView.Size = new System.Drawing.Size(213, 329);
+            this.hardSelectedListView.TabIndex = 7;
+            this.hardSelectedListView.UseCompatibleStateImageBehavior = false;
             // 
             // UIAfterLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 494);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.hardSelectedListView);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.SeachBar);
+            this.Controls.Add(this.SearchBar);
             this.Controls.Add(this.InfoLabel);
             this.Controls.Add(this.GetRecommendationButton);
             this.Controls.Add(this.RoskildeArtistsList);
@@ -128,8 +128,8 @@
         private System.Windows.Forms.CheckedListBox RoskildeArtistsList;
         private System.Windows.Forms.Button GetRecommendationButton;
         private System.Windows.Forms.Label InfoLabel;
-        private System.Windows.Forms.TextBox SeachBar;
+        private System.Windows.Forms.TextBox SearchBar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView hardSelectedListView;
     }
 }

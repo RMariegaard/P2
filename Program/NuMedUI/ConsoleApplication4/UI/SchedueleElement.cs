@@ -16,6 +16,7 @@ namespace Recommender
         public bool Exclamation => OverlappingArtist != null;
         public List<SchedueleElement> OverlappingArtist;
         
+        //Adding the concert that has been overlapped to a list
         public void OverlappingAdd(SchedueleElement Concert)
         {
             if (OverlappingArtist == null)
