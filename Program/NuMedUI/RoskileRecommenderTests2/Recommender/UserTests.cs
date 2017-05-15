@@ -6,14 +6,12 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
-using RoskileRecommenderTests2;
 
 namespace Recommender.Tests
 {
     [TestFixture()]
     public class UserTests
     {
-        MakeTestSubjects makeTestSubjects = new MakeTestSubjects();
         // TestCases for User ID. Not much to test here, other than it is possible to assign all kinds of integers as ID´s. 
         // ID´s are loaded from the dataset, and no real validation is made withing the class, only while loading the data.
         [TestCase(-100000000)]
