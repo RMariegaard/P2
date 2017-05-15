@@ -76,7 +76,7 @@ namespace Recommender
                         //Only show one of each artist
                         if (element.Artist.Stars > newConcert.Artist.Stars)
                         {
-                            if (element.Artist.Stars > 7)
+                            if (newConcert.Artist.Stars > 7)
                             {
                                 element.OverlappingAdd(newConcert);
                             }
