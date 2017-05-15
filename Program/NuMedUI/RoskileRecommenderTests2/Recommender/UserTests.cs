@@ -81,35 +81,41 @@ namespace Recommender.Tests
         public void UserArtistDictContainsCorrectAmountTest(int ID, int amountOfArtists, int amount)
         {
             User testUser = new User(1);
+            Dictionary<int, Tag> emptyTags = new Dictionary<int, Tag>();
 
             for (int i = 0; i < amountOfArtists; i++)
             {
                 if (i == ID)
                 {
-                    testUser.Artists.Add(i, new Userartist(i, amount, new Artist(i, null, "Test")));
+                    testUser.Artists.Add(i, new Userartist(i, amount, new Artist(i, emptyTags, "Test")));
                 }
-                testUser.Artists.Add(i, new Userartist(i, 0, new Artist(i, null, "Test")));
+                else
+                {
+                    testUser.Artists.Add(i, new Userartist(i, 0, new Artist(i, emptyTags, "Test")));
+                }
+
             }
             Assert.AreEqual(testUser.Artists[ID].Amount, amount);
         }
 
         // This test will test if userartists reference to artist is the correct ID/key:
-        [TestCase(1, 1)]
-        [TestCase(1, 2)]
+        [TestCase(0, 1)]
+        [TestCase(1, 3)]
         [TestCase(1, 50)]
         [TestCase(1, 1000)]
-        [TestCase(2, 2)]
-        [TestCase(50, 50)]
-        [TestCase(1234, 1234)]
+        [TestCase(1, 2)]
+        [TestCase(49, 50)]
+        [TestCase(1233, 1234)]
         [TestCase(17, 50)]
         [TestCase(142, 1000)]
         public void UserArtistDictContainsCorrectValuesIDTest(int ID, int amountOfArtists)
         {
             User testUser = new User(1);
+            Dictionary<int, Tag> emptyTags = new Dictionary<int, Tag>();
 
             for (int i = 0; i < amountOfArtists; i++)
             {
-                testUser.Artists.Add(i, new Userartist(i, 0, new Artist(i, null, "Test")));
+                testUser.Artists.Add(i, new Userartist(i, 0, new Artist(i, emptyTags, "Test")));
             }
             Assert.AreEqual(testUser.Artists[ID].ID, ID);
         }
@@ -131,10 +137,11 @@ namespace Recommender.Tests
         public void CalculateArtistWeightTest(int ID, int amountOfArtists, int[] artistsAmounts, double expectedWeight)
         {
             User testUser = new User(1);
+            Dictionary<int, Tag> emptyTags = new Dictionary<int, Tag>();
 
             for (int i = 0; i < amountOfArtists; i++)
             {
-                testUser.Artists.Add(i, new Userartist(i, artistsAmounts[i], new Artist(i, null, "Test")));
+                testUser.Artists.Add(i, new Userartist(i, artistsAmounts[i], new Artist(i, emptyTags, "Test")));
             }
             testUser.CalculateArtistWeight();
 

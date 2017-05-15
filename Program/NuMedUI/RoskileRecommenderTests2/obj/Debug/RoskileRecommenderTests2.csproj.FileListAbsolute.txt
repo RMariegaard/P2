@@ -7,3 +7,12 @@ C:\Users\mark\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\bin\D
 C:\Users\mark\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\obj\Debug\RoskileRecommenderTests2.csprojResolveAssemblyReference.cache
 C:\Users\mark\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\obj\Debug\RoskileRecommenderTests2.dll
 C:\Users\mark\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\obj\Debug\RoskileRecommenderTests2.pdb
+C:\Users\Lasse\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\bin\Debug\RoskileRecommenderTests2.dll
+C:\Users\Lasse\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\bin\Debug\RoskileRecommenderTests2.pdb
+C:\Users\Lasse\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\bin\Debug\ConsoleApplication4.exe
+C:\Users\Lasse\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\bin\Debug\nunit.framework.dll
+C:\Users\Lasse\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\bin\Debug\ConsoleApplication4.pdb
+C:\Users\Lasse\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\bin\Debug\nunit.framework.xml
+C:\Users\Lasse\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\obj\Debug\RoskileRecommenderTests2.csprojResolveAssemblyReference.cache
+C:\Users\Lasse\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\obj\Debug\RoskileRecommenderTests2.dll
+C:\Users\Lasse\Documents\GitHub\P2\Program\NuMedUI\RoskileRecommenderTests2\obj\Debug\RoskileRecommenderTests2.pdb
