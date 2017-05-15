@@ -99,8 +99,10 @@
             // 
             // newUserButton
             // 
+            this.newUserButton.Location = new System.Drawing.Point(168, 350);
             this.newUserButton.Name = "newUserButton";
             this.newUserButton.Size = new System.Drawing.Size(160, 23);
+            this.newUserButton.TabIndex = 8;
             this.newUserButton.Text = "New User";
             this.newUserButton.UseVisualStyleBackColor = true;
             this.newUserButton.Click += new System.EventHandler(this.newUserButton_Click);
