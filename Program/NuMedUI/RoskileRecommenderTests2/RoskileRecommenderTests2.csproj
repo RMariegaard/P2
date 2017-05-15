@@ -54,6 +54,7 @@
     <Compile Include="Recommender\MakeTestSubjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recommender\CosineAndPearsonTests.cs" />
+    <Compile Include="Recommender\SimilarUserTests.cs" />
     <Compile Include="Recommender\TagTests.cs" />
     <Compile Include="Recommender\UserTests.cs" />
   </ItemGroup>
