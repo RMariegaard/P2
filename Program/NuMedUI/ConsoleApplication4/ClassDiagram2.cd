@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Recommender.BinarySerialization" Collapsed="true">
+    <Position X="6.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataLoading\BinarySerialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.DataHandling" Collapsed="true">
+    <Position X="6.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAACAAAAAAwAAAAABAAIgAAACQAABUIEACEAACAAA=</HashCode>
+      <FileName>DataLoading\DataHandling.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.RecommenderSystem" Collapsed="true">
+    <Position X="6" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AEAAgCAAAQAAAAACEAAAEAAAAEAAAAAAEEAAAAACBAA=</HashCode>
+      <FileName>DataLoading\RecommenderSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.Program" Collapsed="true">
+    <Position X="4.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.Artist" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Recommender\Artist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.BaseArtist" Collapsed="true">
+    <Position X="2.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Recommender\BaseArtist.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Recommender.MethodsForRecommending" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EQAAAABIAAEAAAAAAAAAAAAAQAAEIAAAAAAAIAABAAA=</HashCode>
+      <FileName>Recommender\MethodsForRecommending.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Recommender.RecommendedArtist" Collapsed="true">
+    <Position X="2.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Recommender\RecommendedArtist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.RoskildeArtist" Collapsed="true">
+    <Position X="2.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Recommender\RoskildeArtist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.SimilarUser" Collapsed="true">
+    <Position X="4.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAgAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Recommender\SimilarUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.Tag" Collapsed="true">
+    <Position X="4.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAACAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Recommender\Tag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.User" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAgABAAABIAAAAAAAAAEAAAEAAAAAAAAA=</HashCode>
+      <FileName>Recommender\User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Recommender.Userartist" Collapsed="true">
+    <Position X="3.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAACAACgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Recommender\Userartist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.HoverWindow" Collapsed="true">
+    <Position X="6" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAEAAAIAAAAAAQAAAAA=</HashCode>
+      <FileName>UI\HoverWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.LoadingScreen" Collapsed="true">
+    <Position X="6" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABCEAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\LoadingScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.RecommendedArtistUiElement" Collapsed="true">
+    <Position X="4.25" Y="11.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAUQEAAiAAIgAQAgCgIAAAAAIAAAAAAAQQAgAAIAgA=</HashCode>
+      <FileName>UI\RecommendedArtistUiElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.ResizeBitmap" Collapsed="true">
+    <Position X="6" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\ResizeBitmap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.Scheduele" Collapsed="true">
+    <Position X="2.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Scheduele.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.SchedueleElement" Collapsed="true">
+    <Position X="2.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAACAAIIAgAABAAQAAAAAAAAA=</HashCode>
+      <FileName>UI\SchedueleElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.UI" Collapsed="true">
+    <Position X="4.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIBAAAgACAQABAAAACEAAACAAgEAAAACACAAABAAAA=</HashCode>
+      <FileName>UI\UI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.UIAfterLogin" Collapsed="true">
+    <Position X="4.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACIAAECAAABAAAAqAAAQCEAggAAEAAiAAAAQAAAE=</HashCode>
+      <FileName>UI\UiAfterLogin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Recommender.UiScheduele" Collapsed="true">
+    <Position X="4.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABBCAAABAAAQCBAAACAAAAAAAAAAAABQAAgAA=</HashCode>
+      <FileName>UI\UiScheduele.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Recommender.IRecommendationsMethods" Collapsed="true">
+    <Position X="6" Y="2.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>EQAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Recommender\Interfaces\IRecommendationsMethods.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Recommender.ITaggable" Collapsed="true">
+    <Position X="2.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Recommender\Interfaces\ITaggable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Recommender.ElementOrigin" Collapsed="true">
+    <Position X="2.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAACAAAAAAAAAAAAAQAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>UI\ElementOrigin.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
