@@ -21,7 +21,7 @@ namespace Recommender
         {
             bool noOverlap = true;
             
-            //We are writing ToList() becuse we are romoving elements inside the foreach. With .ToList() We are creating a new list, that we use for the forech. But still removing in the original.
+            //We are writing ToList() becuse we are romoving elements inside the foreach. With .ToList() We are creating a new list, that we use for the foreach. But still removing in the original.
             foreach (SchedueleElement element in Concerts.ToList())
             {
                 //Does it overlap
@@ -75,10 +75,32 @@ namespace Recommender
                     {
                         //Only show one of each artist
                         if (element.Artist.Stars > newConcert.Artist.Stars)
+                        {
+                            if (element.Artist.Stars > 7)
+                            {
+                                element.OverlappingAdd(newConcert);
+                            }
                             noOverlap = false;
+                        }
+
+                        else if (element.Artist.Stars == newConcert.Artist.Stars)
+                        {
+                            if(newConcert.Artist.Scene == "Orange")
+                            {
+                                if(element.Artist.Stars > 7)
+                                    newConcert.OverlappingAdd(element);
+                                Concerts.Remove(element);
+                            }
+                            else
+                            {
+                                if(newConcert.Artist.Stars > 7)
+                                    element.OverlappingAdd(newConcert);
+                                noOverlap = false;
+                            }
+                        }
                         else
                         {
-                            if (element.Artist.Stars > 7 || element.Artist.Stars == newConcert.Artist.Stars)
+                            if (element.Artist.Stars > 7)
                             {
                                 newConcert.OverlappingAdd(element);
                             }
