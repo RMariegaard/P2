@@ -45,7 +45,7 @@ namespace Recommender.Tests
             Assert.AreEqual(testUser.Artists.Count, amountOfArtists);
         }
 
-        // This test will test if userartists amount correct Value:
+        // This test will test if userartists amount is correct Value:
         [TestCase(0, 1, 0)]
         [TestCase(0, 1, 1)]
         [TestCase(0, 1, 10)]
@@ -118,72 +118,7 @@ namespace Recommender.Tests
             Assert.AreEqual(testUser.Artists[ID].ID, ID);
         }
 
-        /* 
-               // This Test will test if specific Tag weights are calculated correct:
-               // First difference in how many tags artists has are being tested:
-               [TestCase(1, new int[] { 10, 10 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4 }, 25.0)]
-               [TestCase(3, new int[] { 10, 10 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4 }, 25.0)]
-               [TestCase(2, new int[] { 10, 10 }, new int[] { 1, 1 }, new int[] { 1, 1 }, new int[] { 1, 2 }, 50.0)]
-               [TestCase(1, new int[] { 10, 10 }, new int[] { 1, 1 }, new int[] { 1, 1 }, new int[] { 1, 2 }, 50.0)]
-               [TestCase(3, new int[] { 10, 10 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4 }, 25.0)]
-               [TestCase(3, new int[] { 10, 10 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4 }, 25.0)]
-               [TestCase(1, new int[] { 10, 10 }, new int[] { 1, 0 }, new int[] { 1 }, new int[] { 1 }, 100.0)]
-               [TestCase(1, new int[] { 10, 10 }, new int[] { 3, 2 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, 16.67)]
-               [TestCase(5, new int[] { 10, 10 }, new int[] { 3, 2 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, 25.0)]
-
-                    // Most artists has around 14 tag. So testing for 14 tags, and that Taghandling only takes 10:
-                    [TestCase(1, new int[] { 10, 10 }, new int[] { 14, 14 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 }, 5.0)]
-                    [TestCase(10, new int[] { 10, 10 }, new int[] { 14, 14 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 }, 5.0)]
-                    [TestCase(15, new int[] { 10, 10 }, new int[] { 14, 14 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 }, 5.0)]
-                    [TestCase(24, new int[] { 10, 10 }, new int[] { 14, 14 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 }, 5.0)]
-                    [TestCase(1, new int[] { 10, 10 }, new int[] { 10, 10 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, 5.0)]
-                    [TestCase(10, new int[] { 10, 10 }, new int[] { 10, 10 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 }, 5.0)]
-                    [TestCase(11, new int[] { 10, 10 }, new int[] { 10, 10 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 }, 5.0)]
-                    [TestCase(20, new int[] { 10, 10 }, new int[] { 10, 10 }, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 }, 5.0)]
-
-                    // Then differences in the artists amounts are being tested (How much the user has heard the artists):
-                    [TestCase(1, new int[] { 1, 1 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4 }, 25.0)]
-                    [TestCase(4, new int[] { 1, 1 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4 }, 25.0)]
-                    [TestCase(1, new int[] { 1, 10 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, 20234.0)]
-                    [TestCase(5, new int[] { 1, 10 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, 20.5550)]
-                    [TestCase(1, new int[] { 1, 1000 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, 20324.0)]
-                    [TestCase(5, new int[] { 1, 1000 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, 23240.0)]
-                    [TestCase(1, new int[] { 50, 100 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, 20324.0)]
-                    [TestCase(5, new int[] { 50, 100 }, new int[] { 2, 2 }, new int[] { 1, 1, 1, 1, 1 }, new int[] { 1, 2, 3, 4, 5 }, 23240.0)] 
-        // Then differences in the Tag amounts for the artists (how many times the artists has been tagged with the tag): 
-
-
-        // Then testing where ID´s are identical for some tags: 
-
-        // Then a bit of random testing:
-
-        public void UserTagHandlingTagWeightTest(int ID, int[] artistAmounts, int[] amountOfTags, int[] tagAmounts, int[] tagIDs, double expectedTagWeight)
-        {
-            User testUser = new User(1);
-            int tagCount = 0;
-            int i = 0;
-            // Each int in ArtistAmount should represent a new artist:
-            foreach (int artistamount in artistAmounts)
-            {
-                Dictionary<int, Tag> testTags = new Dictionary<int, Tag>();
-                // The int array of AmountOfTags represent how many tags the i´th artist has:
-                for (int j = 0; j < amountOfTags[i]; j++)
-                {
-                    Tag tempTag = new Tag(tagIDs[tagCount]);
-                    tempTag.Amount = tagAmounts[tagCount];
-                    testTags.Add(tagIDs[tagCount], tempTag);
-                    // Tag count will keep track of where in the array data must be used from:
-                    tagCount++;
-                }
-                testUser.Artists.Add(i, new Userartist(i, artistamount, new Artist(i, testTags, "Test")));
-                i++;
-            }
-            testUser.UserTagHandling();
-
-            Assert.AreEqual(expectedTagWeight, Math.Round(testUser.Tags[ID].Weight, 2));
-        } */
-
-        // Test for UserTagHandling testing Tag Weight, with different values for artist amount on the user (listening time)
+        // Test for UserTagHandling testing Tag Weight, with different values for artist amount on the user (listening time(High numbers increase TagWeight))
         [TestCase(1, new int[] { 1 }, 10.0)]
         [TestCase(1, new int[] { 10 }, 10.0)]
         [TestCase(1, new int[] { 100 }, 10.0)]
@@ -195,11 +130,15 @@ namespace Recommender.Tests
         [TestCase(18, new int[] { 0, 100 }, 10.0)]
         [TestCase(7, new int[] { 1, 10 }, 0.91)]
         [TestCase(18, new int[] { 1, 10 }, 9.09)]
-    /*    [TestCase(7, new int[] { 10, 100 }, 0.91)]
+        [TestCase(7, new int[] { 10, 100 }, 0.91)]
         [TestCase(18, new int[] { 10, 100 }, 9.09)]
-        [TestCase(7, new int[] { 1, 100 }, 0.91)]
-        [TestCase(18, new int[] { 1, 100 }, 9.09)] */
-
+        [TestCase(7, new int[] { 1, 100 }, 0.10)]
+        [TestCase(18, new int[] { 1, 100 }, 9.90)]
+        [TestCase(5, new int[] { 10, 10, 10, 10, 10}, 2.00)]
+        [TestCase(15, new int[] { 10, 10, 10, 10, 10 }, 2.00)]
+        [TestCase(25, new int[] { 10, 10, 10, 10, 10 }, 2.00)]
+        [TestCase(35, new int[] { 10, 10, 10, 10, 10 }, 2.00)]
+        [TestCase(45, new int[] { 10, 10, 10, 10, 10 }, 2.00)]
         public void UserTagHandlingTagWeightDifferentArtistAmountTest(int ID, int[] artistAmounts, double expectedTagWeight)
         {
             User testUser = new User(1);
@@ -213,7 +152,6 @@ namespace Recommender.Tests
                 for (int j = 0; j < 10; j++)
                 {
                     Tag tempTag = new Tag(tagCount);
-                    tempTag.Amount = 1;
                     testTags.Add(tagCount, tempTag);
                     // Tag count makes sure all tags are unique for this test:
                     tagCount++;
@@ -226,6 +164,215 @@ namespace Recommender.Tests
             Assert.AreEqual(expectedTagWeight, value);
         }
 
+        // Test for testing UserTagHandling calculates correct Tagweight for the user when Artists has different amount of tags(High numbers decrease weight):
+        [TestCase(1, new int[] { 1 }, 100.0)]
+        [TestCase(1, new int[] { 2 }, 50.0)]
+        [TestCase(2, new int[] { 2 }, 50.0)]
+        [TestCase(1, new int[] { 10 }, 10.0)]
+        [TestCase(1, new int[] { 100 }, 10.0)]
+        [TestCase(10, new int[] { 100 }, 10.0)]
+        [TestCase(1, new int[] { 1, 1 }, 50.0)]
+        [TestCase(1, new int[] { 2, 2 }, 25.0)]
+        [TestCase(4, new int[] { 2, 2 }, 25.0)]
+        [TestCase(1, new int[] { 10, 10 }, 5.0)]
+        [TestCase(15, new int[] { 10, 10 }, 5.0)]
+        [TestCase(1, new int[] { 100, 100 }, 5.0)]
+        [TestCase(1, new int[] { 10, 100 }, 9.09)]
+        [TestCase(11, new int[] { 10, 100 }, 0.91)]
+        [TestCase(1, new int[] { 1, 100 }, 90.91)]
+        [TestCase(11, new int[] { 1, 100 }, 0.91)]
+        [TestCase(1, new int[] { 10, 10, 10 }, 3.33)]
+        [TestCase(11, new int[] { 10, 10, 10 }, 3.33)]
+        [TestCase(21, new int[] { 10, 10, 10 }, 3.33)]
+        [TestCase(1, new int[] { 1, 10, 10 }, 33.33)]
+        [TestCase(11, new int[] { 1, 10, 10 }, 3.33)]
+        [TestCase(21, new int[] { 1, 10, 10 }, 3.33)]
+        public void UserTagHandlingTagWeightDifferentNumberOfTagTest(int ID, int[] amountOfTags, double expectedTagWeight)
+        {
+            User testUser = new User(1);
+            int tagCount = 1;
+            int i = 0;
+            // Each int in amountOfTags should represent a new artist:
+            foreach(int element in amountOfTags)
+            {
+                Dictionary<int, Tag> testTags = new Dictionary<int, Tag>();
+                // The int array of AmountOfTags represent how many tags the i´th artist has:
+                for (int j = 0; j < element; j++)
+                {
+                    Tag tempTag = new Tag(tagCount);
+                    testTags.Add(tagCount, tempTag);
+                    // Tag count will keep track of where in the array data must be used from:
+                    tagCount++;
+                }
+                testUser.Artists.Add(i, new Userartist(i, 10, new Artist(i, testTags, "Test")));
+                i++;
+            }
+            testUser.UserTagHandling();
+
+            Assert.AreEqual(expectedTagWeight, Math.Round(testUser.Tags[ID].Weight, 2));
+        }
+
+        // Test for testing UserTagHandling calculates correct Tagweight for the user when artists Tags has different amounts/weight:
+        [TestCase(1, new int[] { 1 }, 1, 1, 100.0)]
+        [TestCase(1, new int[] { 10 }, 1, 1, 100.0)]
+        [TestCase(1, new int[] { 1000 }, 1, 1, 100.0)]
+
+        // Testcases for when there are multiple artists with 1 tag each (for theese differences in the tag amount should not result in any changes to the tag weight!):
+        [TestCase(1, new int[] { 1, 1 }, 2, 1, 50.0)]
+        [TestCase(2, new int[] { 1, 1 }, 2, 1, 50.0)]
+
+        [TestCase(1, new int[] { 10, 10 }, 2, 1, 50.0)]
+        [TestCase(1, new int[] { 1, 10 }, 2, 1, 50.0)]
+        [TestCase(1, new int[] { 1, 10000 }, 2, 1, 50.0)]
+
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 10, 1, 10.0)]
+        [TestCase(5, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 10, 1, 10.0)]
+        [TestCase(10, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 10, 1, 10.0)]
+
+        [TestCase(1, new int[] { 10, 1, 1, 1, 1000, 1, 1, 1, 1, 1684 }, 10, 1, 10.0)]
+        [TestCase(5, new int[] { 10, 1, 1, 1, 1000, 1, 1, 1, 1, 1684 }, 10, 1, 10.0)]
+        [TestCase(10, new int[] { 10, 1, 1, 1, 1000, 1, 1, 1, 1, 1684 }, 10, 1, 10.0)]
+
+        // Testing for when there is 1 artist with multiple different tags:
+        [TestCase(1, new int[] { 1, 1 }, 1, 2, 50.0)]
+        [TestCase(2, new int[] { 1, 1 }, 1, 2, 50.0)]
+
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1 }, 1, 5, 20.0)]
+        [TestCase(5, new int[] { 1, 1, 1, 1, 1 }, 1, 5, 20.0)]
+        [TestCase(5, new int[] { 10, 10, 10, 10, 10 }, 1, 5, 20.0)]
+
+        [TestCase(1, new int[] { 1, 1, 1, 1, 4 }, 1, 5, 12.5)]
+        [TestCase(5, new int[] { 1, 1, 1, 1, 4 }, 1, 5, 50.0)]
+
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 10, 10.0)]
+        [TestCase(5, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 10, 10.0)]
+        [TestCase(10, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 10, 10.0)]
+        [TestCase(1, new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 1, 10, 10.0)]
+        [TestCase(5, new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 1, 10, 10.0)]
+        [TestCase(10, new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 1, 10, 10.0)]
+
+        [TestCase(1, new int[] { 110, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 1, 10, 55.0)]
+        [TestCase(5, new int[] { 110, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 1, 10, 5.0)]
+        [TestCase(10, new int[] { 110, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 1, 10, 5.0)]
+        [TestCase(1, new int[] { 210, 10, 10, 10, 210, 10, 10, 10, 10, 10 }, 1, 10, 42.0)]
+        [TestCase(5, new int[] { 210, 10, 10, 10, 210, 10, 10, 10, 10, 10 }, 1, 10, 42.0)]
+        [TestCase(10, new int[] { 210, 10, 10, 10, 210, 10, 10, 10, 10, 10 }, 1, 10, 2.0)]
+        // A max of top 10 tag for each artist is used, so adding more than 10 tags to an artist 
+        // should not have an effect for the those with the lowest amount:
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 14, 10.0)]
+        [TestCase(5, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 14, 10.0)]
+        [TestCase(10, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 14, 10.0)]
+
+        [TestCase(1, new int[] { 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 14, 55.0)]
+        [TestCase(5, new int[] { 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 14, 5.0)]
+        [TestCase(10, new int[] { 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 14, 5.0)]
+
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11 }, 1, 14, 5.0)]
+        [TestCase(5, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11 }, 1, 14, 5.0)]
+        [TestCase(9, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11 }, 1, 14, 5.0)]
+        [TestCase(14, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11 }, 1, 14, 55.0)]
+
+        [TestCase(1, new int[] { 1, 1, 1, 21, 1, 1, 1, 1, 1, 1, 1, 1, 21, 1 }, 1, 14, 2.0)]
+        [TestCase(4, new int[] { 1, 1, 1, 21, 1, 1, 1, 1, 1, 1, 1, 1, 21, 1 }, 1, 14, 42.0)]
+        [TestCase(9, new int[] { 1, 1, 1, 21, 1, 1, 1, 1, 1, 1, 1, 1, 21, 1 }, 1, 14, 2.0)]
+        [TestCase(13, new int[] { 1, 1, 1, 21, 1, 1, 1, 1, 1, 1, 1, 1, 21, 1 }, 1, 14, 42.0)]
+
+        // Testing for when there is several artists with several tags:
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 2, 5, 10.0)]
+        [TestCase(5, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 2, 5, 10.0)]
+        [TestCase(10, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 2, 5, 10.0)]
+        [TestCase(1, new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 2, 5, 10.0)]
+        [TestCase(5, new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 2, 5, 10.0)]
+        [TestCase(10, new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 2, 5, 10.0)]
+        // Testing that the artists tags are shared equally:
+        // 2 artist has up too 50 each, 4 has 25 as Amount for artists are the same in this test scenario.
+        [TestCase(1, new int[] { 40, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 2, 5, 25.0)]
+        [TestCase(5, new int[] { 40, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 2, 5, 6.25)]
+        [TestCase(6, new int[] { 40, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 2, 5, 10.0)]
+        [TestCase(10, new int[] { 40, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 2, 5, 10.0)]
+        [TestCase(1, new int[] { 210, 10, 10, 10, 10, 40, 10, 10, 10, 10 }, 2, 5, 42.0)]
+        [TestCase(5, new int[] { 210, 10, 10, 10, 10, 40, 10, 10, 10, 10 }, 2, 5, 2.0)]
+        [TestCase(6, new int[] { 210, 10, 10, 10, 10, 40, 10, 10, 10, 10 }, 2, 5, 25.0)]
+        [TestCase(10, new int[] { 210, 10, 10, 10, 10, 40, 10, 10, 10, 10 }, 2, 5, 6.25)]
+        // If artists has more than 10 tags:
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 2, 11, 5.0)]
+        [TestCase(10, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 2, 11, 5.0)]
+        [TestCase(12, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 2, 11, 5.0)]
+        [TestCase(21, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 2, 11, 5.0)]
+
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11,
+                                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 21, 1, 1, 1 }, 2, 14, 2.43)]
+        [TestCase(14, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11,
+                                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 21, 1, 1, 1 }, 2, 14, 26.71)]
+        [TestCase(15, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
+                                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 21, 1, 1, 1 }, 2, 14, 1.79)]
+        [TestCase(25, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
+                                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 21, 1, 1, 1 }, 2, 14, 37.5)]
+        public void UserTagHandlingTagWeightDifferentTagAmountTest(int ID, int[] tagAmounts, int amountOfArtists, int amountOfTagsPerArtist, double expectedTagWeight)
+        {
+            User testUser = new User(1);
+            int tagCount = 1;
+            for(int i = 0; i < amountOfArtists; i++)
+            {
+                Dictionary<int, Tag> testTags = new Dictionary<int, Tag>();
+                // The int array of AmountOfTags represent how many tags the i´th artist has:
+                for (int j = 0; j < amountOfTagsPerArtist; j++)
+                {
+                    Tag tempTag = new Tag(tagCount);
+                    tempTag.Amount = tagAmounts[tagCount-1];
+                    testTags.Add(tagCount, tempTag);
+                    // Tag count will keep track of where in the array data must be used from:
+                    tagCount++;
+                }
+                testUser.Artists.Add(i, new Userartist(i, 10, new Artist(i, testTags, "Test")));
+            }
+            testUser.UserTagHandling();
+            // Math.Round is used to make the numbers possible to hit. This does however result in the total tagweight not being 100 as it should.
+            Assert.AreEqual(expectedTagWeight, Math.Round(testUser.Tags[ID].Weight, 2));
+        }
+
+
+        // Test for testing UserTagHandling calculates correct Tagweight for the user when artists has some identical tags:
+        [TestCase(1, new int[] { 1 }, 1, 1, 100)]
+        [TestCase(100, new int[] { 100 }, 1, 1, 100)]
+        [TestCase(1, new int[] { 1, 1 }, 1, 2, 100)]
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 10, 100)]
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 10, 1, 100)]
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 2, 5, 100)]
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 5, 2, 100)]
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 1, 15, 100)]
+        [TestCase(1, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 15, 1, 100)]
+        [TestCase(1, new int[] { 1, 2 }, 1, 2, 50)]
+        [TestCase(1, new int[] { 1, 2, 1, 2 }, 2, 2, 50)]
+        [TestCase(1, new int[] { 1, 1, 1, 2 }, 1, 4, 75)]
+        [TestCase(2, new int[] { 1, 1, 1, 2 }, 1, 4, 25)]
+        [TestCase(1, new int[] { 1, 1, 1, 2 }, 2, 2, 75)]
+        [TestCase(2, new int[] { 1, 1, 1, 2 }, 2, 2, 25)]
+        public void UserTagHandlingTagWeightIdenticalTagIDTest(int ID, int[] tagIDs, int amountOfArtists, int amountOfTagsPerArtist, double expectedTagWeight)
+        {
+            User testUser = new User(1);
+            int tagCount = 0;
+            for (int i = 0; i < amountOfArtists; i++)
+            {
+                Dictionary<int, Tag> testTags = new Dictionary<int, Tag>();
+                // The int array of AmountOfTags represent how many tags the i´th artist has:
+                for (int j = 0; j < amountOfTagsPerArtist; j++)
+                {
+                    Tag tempTag = new Tag(tagIDs[tagCount]);
+                    // If current artist already has the tag, the amount will be increased:
+                    if (testTags.ContainsKey(tagIDs[tagCount]))
+                        testTags[tagIDs[tagCount]].Amount += 1;
+                    else
+                        testTags.Add(tagIDs[tagCount], tempTag);
+                    // Tag count will keep track of where in the array data must be used from:
+                    tagCount++;
+                }
+                testUser.Artists.Add(i, new Userartist(i, 10, new Artist(i, testTags, "Test")));
+            }
+            testUser.UserTagHandling();
+            // Math.Round is used to make the numbers possible to hit. This does however result in the total tagweight not being 100 as it should.
+            Assert.AreEqual(expectedTagWeight, Math.Round(testUser.Tags[ID].Weight, 2));
+        }
 
         // Test that the method CalculateArtistWeight() calculates correct weight value:
         [TestCase(0, 1, new int[] { 1 }, 100)]
