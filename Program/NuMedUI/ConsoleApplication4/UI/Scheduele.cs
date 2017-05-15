@@ -82,19 +82,31 @@ namespace Recommender
                             }
                             noOverlap = false;
                         }
-
                         else if (element.Artist.Stars == newConcert.Artist.Stars)
                         {
-                            if(newConcert.Artist.Scene == "Orange")
+                            //If both concerts are from same recommendation, the score of this recommendation decide.
+                            if (newConcert.AddedFrom == element.AddedFrom)
                             {
-                                if(element.Artist.Stars > 7)
+                                if (element.Artist.FilteringRating < newConcert.Artist.FilteringRating)
+                                {
                                     newConcert.OverlappingAdd(element);
+                                    Concerts.Remove(element);
+                                }
+                                else
+                                {
+                                    element.OverlappingAdd(newConcert);
+                                    noOverlap = false;
+                                }
+                            }
+                            //if only one of them is collab, this gets recommended.
+                            else if (newConcert.AddedFrom == ElementOrigin.Collab)
+                            {
+                                newConcert.OverlappingAdd(element);
                                 Concerts.Remove(element);
                             }
                             else
                             {
-                                if(newConcert.Artist.Stars > 7)
-                                    element.OverlappingAdd(newConcert);
+                                element.OverlappingAdd(newConcert);
                                 noOverlap = false;
                             }
                         }
