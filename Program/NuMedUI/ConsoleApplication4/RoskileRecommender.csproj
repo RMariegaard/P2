@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\NewUserWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\NewUserWindow.Designer.cs">
+      <DependentUpon>NewUserWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Recommender\Interfaces\IRecommendationsMethods.cs" />
     <Compile Include="Recommender\Interfaces\ITaggable.cs" />
     <Compile Include="Recommender\MethodsForRecommending.cs" />
@@ -102,6 +108,12 @@
     </Compile>
     <Compile Include="Recommender\User.cs" />
     <Compile Include="Recommender\Userartist.cs" />
+    <Compile Include="UI\UserBaselineRatings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UserBaselineRatings.Designer.cs">
+      <DependentUpon>UserBaselineRatings.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -113,6 +125,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\NewUserWindow.resx">
+      <DependentUpon>NewUserWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\UI.resx">
       <DependentUpon>UI.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UiScheduele.resx">
       <DependentUpon>UiScheduele.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UserBaselineRatings.resx">
+      <DependentUpon>UserBaselineRatings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

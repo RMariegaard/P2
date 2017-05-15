@@ -106,5 +106,11 @@ namespace Recommender
                 LoginButton_Click(sender, e);
             }
         }
+        
+        private void newUserButton_Click(object sender, EventArgs e)
+        {
+            NewUserWindow newUserWindow = new NewUserWindow(Recommender);
+            newUserWindow.Show();
+        }
     }
 }
