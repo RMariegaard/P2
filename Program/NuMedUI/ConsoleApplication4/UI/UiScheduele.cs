@@ -126,11 +126,19 @@ namespace Recommender
             {
                 panel1.Controls.Clear();
                 label1.Text = btn.Text;
-
+                
                 int counter = 0;
-                foreach (RecommendedArtistUiElement item in _artistGUIList
-                    .Where(x => x.Artist.TimeOfConcert.Date.Day.ToString() == btn.Tag.ToString())
-                    .OrderBy(x => x.TimeOfConcertLabel.ToString()))
+
+                List<RecommendedArtistUiElement> shows = _artistGUIList.Where(x => x.Artist.TimeOfConcert.Date.Day.ToString() == btn.Tag.ToString()).OrderBy(x =>
+                {
+                    if (x.Artist.TimeOfConcert.Hour < 5)
+                    {
+                        return x.Artist.TimeOfConcert + new TimeSpan(24, 0, 0);
+                    }
+                    return x.Artist.TimeOfConcert;
+                }).ToList();
+
+                foreach (RecommendedArtistUiElement item in shows)
                 {
                     item.CalcLocation(new Point(5, 105 * counter), new Size(400, 100));
                     panel1.Controls.Add(item.Element);
