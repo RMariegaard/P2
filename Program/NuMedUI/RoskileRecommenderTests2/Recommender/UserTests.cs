@@ -331,7 +331,6 @@ namespace Recommender.Tests
             for(int i = 0; i < amountOfArtists; i++)
             {
                 Dictionary<int, Tag> testTags = new Dictionary<int, Tag>();
-                // The int array of AmountOfTags represent how many tags the i´th artist has:
                 for (int j = 0; j < amountOfTagsPerArtist; j++)
                 {
                     Tag tempTag = new Tag(tagCount);
