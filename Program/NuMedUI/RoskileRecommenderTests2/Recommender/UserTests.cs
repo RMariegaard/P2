@@ -176,8 +176,8 @@ namespace Recommender.Tests
                 i++;
             }
             testUser.UserTagHandling();
-            double value = Math.Round(testUser.Tags[ID].Weight, 2);
-            Assert.AreEqual(expectedTagWeight, value);
+
+            Assert.AreEqual(expectedTagWeight, Math.Round(testUser.Tags[ID].Weight, 2));
         }
 
         // Test for testing UserTagHandling calculates correct Tagweight for the user when Artists has different amount of tags(High numbers decrease weight):
@@ -403,7 +403,7 @@ namespace Recommender.Tests
         [TestCase(9, 10, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 10)]
         [TestCase(1, 10, new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 10)]
         [TestCase(4, 10, new int[] { 12, 1335, 123, 1123, 0, 1213, 1332, 114, 1456, 1 }, 0)]
-        [TestCase(1, 10, new int[] { 12, 1335, 123, 1123, 0, 1213, 1332, 114, 1456, 1 }, 19.898643613057089)]
+        [TestCase(1, 10, new int[] { 12, 1335, 123, 1123, 0, 1213, 1332, 114, 1456, 1 }, 19.90)]
         public void CalculateArtistWeightTest(int ID, int amountOfArtists, int[] artistsAmounts, double expectedWeight)
         {
             User testUser = new User(1);
@@ -415,7 +415,7 @@ namespace Recommender.Tests
             }
             testUser.CalculateArtistWeight();
 
-            Assert.AreEqual(expectedWeight, testUser.Artists[ID].Weight);
+            Assert.AreEqual(expectedWeight, Math.Round(testUser.Artists[ID].Weight, 2));
         }
     }
 }
