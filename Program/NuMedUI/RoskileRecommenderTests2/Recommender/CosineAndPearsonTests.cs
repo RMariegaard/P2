@@ -31,13 +31,26 @@ namespace Recommender.Tests
             Assert.AreEqual(0, _test.GetCosine(testUser, testArtist));
         }
         [TestCase(new double[] { 1.0, 1.0, 1.0 }, new double[] { 1.0, 1.0, 1.0 }, new int[] { 0, 1, 2 }, new int[] { 0, 1, 2 })]
+        [TestCase(new double[] { 2.0, 34.0, 3.0 }, new double[] { 2.0, 34.0, 3.0 }, new int[] { 0, 1, 2 }, new int[] { 0, 1, 2 })]
         public void Cosine_AllTagAndAmountInCommon_AssertOne(double[] userTags, double[] artistTags, int[] userTagId, int[] artistTagId)
         {
             ITaggable testUser = createTestTypeCosine<User>(userTagId, userTags);
             ITaggable testArtist = createTestTypeCosine<Artist>(artistTagId, artistTags);
 
             Assert.AreEqual(1, Math.Round(_test.GetCosine(testUser, testArtist),4));
-        }       
+        }
+        //This test the cosine algorithm for specific numbers, calculated from this site "http://scistatcalc.blogspot.dk/2015/11/cosine-similarity-calculator.html#"
+        //Notise the id's in the first two does not match for user and artist.
+        [TestCase(new double[] {11.0, 12.0, 13.0, 14.0 }, new double[] { 4.0, 5.0, 6.0, 7.0 }, new int[] {0, 1, 2, 3}, new int[] {0, 1, 2, 4}, ExpectedResult = 0.65)]
+        [TestCase(new double[] { 10.0, 10.0, 10.0, 10.0 }, new double[] { 10.0, 10.0, 10.0, 10.0 }, new int[] { 0, 1, 2, 3 }, new int[] { 0, 1, 2, 4 }, ExpectedResult = 0.75)]
+        [TestCase(new double[] {100.0, 400.0, 7000.0 }, new double[] {900.0, 288.0, 1234.0}, new int[] {0, 1, 2}, new int[] {0, 1, 2}, ExpectedResult = 0.81)]
+        public double Cosine_TestForSpecificResult_ReturnValue(double[] userTags, double[] artistTags, int[] userTagId, int[] artistTagId)
+        {
+            ITaggable testUser = createTestTypeCosine<User>(userTagId, userTags);
+            ITaggable testArtist = createTestTypeCosine<Artist>(artistTagId, artistTags);
+
+            return Math.Round(_test.GetCosine(testUser, testArtist),2);
+        }
         //With inCommon means that both have or havent listened to that specific artist
         [TestCase(new int[] { 1, 1, 1, 1, 1}, new int[] { 1, 1, 1, 1, 1}, new int[] { 0, 1, 2, 3, 4 }, new int[] { 5, 6, 7, 8, 9})]
         [TestCase(new int[] { 34, 21, 12, 65, 23}, new int[] { 23, 34, 55, 66, 44 }, new int[] { 0, 1, 2, 3, 4 }, new int[] { 5, 6, 7, 8, 9 })]
@@ -47,7 +60,7 @@ namespace Recommender.Tests
             User user2 = createTestUserPearson(user2ArtistId, User2ArtistAmount);
             Assert.Negative(_test.GetPearson(user1, user2, allArtists));
         }
-        [TestCase(new int[] { }, new int[] { }, new int[] { }, new int[] { })]
+        [TestCase(new int[] { }, new int[] {}, new int[] { }, new int[] {})]
         [TestCase(new int[] { 0, 0, 0, 0}, new int[] {0, 0, 0, 0 }, new int[] { 1,2,3,4}, new int[] { 3,4,5,6})]
         public void Pearson_NoArtistListenedTo_AssertZero(int[] user1ArtistAmount, int[] User2ArtistAmount, int[] user1ArtistId, int[] user2ArtistId)
         {
