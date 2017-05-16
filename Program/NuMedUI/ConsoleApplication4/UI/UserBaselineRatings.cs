@@ -18,19 +18,18 @@ namespace Recommender
         private Button ratingButton;
         private Button doneRatingButton;
         private Dictionary<int, Userartist> theRatedArtists;
+        private Dictionary<int, Artist> coldStartArtists;
         private RecommenderSystem Recommender;
-        private Random randomNumber;
         private RadioButton[] ratingButtons;
         private Artist artist;
         private Button rateMoreButton;
-
-        //For the search
         private TextBox SearchBar;
         private CheckedListBox ArtistList;
         private Button SearchButton;
-
-
+        
         private int numberOfMustHaveRatings;
+        private int randomArtistToRate;
+        private int skippedArtists;
 
         public UserBaselineRatings(string username, RecommenderSystem Recommender)
         {
@@ -42,17 +41,37 @@ namespace Recommender
             SearchBar = new TextBox();
             ArtistList = new CheckedListBox();
             rateMoreButton = new Button();
-
+            
             numberOfMustHaveRatings = 15;
+            randomArtistToRate = 0;
+            skippedArtists = 0;
 
             InitializeComponent();
-
-            randomNumber = new Random();
+            
             this.Recommender = Recommender;
             theRatedArtists = new Dictionary<int, Userartist>();
+            coldStartArtists = new Dictionary<int, Artist>();
+
+            //Reading the cold start artists
+            string startupPath = Environment.CurrentDirectory;
+            startupPath = Path.GetDirectoryName(startupPath);
+            startupPath = Path.GetDirectoryName(startupPath);
+            foreach (string line in File.ReadAllLines(startupPath + @"\DataFiles\ColdStartArtists.txt").Skip(1))
+            {
+                int key = int.Parse(line.Split(',')[0]);
+                Artist value;
+                if (Recommender.Artists.TryGetValue(key, out value))
+                {
+                    coldStartArtists.Add(key, value);
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
             
             //Info label
-            infoLabel.Text = $"Please rate the following artist. You have recommended: {theRatedArtists.Count}/{numberOfMustHaveRatings}";
+            infoLabel.Text = $"Please rate the following artist. Remenber you can only skip 3. You have recommended: {theRatedArtists.Count}/{numberOfMustHaveRatings}";
             infoLabel.Location = new Point(5, 5);
             infoLabel.AutoSize = true;
 
@@ -132,15 +151,6 @@ namespace Recommender
             //The first artist for recommendation
             RandomNewArtist();
         }
-
-        private void rateMoreButton_Click(object sender, EventArgs e)
-        {
-            Controls.Add(SearchButton);
-            Controls.Add(SearchBar);
-            Controls.Add(ArtistList);
-
-            Controls.Remove(rateMoreButton);
-        }
         
         private void doneRating(object sender, EventArgs e)
         {
@@ -165,16 +175,21 @@ namespace Recommender
                         infoLabel.Text = $"You are done with the requried ratings, but the more ratings we get from you, the better recommendations we can provide. You have recommended {theRatedArtists.Count}";
                         doneRatingButton.Enabled = true;
                         rateMoreButton.Enabled = true;
+                        RandomNewArtist();
                     }
                     else
                     {
-                        infoLabel.Text = $"Please rate the following artist. You have recommended: {theRatedArtists.Count}/{numberOfMustHaveRatings}";
+                        infoLabel.Text = $"Please rate the following artist. Remenber you can only skip 3. You have recommended: {theRatedArtists.Count}/{numberOfMustHaveRatings}";
                         RandomNewArtist();
                     }
                 }
                 else
                 {
-                    RandomNewArtist();
+                    if (skippedArtists < 3)
+                    {
+                        skippedArtists++;
+                        RandomNewArtist();
+                    }
                 }
             }
             catch (Exception){}
@@ -182,16 +197,8 @@ namespace Recommender
 
         private void RandomNewArtist()
         {
-            bool foundArtist = false;
-            while (!foundArtist)
-            {
-                int ranNum = randomNumber.Next(0, Recommender.Artists.Count);
-                if (Recommender.Artists.ContainsKey(ranNum) && !theRatedArtists.ContainsKey(ranNum))
-                {
-                    artist = Recommender.Artists[ranNum];
-                    foundArtist = true;
-                }
-            }
+            artist = coldStartArtists.ElementAt(randomArtistToRate).Value;
+            randomArtistToRate++;
             updateArtist();
         }
 
@@ -221,6 +228,15 @@ namespace Recommender
                 updateArtist();
             }
             catch (Exception){}
+        }
+
+        private void rateMoreButton_Click(object sender, EventArgs e)
+        {
+            Controls.Add(SearchButton);
+            Controls.Add(SearchBar);
+            Controls.Add(ArtistList);
+
+            Controls.Remove(rateMoreButton);
         }
     }
 }

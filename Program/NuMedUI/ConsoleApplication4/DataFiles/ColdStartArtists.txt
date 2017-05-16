@@ -1,0 +1,19 @@
+ID,name,tags
+289,Britney Spears, 931
+72,Name Depeche Mode,701
+227,Name The Beatles,598
+154,Name Radiohead,563
+288,Name Rihanna,528
+163,Name Pink Floyd,388
+599,Name David Bowie,368
+707,Name Metallica,346
+475,Name Eminem,274
+377,Name Linkin Park,271
+735,Name The Rolling Stones,251
+903,Name Amy Winehouse,242
+917,Name Iron Maiden,242
+56,Name Daft Punk,209
+868,Name The Doors,207
+1464,Name ABBA,183
+329,Name Justin Timberlake,182
+331,Name Kanye West,171
