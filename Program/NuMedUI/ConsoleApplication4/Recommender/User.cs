@@ -30,26 +30,24 @@ namespace Recommender
         {
             Artists = new Dictionary<int, Userartist>();
             Tags = new Dictionary<int, Tag>();
-            SetNextID(id);
             ID = id;
         }
 
-        public User()
+        public User(Dictionary<int, Userartist> ratedArtistByUser, int ID)
         {
-            ID = _nextID;
+            _nextID = ID + 1;
+            this.ID = _nextID++;
             Artists = new Dictionary<int, Userartist>();
             Tags = new Dictionary<int, Tag>();
-            SetNextID(_nextID);
+            ColdStart(ratedArtistByUser);
         }
 
-        public User ColdStart(Dictionary<int, Userartist> newArtistsToUser)
+        private void ColdStart(Dictionary<int, Userartist> ratedArtistByUser)
         {
-            User newUser = new User();
-            newUser.Artists = newArtistsToUser;
-            newUser.CalculateTagWeight();
-            newUser.CalculateArtistWeight();
-            return newUser;
-        } 
+            this.Artists = ratedArtistByUser;
+            UserTagHandling();
+            CalculateArtistWeight();
+        }
 
         public void AddMoreArtistToUser(Dictionary<int, RecommendedArtist> newArtistsToUser, User user)
         {            
@@ -66,15 +64,6 @@ namespace Recommender
                 }
             }
             user.CalculateArtistWeight();
-            user.CalculateTagWeight();
-        }
-
-        private void SetNextID(int currentID)
-        {
-            if (currentID >= _nextID)
-            {
-                _nextID = currentID + 1;
-            }
         }
 
         // Method that makes the TagsDictionary, relative to the Artists this user has heard:

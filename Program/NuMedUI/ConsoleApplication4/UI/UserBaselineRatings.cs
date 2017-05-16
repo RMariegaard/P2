@@ -154,7 +154,12 @@ namespace Recommender
         
         private void doneRating(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //Creating a 'cold start' - user
+            User theNewUser = new User(theRatedArtists, Recommender.Users.Values.Max(x => x.ID));
+            Recommender.Users.Add(theNewUser.ID, theNewUser);
+            UIAfterLogin loginWindow = new UIAfterLogin(theNewUser.ID, Recommender);
+            loginWindow.Show();
+            this.Close();
         }
 
         private void ratingButton_Click(object sender, EventArgs e)
