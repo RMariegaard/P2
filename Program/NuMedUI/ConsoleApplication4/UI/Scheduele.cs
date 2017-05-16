@@ -32,7 +32,8 @@ namespace Recommender
                     {
                         if (element.Artist.Id != newConcert.Artist.Id)
                         {
-                            element.OverlappingAdd(newConcert);
+                            if (newConcert.Artist.Stars > 7)
+                                element.OverlappingAdd(newConcert);
                         }
                         noOverlap = false;
                     }
@@ -40,7 +41,8 @@ namespace Recommender
                     {
                         if (element.Artist.Id != newConcert.Artist.Id)
                         {
-                            element.OverlappingAdd(element);
+                            if (element.Artist.Stars > 7)
+                                newConcert.OverlappingAdd(element);
                         }
                         Concerts.Remove(element);
                     }
@@ -54,7 +56,8 @@ namespace Recommender
                     {
                         if (element.Artist.Id != newConcert.Artist.Id)
                         {
-                            element.OverlappingAdd(newConcert);
+                            if (newConcert.Artist.Stars > 7)
+                                element.OverlappingAdd(newConcert);
                         }
                         noOverlap = false;
                     }
@@ -62,7 +65,8 @@ namespace Recommender
                     {
                         if (element.Artist.Id != newConcert.Artist.Id)
                         {
-                            element.OverlappingAdd(element);
+                            if (element.Artist.Stars > 7)
+                                newConcert.OverlappingAdd(element);
                         }
                         Concerts.Remove(element);
                     }
@@ -77,9 +81,7 @@ namespace Recommender
                         if (element.Artist.Stars > newConcert.Artist.Stars)
                         {
                             if (newConcert.Artist.Stars > 7)
-                            {
                                 element.OverlappingAdd(newConcert);
-                            }
                             noOverlap = false;
                         }
                         else if (element.Artist.Stars == newConcert.Artist.Stars)
@@ -113,9 +115,7 @@ namespace Recommender
                         else
                         {
                             if (element.Artist.Stars > 7)
-                            {
                                 newConcert.OverlappingAdd(element);
-                            }
                             Concerts.Remove(element);
                         }
                     }
