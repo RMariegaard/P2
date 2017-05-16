@@ -42,7 +42,7 @@ namespace Recommender
 
         private void RemoveText(object sender, EventArgs e)
         {
-            if (SearchBar.Text == "Seach")
+            if (SearchBar.Text == "Search")
             {
                 SearchBar.Text = "";
                 SearchBar.ForeColor = Color.Black;

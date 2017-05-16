@@ -66,3 +66,5 @@ D:\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UIAfterLo
 D:\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UiScheduele.resources
 D:\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UserBaselineRatings.resources
 D:\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\RoskileRecommender.csproj.GenerateResource.Cache
+C:\Users\caspe\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.NewUserWindow.resources
+C:\Users\caspe\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UserBaselineRatings.resources
