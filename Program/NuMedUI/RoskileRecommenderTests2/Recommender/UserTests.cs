@@ -27,6 +27,22 @@ namespace Recommender.Tests
             Assert.AreEqual(userID, testUser.ID);
         }
 
+        // Test that checks if users tagdictionary works as intended:
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(100)]
+        [TestCase(10000)]
+        public void UserTagDicHasCorrectAmountTest(int amountOfTags)
+        {
+            User testUser = new User(1);
+
+            for (int i = 0; i < amountOfTags; i++)
+            {
+                testUser.Tags.Add(i, new Tag(i));
+            }
+            Assert.AreEqual(testUser.Tags.Count, amountOfTags);
+        }
+
         // These test will check if the UserArtist dictionary works as intended:
         // Test that a given amount of artist is actually added to the Users artist dictionary:
         [TestCase(0)]
