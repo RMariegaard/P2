@@ -26,7 +26,6 @@ namespace Recommender
         private TextBox SearchBar;
         private CheckedListBox ArtistList;
         private Button SearchButton;
-        
         private int numberOfMustHaveRatings;
         private int randomArtistToRate;
         private int skippedArtists;
@@ -71,7 +70,7 @@ namespace Recommender
             }
             
             //Info label
-            infoLabel.Text = $"Please rate the following artist. Remenber you can only skip 2. You have rated: {theRatedArtists.Count}/{numberOfMustHaveRatings}";
+            infoLabel.Text = $"Please rate the following artist. You have rated: {theRatedArtists.Count}/{numberOfMustHaveRatings}";
             infoLabel.Location = new Point(5, 5);
             infoLabel.AutoSize = true;
 
@@ -171,38 +170,32 @@ namespace Recommender
 
                 int rating;
 
-                if (int.TryParse(selected.Text, out rating))
+                if (int.TryParse(selected.Text, out rating) && rating > 3)
                 {
-                    if (rating >= 3)
+                    double amount = (rating-3 / 7) * 100;
+
+                    if (!theRatedArtists.ContainsKey(artist.Id))
+                        theRatedArtists.Add(artist.Id, new Userartist(artist.Id, (int)amount, artist));
+
+                    if (theRatedArtists.Count >= numberOfMustHaveRatings)
                     {
-                        double amount = (rating-3 / 7) * 100;
-
-                        if (!theRatedArtists.ContainsKey(artist.Id))
-                            theRatedArtists.Add(artist.Id, new Userartist(artist.Id, (int)amount, artist));
-
-                        if (theRatedArtists.Count >= numberOfMustHaveRatings)
-                        {
-                            infoLabel.Text =
-                                $"You are done with the requried ratings, but the more ratings we get from you, the better recommendations we can provide. You have rated {theRatedArtists.Count}";
-                            doneRatingButton.Enabled = true;
-                            rateMoreButton.Enabled = true;
-                            RandomNewArtist();
-                        }
-                        else
-                        {
-                            infoLabel.Text =
-                                $"Please rate the following artist. Remenber you can only skip 2. You have rated: {theRatedArtists.Count}/{numberOfMustHaveRatings}";
-                            RandomNewArtist();
-                        }
+                        infoLabel.Text =
+                            $"You are done with the requried ratings, but the more ratings we get from you, the better recommendations we can provide. You have rated: {theRatedArtists.Count}";
+                        doneRatingButton.Enabled = true;
+                        rateMoreButton.Enabled = true;
+                        RandomNewArtist();
+                    }
+                    else
+                    {
+                        infoLabel.Text =
+                            $"Please rate the following artist. You have rated: {theRatedArtists.Count}/{numberOfMustHaveRatings}";
+                        RandomNewArtist();
                     }
                 }
                 else
                 {
-                    if (skippedArtists < 2)
-                    {
-                        skippedArtists++;
-                        RandomNewArtist();
-                    }
+                    skippedArtists++;
+                    RandomNewArtist();
                 }
             }
             catch (Exception){}
@@ -210,6 +203,9 @@ namespace Recommender
 
         private void RandomNewArtist()
         {
+            if (coldStartArtists.Count == randomArtistToRate)
+                rateMoreButton.Enabled = true;
+            
             artist = coldStartArtists.ElementAt(randomArtistToRate).Value;
             randomArtistToRate++;
             updateArtist();
