@@ -155,8 +155,9 @@ namespace Recommender
         private void doneRating(object sender, EventArgs e)
         {
             //Creating a 'cold start' - user
-            User theNewUser = new User(theRatedArtists, Recommender.Users.Values.Max(x => x.ID));
+            User theNewUser = new NewUser(theRatedArtists, Recommender.Users.Keys.Max());
             Recommender.Users.Add(theNewUser.ID, theNewUser);
+            DataHandling.WriteNewUserFile(Recommender.Users);
             UIAfterLogin loginWindow = new UIAfterLogin(theNewUser.ID, Recommender);
             loginWindow.Show();
             this.Close();

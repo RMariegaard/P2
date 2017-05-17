@@ -10,7 +10,7 @@ namespace Recommender
     public class DataHandling
     {
         //Getting the path for the location of the text files from data set
-        string _startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
+        private static string _startupPath = Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory));
 
         string[] _userFile;
         string[] _artistFile;
@@ -260,6 +260,11 @@ namespace Recommender
             BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(_startupPath + @"\DataFiles\users.bin", Users);
             BinarySerialization.WriteToBinaryFile<Dictionary<int, Artist>>(_startupPath + @"\DataFiles\artists.bin", Artists);
             BinarySerialization.WriteToBinaryFile<Dictionary<int, RoskildeArtist>>(_startupPath + @"\DataFiles\Roskildeartists.bin", RoskildeArtists);
+        }
+
+        public static void WriteNewUserFile(Dictionary<int,User> newUsers)
+        {
+            BinarySerialization.WriteToBinaryFile<Dictionary<int, User>>(_startupPath + @"\DataFiles\users.bin", newUsers);
         }
 
         private void ReadRoskildeSchedule(string date)

@@ -10,7 +10,7 @@ namespace Recommender
     public class User : ITaggable
     {
         // The id of the user is stored:
-        private static int _nextID = 1;
+        protected static int _nextID = 1;
         private int _id;
         public int ID
         {
@@ -31,39 +31,6 @@ namespace Recommender
             Artists = new Dictionary<int, Userartist>();
             Tags = new Dictionary<int, Tag>();
             ID = id;
-        }
-
-        public User(Dictionary<int, Userartist> ratedArtistByUser, int ID)
-        {
-            _nextID = ID + 1;
-            this.ID = _nextID++;
-            Artists = new Dictionary<int, Userartist>();
-            Tags = new Dictionary<int, Tag>();
-            ColdStart(ratedArtistByUser);
-        }
-
-        private void ColdStart(Dictionary<int, Userartist> ratedArtistByUser)
-        {
-            this.Artists = ratedArtistByUser;
-            UserTagHandling();
-            CalculateArtistWeight();
-        }
-
-        public void AddMoreArtistToUser(Dictionary<int, RecommendedArtist> newArtistsToUser, User user)
-        {            
-            foreach(var recommenderArtist in newArtistsToUser)
-            {
-                Artist tempArtist = recommenderArtist.Value;
-                if (user.Artists.ContainsKey(recommenderArtist.Value.Id))
-                {
-
-                }
-                else
-                {
-                    user.Artists.Add(recommenderArtist.Value.Id, new Userartist(recommenderArtist.Value.Id, recommenderArtist.Value.Stars, tempArtist));
-                }
-            }
-            user.CalculateArtistWeight();
         }
 
         // Method that makes the TagsDictionary, relative to the Artists this user has heard:
