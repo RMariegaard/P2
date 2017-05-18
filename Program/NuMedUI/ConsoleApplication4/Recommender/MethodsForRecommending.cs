@@ -61,14 +61,18 @@ namespace Recommender
         //Calcuates the Pearson Correlation between two users based on artists
         public double GetPearson(User user, User otherUser, Dictionary<int, Artist> allArtists)
         {
+            List<int> listOfArtists = new List<int>();
+            listOfArtists = user.Artists.Keys.Union(otherUser.Artists.Keys).ToList();
+
             //Calculates the mean of the artist weight for the two users
-            double userMean = CalculateUserMean(user, allArtists.Count);
-            double otherUserMean = CalculateUserMean(otherUser, allArtists.Count);
+            int count = allArtists.Count;
+            double userMean = CalculateUserMean(user, count);
+            double otherUserMean = CalculateUserMean(otherUser, count);
 
             //Calculates the numerator of the Pearson Correlation
-            double numerator = CalculatePearsonNumerator(user, otherUser, userMean, otherUserMean, allArtists);
+            double numerator = CalculatePearsonNumerator(user, otherUser, userMean, otherUserMean, listOfArtists, count);
             //Calculates the denumerator of the Pearson Correlation
-            double denumerator = CalculatePearsonDenuminator(user, otherUser, userMean, otherUserMean, allArtists);
+            double denumerator = CalculatePearsonDenuminator(user, otherUser, userMean, otherUserMean, listOfArtists, count);
 
             //Returns the Pearson Correlation
             if (denumerator == 0.0)
@@ -86,69 +90,70 @@ namespace Recommender
             return temp;
         }
 
-        private double CalculatePearsonNumerator(User user, User otherUser, double userMean, double otherUserMean, Dictionary<int, Artist> allArtists)
+        private double CalculatePearsonNumerator(User user, User otherUser, double userMean, double otherUserMean, List<int> listOfArtists, int count)
         {
+            //first the temp value for all the artists who have been heard by one of the users is calculated
             double temp = 0.0;
-            foreach (int artistId in allArtists.Keys)
+            foreach (int artistId in listOfArtists)
             {
-                int artistID = artistId;
-                if (user.Artists.ContainsKey(artistID))
+                if (user.Artists.ContainsKey(artistId))
                 {
-                    if (otherUser.Artists.ContainsKey(artistID))
+                    if (otherUser.Artists.ContainsKey(artistId))
                     {
-                        temp += (user.Artists[artistID].Amount - userMean) *
-                                (otherUser.Artists[artistID].Amount - otherUserMean);
+                        temp += (user.Artists[artistId].Amount - userMean) *
+                                (otherUser.Artists[artistId].Amount - otherUserMean);
                     }
                     else
                     {
 
-                        temp += (user.Artists[artistID].Amount - userMean) *
+                        temp += (user.Artists[artistId].Amount - userMean) *
                                 (0 - otherUserMean);
                     }
                 }
-                else if (otherUser.Artists.ContainsKey(artistID))
+                else if (otherUser.Artists.ContainsKey(artistId))
                 {
 
                     temp += (0 - userMean) *
-                            (otherUser.Artists[artistID].Amount - otherUserMean);
-                }
-                else
-                {
-
-                    temp += (0 - userMean) *
-                            (0 - otherUserMean);
+                            (otherUser.Artists[artistId].Amount - otherUserMean);
                 }
             }
+            //now the remaining artists who have not been calculated all have values of 0, so this can be calculated.
+            int remainingCount = count - listOfArtists.Count();
+            temp += ((0 - userMean) * (0 - otherUserMean)) * remainingCount;
+
             return temp;
 
 
         }
 
-        private double CalculatePearsonDenuminator(User user, User otherUser, double userMean, double otherUserMean, Dictionary<int, Artist> allArtists)
+        private double CalculatePearsonDenuminator(User user, User otherUser, double userMean, double otherUserMean, List<int> listOfArtists, int count)
         {
             double temp = 0.0;
             double temp2 = 0.0;
-            foreach (int artistId in allArtists.Keys)
+            foreach (int artistId in listOfArtists)
             {
-                int artistID = artistId;
-                if (user.Artists.ContainsKey(artistID))
+                if (user.Artists.ContainsKey(artistId))
                 {
-                    temp += Math.Pow(user.Artists[artistID].Amount - userMean, 2);
+                    temp += Math.Pow(user.Artists[artistId].Amount - userMean, 2);
                 }
-                else if (!user.Artists.ContainsKey(artistID))
+                else if (!user.Artists.ContainsKey(artistId))
                 {
                     temp += Math.Pow(0 - userMean, 2);
                 }
-
-                if (otherUser.Artists.ContainsKey(artistID))
+                if (otherUser.Artists.ContainsKey(artistId))
                 {
-                    temp2 += Math.Pow(otherUser.Artists[artistID].Amount - otherUserMean, 2);
+                    temp2 += Math.Pow(otherUser.Artists[artistId].Amount - otherUserMean, 2);
                 }
-                else if (!otherUser.Artists.ContainsKey(artistID))
+                else if (!otherUser.Artists.ContainsKey(artistId))
                 {
                     temp2 += Math.Pow(0 - otherUserMean, 2);
                 }
             }
+            int remainingCount = count - listOfArtists.Count;
+           
+            temp += Math.Pow(0 - userMean, 2) * remainingCount;
+            temp2 += Math.Pow(0 - otherUserMean, 2) * remainingCount;
+
             return Math.Sqrt(temp * temp2);
         }
 

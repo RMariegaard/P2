@@ -70,3 +70,5 @@ C:\Users\caspe\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug
 C:\Users\caspe\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UserBaselineRatings.resources
 C:\Users\Casper\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.NewUserWindow.resources
 C:\Users\Casper\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UserBaselineRatings.resources
+C:\Users\mark\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.NewUserWindow.resources
+C:\Users\mark\Documents\GitHub\P2\Program\NuMedUI\ConsoleApplication4\obj\Debug\Recommender.UserBaselineRatings.resources
