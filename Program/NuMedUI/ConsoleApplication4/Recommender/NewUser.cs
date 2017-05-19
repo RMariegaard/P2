@@ -12,7 +12,6 @@ namespace Recommender
         //Construtor for the new users with the highest user ID and the artists rated by the user
         public NewUser(Dictionary<int, Userartist> ratedArtistByUser, int lastUserID) : base(lastUserID+1)
         {
-            _nextID = this.ID + 1;
             AddArtists(ratedArtistByUser);
         }
 

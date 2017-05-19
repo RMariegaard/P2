@@ -10,7 +10,6 @@ namespace Recommender
     public class User : ITaggable
     {
         // The id of the user is stored:
-        protected static int _nextID = 1;
         private int _id;
         public int ID
         {
