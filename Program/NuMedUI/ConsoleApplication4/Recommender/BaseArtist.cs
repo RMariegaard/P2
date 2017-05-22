@@ -14,13 +14,14 @@ namespace Recommender
 
         public Dictionary<int, Tag> Tags { get; private set; }
 
+        // Two construkters:
         public BaseArtist(int ID, string Name)
         {
             Tags = new Dictionary<int, Tag>();
             Id = ID;
             this.Name = Name;
         }
-
+        // This construkter is only used when making the binary files
         public BaseArtist(int ID, Dictionary<int, Tag> tag)
         {
             Tags = tag;

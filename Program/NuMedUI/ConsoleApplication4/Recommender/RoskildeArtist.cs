@@ -10,6 +10,7 @@ namespace Recommender
     [Serializable]
     public class RoskildeArtist : Artist
     {
+        // Two properties for saving information on where and when the artist plays:
         public DateTime TimeOfConcert { get; private set; }
         public string Scene { get; private set; }
 

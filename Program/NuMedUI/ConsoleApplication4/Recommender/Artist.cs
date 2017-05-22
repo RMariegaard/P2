@@ -11,8 +11,9 @@ namespace Recommender
     {
         public double TotalTagAmount { get; private set; }
 
+        // Two Construkters:
         public Artist(int ID, string name) : base(ID, name) { }
-
+        // This Construkter is used when making the binary files.
         public Artist(int ID, Dictionary<int, Tag> tag, string name) : base(ID, tag)
         {
             this.Name = name;

@@ -8,6 +8,7 @@ namespace Recommender
 {
     public class RecommendedArtist : RoskildeArtist
     {
+        // This Class simply allows for a rating to be saved:
         public double FilteringRating { get; set; }
         public int Stars { get; set; }
 
